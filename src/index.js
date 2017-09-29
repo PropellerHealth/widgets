@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-let props = document.getElementById('app-props').textContent;
-props = props.replace("<![CDATA[", "").replace("]]>", "");
-const data = JSON.parse(props);
-console.log(data);
-console.log(props);
+let el = document.getElementById('app-props');
+let props;
+let data;
+if (el) {
+  props = el.textContent.replace("<![CDATA[", "").replace("]]>", "");
+  data = JSON.parse(props);
+}
 
 ReactDOM.render(<App {...data}/>, document.getElementById('ph-status'));
