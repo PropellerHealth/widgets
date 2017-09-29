@@ -10,17 +10,19 @@
     "ignore-styles": "^5.0.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14"
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.14",
+    "request": "^2.83.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js start-dev-server",
+    "start": "npm-run-all -p watch-css start-js",
+    "start:server": "NODE_ENV=development node server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "start-dev-server": "NODE_ENV=development node ./server/index.js"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "node-sass-chokidar": "0.0.3",
