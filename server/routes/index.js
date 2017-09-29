@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router  = express.Router();
 
-const universalLoader = require('../universal')
+const universalLoader = require('../universal');
 
-router.get('/', universalLoader)
+router.get('/', universalLoader);
 
-module.exports = router
+module.exports = router;
