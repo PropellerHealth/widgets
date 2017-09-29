@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 let el = document.getElementById('app-props');
@@ -10,4 +11,9 @@ if (el) {
   data = JSON.parse(props);
 }
 
-ReactDOM.render(<App {...data}/>, document.getElementById('ph-status'));
+ReactDOM.render(
+  <BrowserRouter>
+    <App {...data}/>
+  </BrowserRouter>,
+  document.getElementById('ph-status')
+);

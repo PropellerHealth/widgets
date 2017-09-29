@@ -1,0 +1,72 @@
+$green: #8DC641;
+$orange: #F79226;
+$red: #E21A50;
+
+.text-center {
+  text-align: center;
+}
+
+.status-bar {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+
+  .status-section {
+    position: relative;
+    box-sizing: border-box;
+    float: left;
+    width: 33.333%;
+    height: 100%;
+    color: white;
+    opacity: 0.5;
+    transition: opacity 1s;
+
+    &.good {
+      border-radius: 5px 0 0 5px;
+      background-color: $green;
+    }
+
+    &.fair {
+      border-left: 2px solid white;
+      border-right: 2px solid white;
+      background-color: $orange;
+    }
+
+    &.poor {
+      border-radius: 0 5px 5px 0;
+      background-color: $red;
+    }
+
+    span {
+      opacity: 0.5;
+    }
+  }
+
+  &.status-good .good {
+    opacity: 1;
+
+    span {
+      opacity: 1;
+    }
+  }
+
+  &.status-fair .fair {
+    opacity: 1;
+
+    span {
+      opacity: 1;
+    }
+  }
+
+  &.status-poor .poor {
+    opacity: 1;
+
+    span {
+      opacity: 1;
+    }
+  }
+}
+
+.ph-status-explanation {
+  text-align: left;
+}

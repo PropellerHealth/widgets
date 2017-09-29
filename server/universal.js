@@ -1,11 +1,47 @@
-const path = require('path');
-const fs = require('fs');
+const path    = require('path');
+const fs      = require('fs');
+const request = require('request');
+const geoip   = require("geoip-lite");
 
 const React = require('react');
-const { renderToString } = require('react-dom/server')
-const geoip = require("geoip-lite");
+const { renderToString } = require('react-dom/server');
+const { StaticRouter }   = require('react-router-dom');
 
 const { default: App } = require('../src/App');
+
+const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
+
+const propsForRequest = (req, cb) => {
+  switch (req.path) {
+    case "/asthma-conditions":
+      const geo = geoip.lookup(req.ip); // req.ip
+      if (geo) {
+        const lat = geo.ll[0];
+        const lng = geo.ll[1];
+
+        let props = {
+          latitude         : lat,
+          longitude        : lng,
+          forecastLocation : `${geo.city}, ${geo.region}, ${geo.country}`
+        };
+        request.get(`${FORECAST_URL}?latitude=${lat}&longitude=${lng}`, (err, resp, body) => {
+          if (err) return cb(undefined, props);
+          const data = JSON.parse(body);
+
+          return cb(undefined, Object.assign({}, props, {
+            score: data.properties.value,
+            status: data.properties.code.toLowerCase()
+          }));
+        });
+      } else {
+        return cb(undefined, {});
+      }
+      break;
+
+    default:
+      return cb(undefined, {});
+  }
+}
 
 module.exports = function universalLoader(req, res) {
   const filePath = path.resolve(__dirname, '..', 'build', 'index.html');
@@ -15,35 +51,32 @@ module.exports = function universalLoader(req, res) {
       console.error('read err', err);
       return res.status(404).end();
     }
-    const demoIp = "75.100.60.222";
-    const geo = geoip.lookup(demoIp); // req.ip
-    const props = {
-      latitude: geo && geo.ll[0],
-      longitude: geo && geo.ll[1],
-      location: geo && `${geo.city}, ${geo.region}, ${geo.country}`
-    };
-    // const markup = renderToString(
-    //   <div>
-    //     <script id='app-props' type='application/json'>
-    //       <![CDATA[${dataProps}]]>
-    //     </script>
-    //     <App {...props} />
-    //   </div>
-    // );
 
-    const dataProps = JSON.stringify(props);
+    propsForRequest(req, (err, props) => {
+      const dataProps = JSON.stringify(props);
+      const context   = {};
 
-    const markup = (
-      `<div>` +
-        `<script id='app-props' type='application/json'>` +
-          `<![CDATA[${dataProps}]]>` +
-        `</script>` +
-        `<div>` + renderToString(<App {...props}/>) + `</div>` +
-      `</div>`
-    );
+      const markup = (
+        `<div>` +
+          `<script id='app-props' type='application/json'>` +
+            `<![CDATA[${dataProps}]]>` +
+          `</script>` +
+          `<div>` + renderToString(
+            <StaticRouter location={req.url} context={context}>
+              <App {...props}/>
+            </StaticRouter>
+          ) + `</div>` +
+        `</div>`
+      );
 
-    // we're good, send the response
-    const RenderedApp = htmlData.replace('{{SSR}}', markup);
-    res.send(RenderedApp);
+      if (context.url) {
+        // Somewhere a `<Redirect>` was rendered
+        res.redirect(301, context.url);
+      } else {
+        // we're good, send the response
+        const RenderedApp = htmlData.replace('{{SSR}}', markup);
+        res.send(RenderedApp);
+      }
+    });
   });
 }
