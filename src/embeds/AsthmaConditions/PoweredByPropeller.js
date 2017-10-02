@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../..//assets/images/propeller-dots.svg";
 
 const styles = {
-  wrapper : {
+  wrapper: {
     position: "absolute",
     left: "0",
     right: "0",

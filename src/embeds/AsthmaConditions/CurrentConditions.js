@@ -2,7 +2,7 @@ import React from "react";
 import AsthmaScoreBar from "./AsthmaScoreBar";
 import PoweredByPropeller from "./PoweredByPropeller";
 import icon from "../../assets/images/img_location.png";
-import goodImg from  "../../assets/images/conditions-good.svg"
+import goodImg from "../../assets/images/conditions-good.svg";
 
 const STATUS_IMG = {
   high: goodImg,
@@ -19,21 +19,29 @@ const STATUS_TEXT = {
     "Your AIR report is <strong>good</strong>. Your environment isn’t likely to cause any asthma symptoms today, but be sure to keep your rescue inhaler handy in case of emergencies."
 };
 
-const explanationStyle={
+const explanationStyle = {
   textAlign: "left",
   fontSize: "0.85rem"
 };
 
-const CurrentConditions = ({ score, status, forecastLocation, style, flipCard }) => {
+const CurrentConditions = ({
+  score,
+  status,
+  forecastLocation,
+  style,
+  flipCard
+}) => {
   return (
-    <figure style={Object.assign({}, style, {zIndex: 1})} >
-      <h2 style={{margin: "0 0 0.5rem"}}>Asthma Conditions</h2>
-      <div style={{
-        marginBottom: "0.5rem",
-        height: "2rem",
-        transition: "opacity 300ms",
-        opacity: forecastLocation ? 1 : 0
-      }}>
+    <figure style={style}>
+      <h2 style={{ margin: "0 0 0.5rem" }}>Asthma Conditions</h2>
+      <div
+        style={{
+          marginBottom: "0.5rem",
+          height: "2rem",
+          transition: "opacity 300ms",
+          opacity: forecastLocation ? 1 : 0
+        }}
+      >
         <img
           src={icon}
           alt="location icon"
@@ -43,7 +51,7 @@ const CurrentConditions = ({ score, status, forecastLocation, style, flipCard })
         />
         {forecastLocation}
       </div>
-      <div style={{height: "80px", marginBottom: "0.5rem"}}>
+      <div style={{ height: "80px", marginBottom: "0.5rem" }}>
         <img
           src={STATUS_IMG[status]}
           height="100%"

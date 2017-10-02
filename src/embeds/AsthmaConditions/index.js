@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import CurrentConditions from "./CurrentConditions";
 import Signup from "./Signup";
 // import logo from './logo.svg';
@@ -17,20 +17,20 @@ const checkResponse = response =>
 const extractJSON = response => response.json();
 
 const containerStyle = {
-  width: "350px",
-  height: "400px",
+  width   : "350px",
+  height  : "400px",
   position: "relative",
-  color: "#5c5c5c"
+  color   : "#5c5c5c"
 };
 
 const cardStyle = {
-  width: "100%",
-  height: "100%",
-  position: "absolute",
-  border: "1px solid #DDD",
-  boxSizing: "border-box",
+  width         : "100%",
+  height        : "100%",
+  position      : "absolute",
+  border        : "1px solid #DDD",
+  boxSizing     : "border-box",
   transformStyle: "preserve-3d",
-  transition: "transform 1s"
+  transition    : "transform 1s"
 };
 
 const contentStyle = {
@@ -44,10 +44,11 @@ const contentStyle = {
   margin     : "0",
   textAlign  : "center",
   background : "#FFF",
+  zIndex     : 1,
   backfaceVisibility : "hidden"
 };
 
-class App extends React.Component {
+class AsthmaConditions extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +65,7 @@ class App extends React.Component {
   }
 
   flipCard() {
-    this.setState({flipped: !this.state.flipped});
+    this.setState({ flipped: !this.state.flipped });
   }
 
   loadConditions(lat, lng) {
@@ -85,7 +86,9 @@ class App extends React.Component {
   componentDidMount() {
     const { state } = this;
     if (state.latitude && state.longitude) {
-      this.loadConditions(state.latitude, state.longitude);
+      if (!(state.status && state.score)) {
+        this.loadConditions(state.latitude, state.longitude);
+      }
     } else {
       if (state.hasGeolocate) {
         window.navigator.geolocation.getCurrentPosition(loc => {
@@ -111,10 +114,12 @@ class App extends React.Component {
 
   render() {
     return (
-      <div style={containerStyle} >
-        <div style={Object.assign({}, cardStyle, {
-          transform: this.state.flipped ? "rotateY( 180deg )" : ""
-        })}>
+      <div style={containerStyle}>
+        <div
+          style={Object.assign({}, cardStyle, {
+            transform: this.state.flipped ? "rotateY( 180deg )" : ""
+          })}
+        >
           <CurrentConditions
             score={this.state.score}
             status={this.state.status}
@@ -122,14 +127,11 @@ class App extends React.Component {
             style={contentStyle}
             flipCard={this.flipCard}
           />
-          <Signup
-            style={contentStyle}
-            flipCard={this.flipCard}
-          />
+          <Signup style={contentStyle} flipCard={this.flipCard} />
         </div>
       </div>
     );
   }
 }
 
-export default App;
+export default AsthmaConditions;
