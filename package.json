@@ -1,5 +1,5 @@
 {
-  "name": "forecast-widget-2",
+  "name": "propeller-widgets",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,7 +20,7 @@
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "start:server": "NODE_ENV=development node server/index.js",
-    "build": "react-scripts build",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
