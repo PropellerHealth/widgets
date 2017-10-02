@@ -10,17 +10,7 @@ $red: #E21A50;
   }
 }
 
-.text-center {
-  text-align: center;
-}
-
 .status-bar {
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  font-size: 1.4rem;
-  margin-bottom: 1.5rem;
-  backface-visibility: hidden;
 
   .status-section {
     position: relative;
@@ -30,7 +20,8 @@ $red: #E21A50;
     height: 100%;
     color: white;
     opacity: 0.5;
-    transition: opacity 1s;
+    transition: opacity 500ms, font-size 300ms;
+    font-size: 1rem;
 
     &.good {
       border-radius: 5px 0 0 5px;
@@ -51,29 +42,14 @@ $red: #E21A50;
     span {
       opacity: 0.5;
     }
-  }
 
-  &.status-good .good {
-    opacity: 1;
-
-    span {
+    &.active {
       opacity: 1;
-    }
-  }
+      font-size: 1.4rem;
 
-  &.status-fair .fair {
-    opacity: 1;
-
-    span {
-      opacity: 1;
-    }
-  }
-
-  &.status-poor .poor {
-    opacity: 1;
-
-    span {
-      opacity: 1;
+      span {
+        opacity: 1;
+      }
     }
   }
 }
