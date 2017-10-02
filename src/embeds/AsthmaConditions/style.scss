@@ -2,14 +2,25 @@ $green: #8DC641;
 $orange: #F79226;
 $red: #E21A50;
 
+.clearfix {
+  &:after, &:before {
+    clear: both;
+    content: " ";
+    display: table;
+  }
+}
+
 .text-center {
   text-align: center;
 }
 
 .status-bar {
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  backface-visibility: hidden;
 
   .status-section {
     position: relative;
@@ -65,8 +76,4 @@ $red: #E21A50;
       opacity: 1;
     }
   }
-}
-
-.ph-status-explanation {
-  text-align: left;
 }

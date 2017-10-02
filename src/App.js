@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import AsthmaConditions from "./embeds/AsthmaConditions/index";
 // import logo from './logo.svg';
 import "./App.css";
