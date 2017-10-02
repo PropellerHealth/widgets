@@ -14,7 +14,7 @@ const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
 const propsForRequest = (req, cb) => {
   switch (req.path) {
     case "/asthma-conditions":
-      // const geo = geoip.lookup("172.102.4.178"); // req.ip
+      // const geo = geoip.lookup("172.102.4.178");
       const geo = geoip.lookup(req.ip);
       if (geo) {
         const lat = geo.ll[0];
