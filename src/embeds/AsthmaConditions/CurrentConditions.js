@@ -12,11 +12,11 @@ const STATUS_IMG = {
 
 const STATUS_TEXT = {
   high:
-    "Your AIR report is <strong>poor</strong>. People with asthma may experience asthma symptoms today so be sure to take extra precautions, like keeping your rescue inhaler handy.",
+    "Your local asthma conditions are <strong>poor</strong>. People with asthma may experience asthma symptoms today so be sure to take extra precautions, like keeping your rescue inhaler handy.",
   medium:
-    "Your AIR report is <strong>fair</strong>. Sensitive asthma sufferers may experience asthma symptoms today and should take extra precautions, like keeping your rescue inhaler handy.",
+    "Your local asthma conditions are <strong>fair</strong>. Sensitive asthma sufferers may experience asthma symptoms today and should take extra precautions, like keeping your rescue inhaler handy.",
   low:
-    "Your AIR report is <strong>good</strong>. Your environment isn’t likely to cause any asthma symptoms today, but be sure to keep your rescue inhaler handy in case of emergencies."
+    "Your local asthma conditions are <strong>good</strong>. Your environment isn’t likely to cause any asthma symptoms today, but be sure to keep your rescue inhaler handy in case of emergencies."
 };
 
 const explanationStyle = {
@@ -33,11 +33,14 @@ const CurrentConditions = ({
 }) => {
   return (
     <figure style={style}>
-      <h2 style={{ margin: "0 0 0.5rem" }}>Asthma Conditions</h2>
+      <h2 style={{ margin: "0 0 0.5rem" }}>Local Asthma Conditions</h2>
       <div
         style={{
           marginBottom: "0.5rem",
           height: "2rem",
+          MozTransition: "opacity 300ms",
+          WebkitTransition: "opacity 300ms",
+          OTransition: "opacity 300ms",
           transition: "opacity 300ms",
           opacity: forecastLocation ? 1 : 0
         }}
@@ -57,6 +60,9 @@ const CurrentConditions = ({
           height="100%"
           alt={`status ${status}`}
           style={{
+            MozTransition: "opacity 300ms",
+            WebkitTransition: "opacity 300ms",
+            OTransition: "opacity 300ms",
             transition: "opacity 300ms",
             opacity: status ? 1 : 0
           }}

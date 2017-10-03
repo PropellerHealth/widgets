@@ -29,8 +29,13 @@ const cardStyle = {
   position      : "absolute",
   border        : "1px solid #DDD",
   boxSizing     : "border-box",
-  transformStyle: "preserve-3d",
-  transition    : "transform 1s"
+  WebkitTransformStyle : "preserve-3d",
+  MozTransformStyle    : "preserve-3d",
+  transformStyle       : "preserve-3d",
+  WebkitTransition : "transform 1s",
+  MozTransition    : "transform 1s",
+  OTransition      : "transform 1s",
+  transition       : "transform 1s"
 };
 
 const contentStyle = {
@@ -45,7 +50,9 @@ const contentStyle = {
   textAlign  : "center",
   background : "#FFF",
   zIndex     : 1,
-  backfaceVisibility : "hidden"
+  WebkitBackfaceVisibility : "hidden",
+  MozBackfaceVisibility    : "hidden",
+  backfaceVisibility       : "hidden"
 };
 
 class AsthmaConditions extends Component {
@@ -113,11 +120,16 @@ class AsthmaConditions extends Component {
   }
 
   render() {
+    const { flipped } = this.state;
     return (
       <div style={containerStyle}>
         <div
           style={Object.assign({}, cardStyle, {
-            transform: this.state.flipped ? "rotateY( 180deg )" : ""
+            OTransform: flipped ? "rotateY( 180deg )" : "",
+            WebkitTransform: flipped ? "rotateY( 180deg )" : "",
+            MozTransform: flipped ? "rotateY( 180deg )" : "",
+            msTransform: flipped ? "rotateY( 180deg )" : "",
+            transform: flipped ? "rotateY( 180deg )" : ""
           })}
         >
           <CurrentConditions
