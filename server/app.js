@@ -11,6 +11,7 @@ require('babel-register')({
 });
 
 const index = require('./routes/index');
+const api   = require('./routes/api');
 const universalLoader = require('./universal');
 
 const app = express();
@@ -23,6 +24,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', index);
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
+
+app.use('/api', api);
 
 app.use('/', universalLoader);
 
