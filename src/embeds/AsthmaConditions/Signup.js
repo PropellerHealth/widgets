@@ -27,7 +27,8 @@ const styles = {
     backgroundColor: "#78be20",
     color: "#FFF",
     border: "2px solid #78be20",
-    borderRadius: "3px"
+    borderRadius: "3px",
+    cursor: "pointer"
   },
   backWrapper: {
     position: "absolute",
@@ -64,7 +65,9 @@ class Signup extends Component {
     const { style, flipCard } = this.props;
     return (
       <figure className="signup-form" style={Object.assign({}, style, { transform: "rotateY(180deg)" })}>
-        <h2 style={{ margin: "0 0 0.5rem",  fontSize: "21px" }}>Signup for notifications</h2>
+        <h2 style={{ margin: "0 0 0.5rem",  fontSize: "21px" }}>
+          Sign Up for Notifications
+        </h2>
         <form style={{ textAlign: "left" }} onSubmit={this.onSubmit}>
           <fieldset style={{ border: "none", margin: 0, padding: 0 }}>
             <legend style={{ fontSize: "0.9rem", textAlign: "center" }}>
@@ -115,12 +118,12 @@ class Signup extends Component {
                 onChange={(e) => this.onChange(e, "postalCode")}
               />
             </div>
-            <input style={styles.formButton} type="submit" value="Sign up"/>
+            <input style={styles.formButton} type="submit" value="Sign Up"/>
           </fieldset>
         </form>
         <div style={styles.backWrapper}>
           <button className="toggle-button go-back" onClick={flipCard}>
-            Back to forecast
+            Back to Forecast
           </button>
           {/* <PoweredByPropeller /> */}
         </div>
