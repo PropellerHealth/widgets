@@ -7,7 +7,7 @@
 </head>
 <body>
   <div style="text-align: center;">
-    <iframe src="http://localhost:3002/asthma-conditions"
+    <iframe src="https://widgets.propellerhealth.biz/asthma-conditions"
       width="350"
       height="420"
       frameborder="0"
@@ -17,6 +17,19 @@
       marginheight="0"
       marginwidth="0"
     ></iframe>
+    <textarea readonly cols=100 rows=10 onclick="(function(el){ console.log(el); el.select(); })()">
+      <iframe src="https://widgets.propellerhealth.com/asthma-conditions"
+              width="350"
+              height="420"
+              frameborder="0"
+              allowtransparency="true"
+              allow="geolocation"
+              name="propeller-asthma-conditions"
+              marginheight="0"
+              marginwidth="0"
+      ></iframe>
+  </textarea>
+
   </div>
 
 </body>
