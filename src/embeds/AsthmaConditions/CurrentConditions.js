@@ -19,9 +19,28 @@ const STATUS_TEXT = {
     "Your local asthma conditions are <strong>good</strong>. Your environment isn’t likely to cause any asthma symptoms today but be sure to keep your rescue inhaler handy in case of other triggers of your asthma or emergencies."
 };
 
-const explanationStyle = {
-  textAlign: "left",
-  fontSize: "0.85rem"
+const styles = {
+  explanation: {
+    textAlign: "left",
+    fontSize: "0.85rem",
+    lineHeight: "1rem"
+  },
+  buttonWrapper: {
+    position: "absolute",
+    left: "0",
+    right: "0",
+    bottom: "55px"
+  },
+  actionButton : {
+    display: "inline-block",
+    padding: "0.3rem 0.5rem 0.4rem",
+    border: "1px solid",
+    background: "white",
+    borderRadius: "3px",
+    color: "#20C3F3",
+    cursor: "pointer",
+    outline: "none"
+  }
 };
 
 const CurrentConditions = ({
@@ -33,11 +52,10 @@ const CurrentConditions = ({
 }) => {
   return (
     <figure style={style}>
-      <h2 style={{ margin: "0 0 0.5rem" }}>Local Asthma Conditions</h2>
+      <h1 style={{ margin: "0 0 0.5rem", fontSize: "21px" }}>Local Asthma Conditions</h1>
       <div
         style={{
           marginBottom: "0.5rem",
-          height: "2rem",
           MozTransition: "opacity 300ms",
           WebkitTransition: "opacity 300ms",
           OTransition: "opacity 300ms",
@@ -49,8 +67,8 @@ const CurrentConditions = ({
           src={icon}
           alt="location icon"
           style={{ verticalAlign: "middle", marginRight: "5px" }}
-          height="31"
-          width="22"
+          height="20"
+          width="14"
         />
         {forecastLocation}
       </div>
@@ -70,11 +88,13 @@ const CurrentConditions = ({
       </div>
       <AsthmaScoreBar score={score} status={status} />
       <div
-        style={explanationStyle}
+        style={styles.explanation}
         dangerouslySetInnerHTML={{ __html: STATUS_TEXT[status] }}
       />
-      <div className="signup">
-        <button onClick={flipCard}>Get personal notifications</button>
+      <div style={styles.buttonWrapper}>
+        <button className="toggle-button signup" onClick={flipCard}>
+          Get personal notifications
+        </button>
       </div>
       <PoweredByPropeller />
     </figure>

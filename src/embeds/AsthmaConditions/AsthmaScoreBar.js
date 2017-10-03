@@ -18,7 +18,7 @@ const styles = {
     width: "100%",
     height: HEIGHT,
     lineHeight: HEIGHT,
-    marginBottom: "1.5rem"
+    marginBottom: "0.75rem"
   }
 };
 

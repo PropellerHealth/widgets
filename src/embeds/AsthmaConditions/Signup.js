@@ -4,44 +4,37 @@ import PoweredByPropeller from "./PoweredByPropeller";
 const PROPELLER_SIGNUP = "https://forecast-subscription.appspot.com/subscribe";
 
 const styles = {
-  label: {
-    display: "inline-block",
-    maxWidth: "100%",
-    marginBottom: "5px",
-    fontWeight: "700",
-    fontSize: "0.9rem"
+  inputWrapper : {
+    padding: "0.5rem",
+    border: "1px solid #DDD",
+    borderRadius: "4px",
+    background: "#FAFAFA",
+    margin: "0.7rem 0 0.5rem"
   },
 
   orDivider: {
     textAlign: "center"
+  },
+
+  formButton: {
+    display: "inline-block",
+    float: "right",
+    width: "48%",
+    marginTop: "25px",
+    padding: "12px 0",
+    fontSize: "1rem",
+    textAlign: "center",
+    backgroundColor: "#78be20",
+    color: "#FFF",
+    border: "2px solid #78be20",
+    borderRadius: "3px"
+  },
+  backWrapper: {
+    position: "absolute",
+    left: "0",
+    right: "0",
+    bottom: "8px"
   }
-};
-
-const inputStyle = {
-  boxSizing: "border-box",
-  border: "1px solid #CEC9C9",
-  background: "#FFF",
-  color: "#888B8D",
-  borderRadius: "3px",
-  padding: "10px 16px",
-  height: "46px",
-  width: "100%",
-  lineHeight: "1.3333333",
-  fontSize: "1rem"
-};
-
-const buttonStyle = {
-  backgroundColor: "#78be20",
-  borderWidth: 0,
-  width: "210px",
-  border: "2px solid #fff",
-  display: "inline-block",
-  paddingTop: "14px",
-  paddingBottom: "14px",
-  marginTop: "14px",
-  textAlign: "center",
-  color: "#FFF",
-  borderRadius: "6px"
 };
 
 class Signup extends Component {
@@ -70,22 +63,22 @@ class Signup extends Component {
   render() {
     const { style, flipCard } = this.props;
     return (
-      <figure style={Object.assign({}, style, { transform: "rotateY(180deg)" })}>
-        <h2 style={{ margin: "0 0 0.5rem" }}>Signup for notifications</h2>
+      <figure className="signup-form" style={Object.assign({}, style, { transform: "rotateY(180deg)" })}>
+        <h2 style={{ margin: "0 0 0.5rem",  fontSize: "21px" }}>Signup for notifications</h2>
         <form style={{ textAlign: "left" }} onSubmit={this.onSubmit}>
           <fieldset style={{ border: "none", margin: 0, padding: 0 }}>
-            <legend style={{ fontSize: "0.9rem" }}>
-              Sign up to receive a quick text or email when your local asthma
-              conditions are either fair or poor.
+            <legend style={{ fontSize: "0.9rem", textAlign: "center" }}>
+              Receive a text or email when your
+              <br/>
+              local asthma conditions are fair or poor.
             </legend>
-            <div className="clearfix">
+            <div className="clearfix" style={styles.inputWrapper}>
               <div>
-                <label for="email" style={styles.label}>
+                <label for="email">
                   Email
                 </label>
                 <input
                   id="email"
-                  style={inputStyle}
                   autocomplete="email"
                   type="email"
                   value={this.state.email}
@@ -93,15 +86,14 @@ class Signup extends Component {
                 />
               </div>
               <div className="or-divider" style={styles.orDivider}>
-                or
+                — or —
               </div>
               <div>
-                <label for="sms" style={styles.label}>
+                <label for="sms">
                   SMS Number
                 </label>
                 <input
                   id="sms"
-                  style={inputStyle}
                   autocomplete="tel-national"
                   pattern="\d{10}"
                   type="tel"
@@ -110,13 +102,12 @@ class Signup extends Component {
                 />
               </div>
             </div>
-            <div style={{ width: "50%", float: "left" }}>
-              <label for="postalCode" style={styles.label}>
+            <div style={{ width: "48%", float: "left" }}>
+              <label for="postalCode">
                 Zip Code
               </label>
               <input
                 id="postalCode"
-                style={inputStyle}
                 required
                 type="tel"
                 pattern="\d{5}"
@@ -124,11 +115,15 @@ class Signup extends Component {
                 onChange={(e) => this.onChange(e, "postalCode")}
               />
             </div>
-            <input style={buttonStyle} type="submit" value="Sign up"/>
+            <input style={styles.formButton} type="submit" value="Sign up"/>
           </fieldset>
         </form>
-        <button onClick={flipCard}>Back to forecast</button>
-        {/* <PoweredByPropeller /> */}
+        <div style={styles.backWrapper}>
+          <button className="toggle-button go-back" onClick={flipCard}>
+            Back to forecast
+          </button>
+          {/* <PoweredByPropeller /> */}
+        </div>
       </figure>
     );
   }

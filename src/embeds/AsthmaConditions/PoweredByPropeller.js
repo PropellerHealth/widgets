@@ -1,21 +1,13 @@
 import React from "react";
-import logo from "../..//assets/images/propeller-dots.svg";
+import logo from "../../assets/images/img_air_logo_tag.png";
 
 const styles = {
   wrapper: {
     position: "absolute",
     left: "0",
     right: "0",
-    bottom: "0.5rem"
-  },
-  link: {
-    color: "#20C3F3",
-    textDecoration: "none",
-    fontSize: "0.8rem"
-  },
-  icon: {
-    verticalAlign: "middle",
-    marginRight: "5px"
+    bottom: "0.25rem",
+    textAlign: "center"
   }
 };
 
@@ -26,16 +18,13 @@ const PoweredByPropeller = () => {
         href="https://www.propellerhealth.com/air-by-propeller/"
         target="_blank"
         rel="noopener noreferrer"
-        style={styles.link}
       >
         <img
           src={logo}
           alt="Propeller Logo"
-          width="25"
-          height="25"
-          style={styles.icon}
+          width="100"
+          height="30"
         />
-        Powered by Propeller
       </a>
     </div>
   );
