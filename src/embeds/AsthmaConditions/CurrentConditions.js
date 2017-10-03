@@ -14,9 +14,9 @@ const STATUS_TEXT = {
   high:
     "Your local asthma conditions are <strong>poor</strong>. People with asthma may experience asthma symptoms today so be sure to take extra precautions, like keeping your rescue inhaler handy.",
   medium:
-    "Your local asthma conditions are <strong>fair</strong>. Sensitive asthma sufferers may experience asthma symptoms today and should take extra precautions, like keeping your rescue inhaler handy.",
+    "Your local asthma conditions are <strong>fair</strong>. Sensitive asthma sufferers may experience asthma symptoms today and should take extra precautions, including  keeping your rescue inhaler handy to treat unexpected symptoms of your asthma.",
   low:
-    "Your local asthma conditions are <strong>good</strong>. Your environment isn’t likely to cause any asthma symptoms today, but be sure to keep your rescue inhaler handy in case of emergencies."
+    "Your local asthma conditions are <strong>good</strong>. Your environment isn’t likely to cause any asthma symptoms today but be sure to keep your rescue inhaler handy in case of other triggers of your asthma or emergencies."
 };
 
 const explanationStyle = {
