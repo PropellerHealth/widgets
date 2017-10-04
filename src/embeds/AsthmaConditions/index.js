@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import CurrentConditions from "./CurrentConditions";
 import Signup from "./Signup";
-import { checkStatus, extractJSON, headers } from "../../utilities";
+import { checkStatus, extractJSON, headers, isIE11 } from "../../utilities";
 // import logo from './logo.svg';
 import "./style.css";
-
-if (typeof window === "undefined") {
-  global.window = {};
-}
 
 const GOOGLE_KEY = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
 const GOOGLE_API = "https://maps.googleapis.com/maps/api/geocode/json";
@@ -119,15 +115,16 @@ class AsthmaConditions extends Component {
 
   render() {
     const { flipped } = this.state;
+    const shouldFlip = flipped && !isIE11;
     return (
       <div style={containerStyle}>
         <div
           style={Object.assign({}, cardStyle, {
-            OTransform: flipped ? "rotateY( 180deg )" : "",
-            WebkitTransform: flipped ? "rotateY( 180deg )" : "",
-            MozTransform: flipped ? "rotateY( 180deg )" : "",
-            msTransform: flipped ? "rotateY( 180deg )" : "",
-            transform: flipped ? "rotateY( 180deg )" : ""
+            OTransform: shouldFlip ? "rotateY(180deg)" : "",
+            WebkitTransform: shouldFlip ? "rotateY(180deg)" : "",
+            MozTransform: shouldFlip ? "rotateY(180deg)" : "",
+            msTransform: shouldFlip ? "rotateY(180deg)" : "",
+            transform: shouldFlip ? "rotateY(180deg)" : ""
           })}
         >
           <CurrentConditions
@@ -137,7 +134,18 @@ class AsthmaConditions extends Component {
             style={contentStyle}
             flipCard={this.flipCard}
           />
-          <Signup style={contentStyle} flipCard={this.flipCard} />
+          <Signup
+            style={
+              isIE11
+                ? Object.assign({
+                  msTransform: `translateX(${flipped ? 0 : 100}%)`,
+                  transform: `translateX(${flipped ? 0 : 100}%)`,
+                  msTransition: "transform 1s",
+                  transition: "transform 1s"
+                })
+                : contentStyle
+            }
+            flipCard={this.flipCard} />
         </div>
       </div>
     );
