@@ -60,6 +60,7 @@ const CurrentConditions = ({
           WebkitTransition: "opacity 300ms",
           OTransition: "opacity 300ms",
           transition: "opacity 300ms",
+          height: "22px",
           opacity: forecastLocation ? 1 : 0
         }}
       >
