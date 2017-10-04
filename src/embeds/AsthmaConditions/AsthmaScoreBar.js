@@ -6,10 +6,10 @@ const STATUS_MAP = {
   high: "poor"
 };
 
-const THRESHOLDS = {
-  fair: 0.4,
-  poor: 0.55
-};
+// const THRESHOLDS = {
+//   fair: 0.4,
+//   poor: 0.55
+// };
 
 const HEIGHT = "40px";
 
