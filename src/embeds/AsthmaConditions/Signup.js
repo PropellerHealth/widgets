@@ -1,10 +1,19 @@
 import React, { Component } from "react";
-import PoweredByPropeller from "./PoweredByPropeller";
-import { checkStatus, extractJSON, headers } from "../../utilities";
+import Alert from 'react-s-alert';
+import { checkStatus, headers } from "../../utilities";
+
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/flip.css';
 
 const FORECAST_SIGNUP = "/api/forecast-signup";
 
-const styles = {
+const ERRORS = {
+  email: "Please enter a valid email address",
+  postalCode: "Zip code should be 5 numbers",
+  phone: "SMS number should contain 10 numbers, ex. 6085551212"
+};
+
+const styles = Object.freeze({
   inputWrapper : {
     padding      : "0.5rem",
     border       : "1px solid #DDD",
@@ -37,7 +46,7 @@ const styles = {
     right    : "0",
     bottom   : "8px"
   }
-};
+});
 
 class Signup extends Component {
   constructor(props) {
@@ -46,25 +55,18 @@ class Signup extends Component {
       email      : undefined,
       sms        : undefined,
       postalCode : undefined,
-      submitting : false,
-      error      : undefined,
-      success    : undefined
+      submitting : false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(e, key) {
-    this.setState({
-      [key]   : e.target.value,
-      error   : undefined,
-      success : undefined
-    });
+    this.setState({ [key] : e.target.value });
   }
 
   onSubmit(e) {
     e.preventDefault();
-    console.log("signup", this.state);
 
     const data = {
       zip   : this.state.postalCode,
@@ -73,18 +75,12 @@ class Signup extends Component {
     };
 
     if (!data.email && !data.sms) {
-      this.setState({
-        submitting : false,
-        error      : "Please include a valid email or phone number."
-      });
+      this.setState({ submitting : false });
+      Alert.warning("Please include a valid email or phone number.");
       return;
     }
 
-    this.setState({
-      submitting : true,
-      error      : undefined,
-      success    : undefined
-    });
+    this.setState({ submitting : true });
 
     window
       .fetch(FORECAST_SIGNUP, {
@@ -94,20 +90,21 @@ class Signup extends Component {
       })
       .then(checkStatus)
       .then(() => {
-        this.setState({
-          submitting : false,
-          success    : "Thanks for signing up. You should get a confirmation message soon."
-        });
+        this.setState({ submitting : false });
+        Alert.success("Thanks for signing up. You should get a confirmation message soon.")
       })
       .catch(err => {
-        console.log(err);
-        console.log(err.toString()); // "Bad Request"
-        err.json().then(console.log) // {id: "string.email", message: ""to" must be a valid email"}
+        this.setState({ submitting : false });
 
-        this.setState({
-          submitting : false,
-          error      : err.toString()
-        });
+        err.json()
+          .then(data => {
+            // data = {id: "string.email", message: ""to" must be a valid email"}
+            const attr = data.id.split(".");
+            Alert.error(`Please enter a valid ${attr[attr.length - 1]}`);
+          })
+          .catch(() => {
+            Alert.error(err.toString()); // "Bad Request"
+          });
       });
   }
 
@@ -120,7 +117,7 @@ class Signup extends Component {
         </h2>
         <form style={{ textAlign: "left" }} onSubmit={this.onSubmit}>
           <fieldset style={{ border: "none", margin: 0, padding: 0 }}>
-            <legend style={{ fontSize: "0.9rem", textAlign: "center" }}>
+            <legend style={{ fontSize: "0.9rem", textAlign: "center", width: "100%"}}>
               Receive a text or email when your
               <br/>
               local asthma conditions are fair or poor.
@@ -136,6 +133,8 @@ class Signup extends Component {
                   type="email"
                   value={this.state.email}
                   onChange={(e) => this.onChange(e, "email")}
+                  title={ERRORS.email}
+                  onIn
                 />
               </div>
               <div className="or-divider" style={styles.orDivider}>
@@ -154,6 +153,7 @@ class Signup extends Component {
                   type="tel"
                   value={this.state.sms}
                   onChange={(e) => this.onChange(e, "sms")}
+                  title={ERRORS.phone}
                 />
               </div>
             </div>
@@ -171,17 +171,27 @@ class Signup extends Component {
                 autocomplete="postal-code"
                 value={this.state.postalCode}
                 onChange={(e) => this.onChange(e, "postalCode")}
+                title={ERRORS.postalCode}
               />
             </div>
-            <input style={styles.formButton} type="submit" value="Sign Up"/>
+            <input
+              style={
+                this.state.submitting
+                  ? Object.assign({}, styles.formButton, {opacity: "0.5"})
+                  : styles.formButton
+              }
+              type="submit"
+              value={this.state.submitting ? "Submitting..." : "Sign Up"}
+              disabled={this.state.submitting}
+            />
           </fieldset>
         </form>
         <div style={styles.backWrapper}>
           <button className="toggle-button go-back" onClick={flipCard}>
             Back to Forecast
           </button>
-          {/* <PoweredByPropeller /> */}
         </div>
+        <Alert stack={{ limit: 3 }} position="top" effect="flip" timeout={5000} />
       </figure>
     );
   }
