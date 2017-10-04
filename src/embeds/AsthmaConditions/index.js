@@ -9,44 +9,44 @@ const GOOGLE_KEY = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
 const GOOGLE_API = "https://maps.googleapis.com/maps/api/geocode/json";
 const PROPELLER_API = "https://open.propellerhealth.com/prod/forecast";
 
-const containerStyle = {
-  width   : "350px",
-  height  : "400px",
-  position: "relative",
-  color   : "#5c5c5c"
-};
-
-const cardStyle = {
-  width         : "100%",
-  height        : "100%",
-  position      : "absolute",
-  border        : "1px solid #DDD",
-  boxSizing     : "border-box",
-  WebkitTransformStyle : "preserve-3d",
-  MozTransformStyle    : "preserve-3d",
-  transformStyle       : "preserve-3d",
-  WebkitTransition : "transform 1s",
-  MozTransition    : "transform 1s",
-  OTransition      : "transform 1s",
-  transition       : "transform 1s"
-};
-
-const contentStyle = {
-  position   : "absolute",
-  boxSizing  : "border-box",
-  padding    : "0.5rem 1rem",
-  top        : "0",
-  bottom     : "0",
-  left       : "0",
-  right      : "0",
-  margin     : "0",
-  textAlign  : "center",
-  background : "#FFF",
-  zIndex     : 1,
-  WebkitBackfaceVisibility : "hidden",
-  MozBackfaceVisibility    : "hidden",
-  backfaceVisibility       : "hidden"
-};
+const styles = Object.freeze({
+  container: {
+    width   : "350px",
+    height  : "400px",
+    position: "relative",
+    color   : "#5c5c5c"
+  },
+  card: {
+    width         : "100%",
+    height        : "100%",
+    position      : "absolute",
+    border        : "1px solid #DDD",
+    boxSizing     : "border-box",
+    WebkitTransformStyle : "preserve-3d",
+    MozTransformStyle    : "preserve-3d",
+    transformStyle       : "preserve-3d",
+    WebkitTransition : "transform 1s",
+    MozTransition    : "transform 1s",
+    OTransition      : "transform 1s",
+    transition       : "transform 1s"
+  },
+  content: {
+    position   : "absolute",
+    boxSizing  : "border-box",
+    padding    : "0.5rem 1rem",
+    top        : "0",
+    bottom     : "0",
+    left       : "0",
+    right      : "0",
+    margin     : "0",
+    textAlign  : "center",
+    background : "#FFF",
+    zIndex     : 1,
+    WebkitBackfaceVisibility : "hidden",
+    MozBackfaceVisibility    : "hidden",
+    backfaceVisibility       : "hidden"
+  }
+});
 
 class AsthmaConditions extends Component {
   constructor(props) {
@@ -117,9 +117,9 @@ class AsthmaConditions extends Component {
     const { flipped } = this.state;
     const shouldFlip = flipped && !isIE11;
     return (
-      <div style={containerStyle}>
+      <div style={styles.container}>
         <div
-          style={Object.assign({}, cardStyle, {
+          style={Object.assign({}, styles.card, {
             OTransform: shouldFlip ? "rotateY(180deg)" : "",
             WebkitTransform: shouldFlip ? "rotateY(180deg)" : "",
             MozTransform: shouldFlip ? "rotateY(180deg)" : "",
@@ -131,7 +131,7 @@ class AsthmaConditions extends Component {
             score={this.state.score}
             status={this.state.status}
             forecastLocation={this.state.forecastLocation}
-            style={contentStyle}
+            style={styles.content}
             flipCard={this.flipCard}
           />
           <Signup
@@ -142,8 +142,8 @@ class AsthmaConditions extends Component {
                   transform: `translateX(${flipped ? 0 : 100}%)`,
                   msTransition: "transform 1s",
                   transition: "transform 1s"
-                })
-                : contentStyle
+                }, styles.content)
+                : styles.content
             }
             flipCard={this.flipCard} />
         </div>
