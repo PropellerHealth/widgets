@@ -80,7 +80,6 @@ class AsthmaConditions extends Component {
       .then(checkStatus)
       .then(extractJSON)
       .then(data => {
-        console.log(data);
         this.setState({
           score: data.properties.value,
           status: data.properties.code.toLowerCase()

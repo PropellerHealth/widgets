@@ -22,26 +22,24 @@ const styles = {
   }
 };
 
-const markerPosition = score => {
-  console.log(typeof score);
-  if ("number" !== typeof score) return;
+// const markerPosition = score => {
+//   console.log(typeof score);
+//   if ("number" !== typeof score) return;
 
-  let position;
-  if (score > THRESHOLDS.fair) {
-    position = 0.33333 / (score / THRESHOLDS.fair);
-  } else if (score > THRESHOLDS.poor) {
-    position = 0.66667 + (0.3333 / ( 1 - score));
-  }
+//   let position;
+//   if (score > THRESHOLDS.fair) {
+//     position = 0.33333 / (score / THRESHOLDS.fair);
+//   } else if (score > THRESHOLDS.poor) {
+//     position = 0.66667 + (0.3333 / ( 1 - score));
+//   }
 
-  console.log(position);
-  return position;
-};
+//   console.log(position);
+//   return position;
+// };
 
 const isActive = bool => bool ? "active" : "";
 
 const AsthmaScoreBar = ({ status, score }) => {
-  // console.log(status, score);
-  // console.log(typeof score);
   const _status = STATUS_MAP[status];
   return (
     <div
