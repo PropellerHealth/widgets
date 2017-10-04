@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CurrentConditions from "./CurrentConditions";
 import Signup from "./Signup";
+import { checkStatus, extractJSON, headers } from "../../utilities";
 // import logo from './logo.svg';
 import "./style.css";
 
@@ -11,10 +12,6 @@ if (typeof window === "undefined") {
 const GOOGLE_KEY = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
 const GOOGLE_API = "https://maps.googleapis.com/maps/api/geocode/json";
 const PROPELLER_API = "https://open.propellerhealth.com/prod/forecast";
-
-const checkResponse = response =>
-  response.ok ? response : Promise.reject(response);
-const extractJSON = response => response.json();
 
 const containerStyle = {
   width   : "350px",
@@ -77,8 +74,10 @@ class AsthmaConditions extends Component {
 
   loadConditions(lat, lng) {
     window
-      .fetch(`${PROPELLER_API}?latitude=${lat}&longitude=${lng}`)
-      .then(checkResponse)
+      .fetch(`${PROPELLER_API}?latitude=${lat}&longitude=${lng}`, {
+        headers: headers
+      })
+      .then(checkStatus)
       .then(extractJSON)
       .then(data => {
         console.log(data);
@@ -105,7 +104,7 @@ class AsthmaConditions extends Component {
             .fetch(
               `${GOOGLE_API}?latlng=${latitude},${longitude}&location_type=APPROXIMATE&result_type=locality|administrative_area_level_3&key=${GOOGLE_KEY}`
             )
-            .then(checkResponse)
+            .then(checkStatus)
             .then(extractJSON)
             .then(data => {
               if (data.results.length > 0) {
