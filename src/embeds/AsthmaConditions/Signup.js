@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import PoweredByPropeller from "./PoweredByPropeller";
+import { checkStatus, extractJSON, headers } from "../../utilities";
 
-const PROPELLER_SIGNUP = "https://forecast-subscription.appspot.com/subscribe";
+const FORECAST_SIGNUP = "/api/forecast-signup";
 
 const styles = {
   inputWrapper : {
@@ -42,9 +43,12 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: undefined,
-      sms: undefined,
-      postalCode: undefined
+      email      : undefined,
+      sms        : undefined,
+      postalCode : undefined,
+      submitting : false,
+      error      : undefined,
+      success    : undefined
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -52,13 +56,59 @@ class Signup extends Component {
 
   onChange(e, key) {
     this.setState({
-      [key]: e.target.value
+      [key]   : e.target.value,
+      error   : undefined,
+      success : undefined
     });
   }
 
   onSubmit(e) {
     e.preventDefault();
     console.log("signup", this.state);
+
+    const data = {
+      zip   : this.state.postalCode,
+      email : this.state.email,
+      sms   : this.state.sms
+    };
+
+    if (!data.email && !data.sms) {
+      this.setState({
+        submitting : false,
+        error      : "Please include a valid email or phone number."
+      });
+      return;
+    }
+
+    this.setState({
+      submitting : true,
+      error      : undefined,
+      success    : undefined
+    });
+
+    window
+      .fetch(FORECAST_SIGNUP, {
+        method  : "POST",
+        body    : JSON.stringify(data),
+        headers : headers
+      })
+      .then(checkStatus)
+      .then(() => {
+        this.setState({
+          submitting : false,
+          success    : "Thanks for signing up. You should get a confirmation message soon."
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        console.log(err.toString()); // "Bad Request"
+        err.json().then(console.log) // {id: "string.email", message: ""to" must be a valid email"}
+
+        this.setState({
+          submitting : false,
+          error      : err.toString()
+        });
+      });
   }
 
   render() {
@@ -99,6 +149,8 @@ class Signup extends Component {
                   id="sms"
                   autocomplete="tel-national"
                   pattern="\d{10}"
+                  minLength="10"
+                  maxLength="10"
                   type="tel"
                   value={this.state.sms}
                   onChange={(e) => this.onChange(e, "sms")}
@@ -114,6 +166,9 @@ class Signup extends Component {
                 required
                 type="tel"
                 pattern="\d{5}"
+                minLength="5"
+                maxLength="5"
+                autocomplete="postal-code"
                 value={this.state.postalCode}
                 onChange={(e) => this.onChange(e, "postalCode")}
               />
