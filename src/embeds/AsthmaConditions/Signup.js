@@ -6,11 +6,11 @@ const FORECAST_SIGNUP = "/api/forecast-signup";
 
 const styles = {
   inputWrapper : {
-    padding: "0.5rem",
-    border: "1px solid #DDD",
-    borderRadius: "4px",
-    background: "#FAFAFA",
-    margin: "0.7rem 0 0.5rem"
+    padding      : "0.5rem",
+    border       : "1px solid #DDD",
+    borderRadius : "4px",
+    background   : "#FAFAFA",
+    margin       : "0.7rem 0 0.5rem"
   },
 
   orDivider: {
@@ -18,24 +18,24 @@ const styles = {
   },
 
   formButton: {
-    display: "inline-block",
-    float: "right",
-    width: "48%",
-    marginTop: "25px",
-    padding: "12px 0",
-    fontSize: "1rem",
-    textAlign: "center",
-    backgroundColor: "#78be20",
-    color: "#FFF",
-    border: "2px solid #78be20",
-    borderRadius: "3px",
-    cursor: "pointer"
+    display         : "inline-block",
+    float           : "right",
+    width           : "48%",
+    marginTop       : "25px",
+    padding         : "12px 0",
+    fontSize        : "1rem",
+    textAlign       : "center",
+    backgroundColor : "#78be20",
+    color           : "#FFF",
+    border          : "2px solid #78be20",
+    borderRadius    : "3px",
+    cursor          : "pointer"
   },
   backWrapper: {
-    position: "absolute",
-    left: "0",
-    right: "0",
-    bottom: "8px"
+    position : "absolute",
+    left     : "0",
+    right    : "0",
+    bottom   : "8px"
   }
 };
 
