@@ -1,28 +1,28 @@
-$propeller-primary: #20C3F3;
-$blue: #20C3F3;
-$green: #78BE20;
-$light-green: #93CB4D;
-$lightest-green: #BADD8D;
-$input-color: #4d4d4d;
-$muted: #bfd1d1;
-$white: #FFF;
-$grey: #888b8d;
-$red: #E0004D;
+// $propeller-primary: #20C3F3;
+// $blue: #20C3F3;
+// $green: #78BE20;
+// $light-green: #93CB4D;
+// $lightest-green: #BADD8D;
+// $input-color: #4d4d4d;
+// $muted: #bfd1d1;
+// $white: #FFF;
+// $grey: #888b8d;
+// $red: #E0004D;
 
-@font-face {
-  font-family: "Circular-Pro-Book";
-  src:url("./assets/fonts/lineto-circular-pro-book.eot");
-  src:url("./assets/fonts/lineto-circular-pro-book.eot?#iefix") format("embedded-opentype"),
-      url("./assets/fonts/lineto-circular-pro-book.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: "Circular-Pro-Book";
+//   src:url("./assets/fonts/lineto-circular-pro-book.eot");
+//   src:url("./assets/fonts/lineto-circular-pro-book.eot?#iefix") format("embedded-opentype"),
+//       url("./assets/fonts/lineto-circular-pro-book.woff") format("woff");
+//   font-weight: normal;
+//   font-style: normal;
+// }
 
-body {
-  font-family: 'Circular-Pro-Book', 'Trebuchet MS', Arial, sans-serif;
-  margin: 0;
-}
+// body {
+//   font-family: 'Circular-Pro-Book', 'Trebuchet MS', Arial, sans-serif;
+//   margin: 0;
+// }
 
-h1, h2 {
-  color: $propeller-primary;
-}
+// h1, h2 {
+//   color: $propeller-primary;
+// }

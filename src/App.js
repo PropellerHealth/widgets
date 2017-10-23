@@ -1,6 +1,8 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import AsthmaConditions from "./embeds/AsthmaConditions/index";
+import { FindMyDoctor} from "propeller-react-components";
+
 // import logo from './logo.svg';
 import "./App.css";
 
@@ -16,10 +18,11 @@ class App extends React.Component {
     return (
       <Switch>
         <Route path="/asthma-conditions" render={() =>  <AsthmaConditions {...props}/> } />
+        <Route path="/find-my-doctor" render={() =>  <FindMyDoctor {...props}/> } />
         <Route render={() => <div>No match</div>} />
       </Switch>
-    );
+      );
+    }
   }
-}
-
-export default App;
+  
+  export default App;

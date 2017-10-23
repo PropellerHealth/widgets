@@ -8,6 +8,7 @@
     "express": "^4.15.5",
     "geoip-lite": "^1.2.1",
     "ignore-styles": "^5.0.1",
+    "propeller-react-components": "1.0.12",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
