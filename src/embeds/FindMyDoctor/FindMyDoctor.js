@@ -6,6 +6,9 @@ import ConfirmDoctor  from "./ConfirmDoctor";
 import Success        from "./Success";
 import propellerLogo  from "../../assets/images/propeller-logo-white.svg";
 
+import "./FindMyDoctor.css";
+import "../../assets/styles/bootstrap.css";
+
 const ORDER = [
   FirstScreen,
   SearchList,
