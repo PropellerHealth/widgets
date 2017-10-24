@@ -1,10 +1,9 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import AsthmaConditions from "./embeds/AsthmaConditions/index";
-import { FindMyDoctor} from "propeller-react-components";
+import FindMyDoctor from "./embeds/FindMyDoctor/FindMyDoctor";
 
 // import logo from './logo.svg';
-import "./App.css";
 
 if (typeof window === "undefined") {
   global.window = {};

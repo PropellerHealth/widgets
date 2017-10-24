@@ -27,6 +27,13 @@ const headers = {
 
 const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
 
+export const API_HEADER = {
+  "Content-Type": "application/x-www-form-urlencoded"
+};
+
+// liberated from DTC
+export const checkResponse = response => response.ok ? response : Promise.reject(response);
+
 export {
   checkStatus,
   extractJSON,
