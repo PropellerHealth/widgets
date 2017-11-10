@@ -13,51 +13,46 @@ const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
 
 const propsForRequest = (req, cb) => {
   const geo = geoip.lookup(req.ip);
-  switch (req.path) {
-    case "/asthma-conditions":
-      // const geo = geoip.lookup("172.102.4.178");
-      if (geo) {
-        const lat = geo.ll[0];
-        const lng = geo.ll[1];
+  if (req.path === "/asthma-conditions") {
+    if (geo) {
+      const lat = geo.ll[0];
+      const lng = geo.ll[1];
 
-        let props = {
-          latitude         : lat,
-          longitude        : lng,
-          forecastLocation : `${geo.city}, ${geo.region}, ${geo.country}`
-        };
-        request.get(`${FORECAST_URL}?latitude=${lat}&longitude=${lng}`, (err, resp, body) => {
-          if (err) return cb(undefined, props);
-          const data = JSON.parse(body);
+      let props = {
+        latitude         : lat,
+        longitude        : lng,
+        forecastLocation : `${geo.city}, ${geo.region}, ${geo.country}`
+      };
+      request.get(`${FORECAST_URL}?latitude=${lat}&longitude=${lng}`, (err, resp, body) => {
+        if (err) return cb(undefined, props);
+        const data = JSON.parse(body);
 
-          return cb(undefined, Object.assign({}, props, {
-            score: data.properties.value,
-            status: data.properties.code.toLowerCase()
-          }));
-        });
-      } else {
-        return cb(undefined, {});
-      }
-      break;
-
-    case "/find-my-doctor":
-      // const geo = geoip.lookup("172.102.4.178");
-      if (geo) {
-        const lat = geo.ll[0];
-        const lng = geo.ll[1];
-
-        let props = {
-          latitude  : lat,
-          longitude : lng,
-          location  : `${geo.city}`,
-          city      : `${geo.city}`
-        };
-      } else {
-        return cb(undefined, {});
-      }
-      break;
-
-    default:
+        return cb(undefined, Object.assign({}, props, {
+          score: data.properties.value,
+          status: data.properties.code.toLowerCase()
+        }));
+      });
+    } else {
       return cb(undefined, {});
+    }
+  }
+  else if (req.path === "/find-my-doctor"){
+    if (geo) {
+      const lat = geo.ll[0];
+      const lng = geo.ll[1];
+
+      let props = {
+        latitude  : lat,
+        longitude : lng,
+        location  : geo.city,
+        city      : geo.city
+      };
+    } else {
+      return cb(undefined, {});
+    }
+  }
+  else {
+    return cb(undefined, {});
   }
 }
 
@@ -98,3 +93,37 @@ module.exports = function universalLoader(req, res) {
     });
   });
 }
+
+
+// const propsForRequest = (req, cb) => {
+//   switch (req.path) {
+//     case "/asthma-conditions":
+//       // const geo = geoip.lookup("172.102.4.178");
+//       const geo = geoip.lookup(req.ip);
+//       if (geo) {
+//         const lat = geo.ll[0];
+//         const lng = geo.ll[1];
+
+//         let props = {
+//           latitude         : lat,
+//           longitude        : lng,
+//           forecastLocation : `${geo.city}, ${geo.region}, ${geo.country}`
+//         };
+//         request.get(`${FORECAST_URL}?latitude=${lat}&longitude=${lng}`, (err, resp, body) => {
+//           if (err) return cb(undefined, props);
+//           const data = JSON.parse(body);
+
+//           return cb(undefined, Object.assign({}, props, {
+//             score: data.properties.value,
+//             status: data.properties.code.toLowerCase()
+//           }));
+//         });
+//       } else {
+//         return cb(undefined, {});
+//       }
+//       break;
+
+//     default:
+//       return cb(undefined, {});
+//   }
+// }
