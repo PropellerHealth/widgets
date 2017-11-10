@@ -55,7 +55,6 @@ class FindMyDoctor extends Component {
     } else {
       if ( state.hasGeolocate ) {
         window.navigator.geolocation.getCurrentPosition(loc =>  {
-          console.log('your geolocation updating is embarrassingly slow, fix it');
           const { latitude, longitude } = loc.coords;
           this.loadConditions(latitude, longitude);
           window

@@ -39,6 +39,24 @@ const propsForRequest = (req, cb) => {
       }
       break;
 
+    case "/find-my-doctor":
+      // const geo = geoip.lookup("172.102.4.178");
+      const geo = geoip.lookup(req.ip);
+      if (geo) {
+        const lat = geo.ll[0];
+        const lng = geo.ll[1];
+
+        let props = {
+          latitude  : lat,
+          longitude : lng,
+          location  : `${geo.city}`,
+          city      : `${geo.city}`
+        };
+      } else {
+        return cb(undefined, {});
+      }
+      break;
+
     default:
       return cb(undefined, {});
   }
