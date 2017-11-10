@@ -1,5 +1,12 @@
 import React from "react";
 
+const TEXT = {
+  thanks      : "Thank You",
+  watchEmail  : "Please watch your email for further information",
+  trouble     : "Having trouble",
+  contact     : "Contact us"
+};
+
 const Success = () => {
   return (
     <div className="jumbotron vertical-center">
@@ -7,11 +14,11 @@ const Success = () => {
         <h1 className="display-3"
           style={{marginTop: "150px"}}
         >
-        Thank You!</h1>
-        <p className="lead">Please watch your email for further information.</p>
+        {TEXT.thanks}!</h1>
+        <p className="lead">{TEXT.watchEmail}.</p>
         <hr/>
         <p>
-          Having trouble? <a href="https://www.propellerhealth.com/contact/">Contact us</a>
+          {TEXT.trouble}? <a href="https://www.propellerhealth.com/contact/">{TEXT.contact}</a>
         </p>
         <p className="lead">
           <a className="btn btn-primary btn-sm" href="https://propellerhealth.com/" role="button">Continue to Propeller Health</a>
