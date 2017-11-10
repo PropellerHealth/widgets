@@ -12,14 +12,13 @@ const { default: App } = require('../src/App');
 const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
 
 const propsForRequest = (req, cb) => {
+  const geo = geoip.lookup(req.ip);
+  const lat = geo.ll[0];
+  const lng = geo.ll[1];
   switch (req.path) {
     case "/asthma-conditions":
       // const geo = geoip.lookup("172.102.4.178");
-      let geo = geoip.lookup(req.ip);
       if (geo) {
-        let lat = geo.ll[0];
-        let lng = geo.ll[1];
-
         let props = {
           latitude         : lat,
           longitude        : lng,
@@ -27,7 +26,7 @@ const propsForRequest = (req, cb) => {
         };
         request.get(`${FORECAST_URL}?latitude=${lat}&longitude=${lng}`, (err, resp, body) => {
           if (err) return cb(undefined, props);
-          let data = JSON.parse(body);
+          const data = JSON.parse(body);
 
           return cb(undefined, Object.assign({}, props, {
             score: data.properties.value,
@@ -40,17 +39,13 @@ const propsForRequest = (req, cb) => {
       break;
 
     case "/find-my-doctor":
-      // let geo = geoip.lookup("172.102.4.178");
-      let geo = geoip.lookup(req.ip);
+      // const geo = geoip.lookup("172.102.4.178");
       if (geo) {
-        let lat = geo.ll[0];
-        let lng = geo.ll[1];
-
         let props = {
           latitude  : lat,
           longitude : lng,
           location  : `${geo.city}`,
-          city      : `${geo.city}`
+          city    : `${geo.city}`
         };
       } else {
         return cb(undefined, {});
