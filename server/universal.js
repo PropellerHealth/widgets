@@ -15,10 +15,10 @@ const propsForRequest = (req, cb) => {
   switch (req.path) {
     case "/asthma-conditions":
       // const geo = geoip.lookup("172.102.4.178");
-      const geo = geoip.lookup(req.ip);
+      let geo = geoip.lookup(req.ip);
       if (geo) {
-        const lat = geo.ll[0];
-        const lng = geo.ll[1];
+        let lat = geo.ll[0];
+        let lng = geo.ll[1];
 
         let props = {
           latitude         : lat,
@@ -27,7 +27,7 @@ const propsForRequest = (req, cb) => {
         };
         request.get(`${FORECAST_URL}?latitude=${lat}&longitude=${lng}`, (err, resp, body) => {
           if (err) return cb(undefined, props);
-          const data = JSON.parse(body);
+          let data = JSON.parse(body);
 
           return cb(undefined, Object.assign({}, props, {
             score: data.properties.value,
@@ -40,11 +40,11 @@ const propsForRequest = (req, cb) => {
       break;
 
     case "/find-my-doctor":
-      // const geo = geoip.lookup("172.102.4.178");
-      const geo = geoip.lookup(req.ip);
+      // let geo = geoip.lookup("172.102.4.178");
+      let geo = geoip.lookup(req.ip);
       if (geo) {
-        const lat = geo.ll[0];
-        const lng = geo.ll[1];
+        let lat = geo.ll[0];
+        let lng = geo.ll[1];
 
         let props = {
           latitude  : lat,
