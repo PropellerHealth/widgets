@@ -6,6 +6,8 @@ import ConfirmDoctor  from "./ConfirmDoctor";
 import Success        from "./Success";
 import propellerLogo  from "../../assets/images/propeller-logo-white.svg";
 
+import { checkStatus, extractJSON } from "../../utilities";
+
 import "./FindMyDoctor.css";
 import "../../assets/styles/bootstrap.css";
 
@@ -16,18 +18,63 @@ const ORDER = [
   Success
 ];
 
+const GOOGLE_KEY = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
+const GOOGLE_API = "https://maps.googleapis.com/maps/api/geocode/json";
+
 class FindMyDoctor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      idx     : 0,
-      doctors : [],
-      doctor  : {}
+      idx           : 0,
+      doctors       : [],
+      doctor        : {},
+      latitude      : props.latitude,
+      longitude     : props.longitude,
+      hasGeolocate  : window.navigator && "geolocation" in window.navigator,
+      location      : props.state,
+      city          : props.city
     };
     this.goNext                     = this.goNext.bind(this);
     this.goToStart                  = this.goToStart.bind(this);
     this.updateOrSomethingLikeThat  = this.updateOrSomethingLikeThat.bind(this);
     this.passThatDocAlong           = this.passThatDocAlong.bind(this);
+    this.loadConditions             = this.loadConditions.bind(this);
+  }
+
+  loadConditions(latitude, longitude) {
+    this.setState({
+      latitude,
+      longitude
+    });
+  }
+
+  componentDidMount() {
+    const { state } = this;
+    if ( state.latitude && state.longitude ) {
+      this.loadConditions(state.latitude, state.longitude);
+    } else {
+      if ( state.hasGeolocate ) {
+        window.navigator.geolocation.getCurrentPosition(loc =>  {
+          console.log('your geolocation updating is embarrassingly slow, fix it');
+          const { latitude, longitude } = loc.coords;
+          this.loadConditions(latitude, longitude);
+          window
+          .fetch(
+            `${GOOGLE_API}?latlng=${latitude},${longitude}&location_type=APPROXIMATE&result_type=locality|administrative_area_level_3&key=${GOOGLE_KEY}`
+          )
+          .then(checkStatus)
+          .then(extractJSON)
+          .then(data => {
+            if ( data.results.length > 0 ) {
+              this.setState({
+                location  : data.results[0].address_components[2].short_name,
+                city      : data.results[0].address_components[0].long_name
+              });
+            }
+          });
+        });
+      }
+    }
   }
 
   goNext() {
@@ -63,7 +110,8 @@ class FindMyDoctor extends Component {
           goNext={this.goNext} 
           goToStart={this.goToStart} 
           updateOrSomethingLikeThat={this.updateOrSomethingLikeThat} 
-          passThatDocAlong={this.passThatDocAlong} 
+          passThatDocAlong={this.passThatDocAlong}
+          loadConditions={this.loadConditions}
           {...this.state} 
         />
         </div>

@@ -4,6 +4,24 @@ import { Grid, Row, Col } from "react-bootstrap";
 import SearchScreen   from "./SearchScreen";
 import doctorStanding from "../../assets/images/img_docstanding.png";
 
+const styles  = Object.freeze({
+  header    : { 
+    fontSize  : "2.75rem", 
+    textAlign : "center", 
+    width     : "100%"
+  },
+  paragraph : { 
+    fontSize  : "1.75rem", 
+    textAlign : "center", 
+    width     : "100%"
+  }
+});
+
+const strings = {
+  header    : "Keep Your Doc in the Loop.",
+  paragraph : "Connect your doctor to Propeller and we will send them your wellness report every 3 months."
+};
+
 const FirstScreen = (props) => {
   return (
     <Grid>
@@ -12,12 +30,12 @@ const FirstScreen = (props) => {
           <img className="img-responsive hidden-xs" src={doctorStanding} alt=""/>
         </Col>
         <Col sm={6} smPull={6}>
-          <h1 style={{ fontSize: "2.75rem", textAlign: "center", width: "100%"}}>
-            Keep Your Doc in the Loop.
+          <h1 style={styles.header}>
+            {strings.header}
           </h1>
           <br/>
-          <p style={{ fontSize: "1.75rem", textAlign: "center", width: "100%"}}>
-            Connect your doctor to Propeller and we will send them your wellness report every 3 months.
+          <p style={styles.paragraph}>
+            {strings.paragraph}
           </p>
           <br/>
           <SearchScreen {...props} />
