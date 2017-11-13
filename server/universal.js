@@ -48,6 +48,8 @@ const propsForRequest = (req, cb) => {
         location  : geo.city,
         city      : geo.city
       };
+
+      return cb(undefined, props)
     } else {
       return cb(undefined, {});
     }
