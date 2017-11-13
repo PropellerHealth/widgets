@@ -12,12 +12,12 @@ const { default: App } = require('../src/App');
 const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
 
 const propsForRequest = (req, cb) => {
-  const geo = geoip.lookup(req.ip);
   if (req.path === "/asthma-conditions") {
+    const geo = geoip.lookup(req.ip);
     if (geo) {
       const lat = geo.ll[0];
       const lng = geo.ll[1];
-
+      
       let props = {
         latitude         : lat,
         longitude        : lng,
@@ -26,7 +26,7 @@ const propsForRequest = (req, cb) => {
       request.get(`${FORECAST_URL}?latitude=${lat}&longitude=${lng}`, (err, resp, body) => {
         if (err) return cb(undefined, props);
         const data = JSON.parse(body);
-
+        
         return cb(undefined, Object.assign({}, props, {
           score: data.properties.value,
           status: data.properties.code.toLowerCase()
@@ -37,6 +37,7 @@ const propsForRequest = (req, cb) => {
     }
   }
   else if (req.path === "/find-my-doctor"){
+    const geo = geoip.lookup(req.ip);
     if (geo) {
       const lat = geo.ll[0];
       const lng = geo.ll[1];
