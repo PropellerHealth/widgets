@@ -45,7 +45,7 @@ const propsForRequest = (req, cb) => {
       let props = {
         latitude  : lat,
         longitude : lng,
-        location  : geo.city,
+        location  : geo.region,
         city      : geo.city
       };
 
