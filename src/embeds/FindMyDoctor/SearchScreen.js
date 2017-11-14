@@ -2,7 +2,6 @@ import React, { Component }       from "react";
 import Alert                      from "react-s-alert";
 import { FormGroup, FormControl } from "react-bootstrap";
 
-// import { checkResponse, extractJSON } from "../../utilities";
 import { checkResponse, extractJSON, stateInputList } from "../../utilities";
 
 const INPUT_FIELD = {
@@ -50,11 +49,7 @@ class SearchScreen extends Component {
       city      : props.city,
       latitude  : props.latitude,
       longitude : props.longitude, 
-      location  : stateInputList.forEach(state => {
-        if ( this.props.location === state.abbreviation ) {
-          return state.name;
-        }
-      })
+      location  : props.location
     };
 
     

@@ -9,6 +9,8 @@ const { StaticRouter }   = require('react-router-dom');
 
 const { default: App } = require('../src/App');
 
+import { stateInputList } from "../src/utilities.js";
+
 const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
 
 const propsForRequest = (req, cb) => {
@@ -39,14 +41,22 @@ const propsForRequest = (req, cb) => {
   else if (req.path === "/find-my-doctor"){
     const geo = geoip.lookup(req.ip);
     if (geo) {
-      const lat = geo.ll[0];
-      const lng = geo.ll[1];
+      const latitude  = geo.ll[0];
+      const longitude = geo.ll[1];
+      const city      = geo.city;
+      let location    = "";
+
+      stateInputList.forEach(state => {
+        if ( state.abbreviation === geo.region ) {
+          location = state.name;
+        }
+      })
 
       let props = {
-        latitude  : lat,
-        longitude : lng,
-        location  : geo.region,
-        city      : geo.city
+        latitude,
+        longitude,
+        location,
+        city
       };
 
       return cb(undefined, props)
