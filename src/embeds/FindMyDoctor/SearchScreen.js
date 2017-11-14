@@ -48,7 +48,9 @@ class SearchScreen extends Component {
       doctor    : "", 
       location  : props.location, 
       specialty : "",
-      city      : props.city 
+      city      : props.city,
+      latitude  : props.latitude,
+      longitude : props.longitude 
     };
 
     
@@ -65,8 +67,14 @@ class SearchScreen extends Component {
   
   buildRequest(doctor, specialty, location) {
     let allOfTheNames       =   `name=${doctor.trim().split(" ").join("%20")}`;
-    let allOfTheLocations   =   `&location=${location.trim().split(" ").join("%20")}`;
+    let allOfTheLocations   =   "";
     let allOfTheSpecialties =   "";
+
+    if ( this.state.latitude && this.state.longitude ) {
+      allOfTheLocations = `&location=${this.state.latitude}%2C${this.state.latitude}`;
+    } else {
+      allOfTheLocations = `&location=${location.trim().split(" ").join("%20")}`;
+    }
 
     if (specialty) {
       allOfTheSpecialties = `&specialty_uid=${specialty.trim().split(" ").join("%20")}`;
@@ -87,7 +95,11 @@ class SearchScreen extends Component {
     const data = {
       doctor    : this.state.doctor,
       specialty : this.state.specialty,
-      location  : this.state.location,
+      location  : stateInputList.forEach(state => {
+        if ( this.state.location === state.abbreviation ) {
+          return state.name;
+        }
+      }),
       city      : this.state.city
     };
     
