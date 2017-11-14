@@ -46,11 +46,15 @@ class SearchScreen extends Component {
     this.state = {
       searching : false,
       doctor    : "", 
-      location  : props.location, 
       specialty : "",
       city      : props.city,
       latitude  : props.latitude,
-      longitude : props.longitude 
+      longitude : props.longitude, 
+      location  : stateInputList.forEach(state => {
+        if ( this.props.location === state.abbreviation ) {
+          return state.name;
+        }
+      })
     };
 
     
@@ -95,12 +99,8 @@ class SearchScreen extends Component {
     const data = {
       doctor    : this.state.doctor,
       specialty : this.state.specialty,
-      location  : stateInputList.forEach(state => {
-        if ( this.state.location === state.abbreviation ) {
-          return state.name;
-        }
-      }),
-      city      : this.state.city
+      city      : this.state.city,
+      location  : this.state.location
     };
     
     if (!data.doctor && !data.location) {
