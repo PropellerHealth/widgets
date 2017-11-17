@@ -1,14 +1,16 @@
-import React, { Component }       from "react";
-import Alert                      from "react-s-alert";
-import { FormGroup, FormControl } from "react-bootstrap";
+import React, { Component }           from "react";
+import Alert                          from "react-s-alert";
+import { FormGroup, FormControl, 
+  InputGroup, Glyphicon, Button }     from "react-bootstrap";
+import { checkResponse, extractJSON } from "../../utilities";
 
-import { checkResponse, extractJSON, stateInputList } from "../../utilities";
+const GOOGLE_KEY        = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
 
 const INPUT_FIELD = {
-  doctor    : "Doctor's Name",
-  specialty : "Specialty (optional)",
-  location  : "State",
-  city      : "City"
+  doctor          : "Doctor's Name",
+  specialty       : "Specialty (optional)",
+  location        : "Location",
+  currentLocation : "Current Location"
 };
 
 const ERRORS = {
@@ -46,25 +48,53 @@ class SearchScreen extends Component {
       searching : false,
       doctor    : "", 
       specialty : "",
-      city      : props.city,
       latitude  : props.latitude,
       longitude : props.longitude, 
-      location  : props.location
+      geoLocation  : props.forecastLocation,
+      location  : "",
+      uid       : props.uid,
+      showing   : "true"
     };
 
-    
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange           = this.onChange.bind(this);
+    this.onSubmit           = this.onSubmit.bind(this);
+    this.showLocationSearch = this.showLocationSearch.bind(this);
+    this.initAutocomplete   = this.initAutocomplete.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  autocomplete  = ""
+
+  showLocationSearch () {
+    this.setState({ showing : !this.state.showing});
+  }
+
+  componentWillMount () {
+    const script  = document.createElement("script");
+
+    script.src    = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_KEY}&libraries=places`
+    script.async  = true;
+    script.addEventListener("load", this.initAutocomplete);
+    
+    document.body.appendChild(script);
+  }
+
+  componentWillUnmount () {
+    document.body.removeEventListener("load", this.initAutocomplete);
+  }
+
+  initAutocomplete () {
+    this.autocomplete = new window.google.maps.places
+      .Autocomplete((document.getElementById('location')),{types: ['(cities)']})
+      .setComponentRestrictions({'country': ['us']});
+  };
+
+  componentWillReceiveProps (nextProps) {
     this.setState({
-      location  : nextProps.location, 
-      city      : nextProps.city 
+      geoLocation  : nextProps.geoLocation
     });  
   }
-  
-  buildRequest(doctor, specialty, location) {
+
+  buildRequest (doctor, specialty, location) {
     let allOfTheNames       =   `name=${doctor.trim().split(" ").join("%20")}`;
     let allOfTheLocations   =   "";
     let allOfTheSpecialties =   "";
@@ -80,21 +110,21 @@ class SearchScreen extends Component {
     }
 
     const queryParameters = allOfTheNames + allOfTheLocations + allOfTheSpecialties;
-    return `${BETTER_DOCTOR_API.url}?${queryParameters}&user_key=7cfd780736f7b59580de65b9bf25ba04`;
+    return `${BETTER_DOCTOR_API.url}?${queryParameters}&user_key=${BETTER_DOCTOR_API.userKey}`;
   }
 
-  onChange(e, key) {
+  onChange (e, key) {
+    console.log("onchange to check value: ", this.autocomplete)
     this.setState({ [key] : e.target.value });
   }
   
-  onSubmit(e) {
+  onSubmit (e) {
     const { goNext, updateOrSomethingLikeThat } = this.props;
     e.preventDefault();
     
     const data = {
       doctor    : this.state.doctor,
       specialty : this.state.specialty,
-      city      : this.state.city,
       location  : this.state.location
     };
     
@@ -128,15 +158,15 @@ class SearchScreen extends Component {
     }
   }
 
-  render() {
+  render () {
+    const { showing } = this.state;
+
     return (
       <form onSubmit={this.onSubmit}>
         <fieldset>
           <FormGroup>
-            <label
-              style={{fontSize:"1.25rem"}}
-            >
-              {INPUT_FIELD.doctor}:
+            <label style={{fontSize:"1.25rem"}}>
+                {INPUT_FIELD.doctor}:
             </label>
             <FormControl
               id="doctor"
@@ -146,9 +176,7 @@ class SearchScreen extends Component {
             />
           </FormGroup>
           <FormGroup>
-            <label
-              style={{fontSize:"1.25rem"}}
-            >
+            <label style={{fontSize:"1.25rem"}}>
               {INPUT_FIELD.specialty}:
             </label>
             <FormControl
@@ -158,38 +186,44 @@ class SearchScreen extends Component {
               title={ERRORS.specialty}
             />
           </FormGroup>
-          <FormGroup>
-            <label
-              style={{fontSize:"1.25rem"}}
-            >
-              {INPUT_FIELD.city}:
+          <FormGroup
+            style={{ display: `${showing ? "block" : "none"}`}}
+          >
+            <label style={{fontSize:"1.25rem"}}>
+              {INPUT_FIELD.currentLocation}:
             </label>
-            <FormControl
-              id="city"
-              value={this.state.city}
-              onChange={(e) => this.onChange(e, "city")}
-              title={ERRORS.specialty}
-            />
+            <InputGroup>
+              <FormControl 
+                type="text"
+                value={this.state.geoLocation}
+              />
+              <InputGroup.Button onClick={() => this.showLocationSearch()}>
+                <Button>
+                  <Glyphicon glyph="remove" />
+                </Button>
+              </InputGroup.Button>
+            </InputGroup>
           </FormGroup>
-          <FormGroup>
-            <label
-              style={{fontSize:"1.25rem"}}
-            >
+          <FormGroup
+            style={{ display: `${showing ? "none" : "block"}`}}
+          >
+            <label style={{fontSize:"1.25rem"}}>
               {INPUT_FIELD.location}:
             </label>
-            <select
-              className="form-control"
-              id="location"
-              required
-              value={this.state.location}
-              onChange={(e) => this.onChange(e, "location")}
-              title={ERRORS.location}
-            >
-              {stateInputList.map(state => <option key={state.name} value={state.abbreviation}>{state.name}</option>)}
-            </select>
-            </FormGroup>
-            <br/>
-            <input
+            <InputGroup>
+              <FormControl 
+                type="text"
+                id="location"
+              />
+                <InputGroup.Button onClick={() => this.showLocationSearch()}>
+                  <Button>
+                    <Glyphicon glyph="globe" />
+                  </Button>
+              </InputGroup.Button>
+            </InputGroup>
+          </FormGroup>
+          <br/>
+          <input
             style={
               this.state.searching
               ? Object.assign({}, styles.formButton, {opacity: "0.5"})
@@ -198,11 +232,11 @@ class SearchScreen extends Component {
             type="submit"
             value={this.state.searching ? "Searching..." : "Search"}
             disabled={this.state.searching}
-            />
-            </fieldset>
-            </form>
-          );
-        }
-      }
-      
-      export default SearchScreen;
+          />
+        </fieldset>
+      </form>
+      );
+    }
+  }
+  
+  export default SearchScreen;
