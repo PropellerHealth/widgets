@@ -9,23 +9,42 @@ const { StaticRouter }   = require('react-router-dom');
 
 const { default: App } = require('../src/App');
 
-import { stateInputList } from "../src/utilities.js";
-
 const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
+
+// consider moving this into utilities, only use geoip if going down certain rabbit holes
+const returnLocationFromIp = ip => {
+  if ( ip ) {
+    const geo = geoip.lookup(req.ip);
+    if ( geo ) {
+      const latitude          = geo.ll[0];
+      const longitude         = geo.ll[1];
+      const forecastLocation  = `${geo.city}, ${geo.region}, ${geo.country}`
+      
+      return { latitude, longitude, forecastLocation }
+    } else {
+      return undefined;
+    }
+  } else {
+    return undefined;
+  }
+}
 
 const propsForRequest = (req, cb) => {
   if (req.path === "/asthma-conditions") {
-    const geo = geoip.lookup(req.ip);
-    if (geo) {
-      const lat = geo.ll[0];
-      const lng = geo.ll[1];
+    // const geo = geoip.lookup(req.ip);
+    // if (geo) {
+    //   const lat = geo.ll[0];
+    //   const lng = geo.ll[1];
       
-      let props = {
-        latitude         : lat,
-        longitude        : lng,
-        forecastLocation : `${geo.city}, ${geo.region}, ${geo.country}`
-      };
-      request.get(`${FORECAST_URL}?latitude=${lat}&longitude=${lng}`, (err, resp, body) => {
+    //   let props = {
+    //     latitude         : lat,
+    //     longitude        : lng,
+    //     forecastLocation : `${geo.city}, ${geo.region}, ${geo.country}`
+    //   };
+    const props = returnLocationFromIp(req.ip);
+
+    if ( props ) {
+      request.get(`${FORECAST_URL}?latitude=${latitude}&longitude=${longitude}`, (err, resp, body) => {
         if (err) return cb(undefined, props);
         const data = JSON.parse(body);
         
@@ -37,34 +56,15 @@ const propsForRequest = (req, cb) => {
     } else {
       return cb(undefined, {});
     }
-  }
-  else if (req.path === "/find-my-doctor"){
-    const geo = geoip.lookup(req.ip);
-    if (geo) {
-      const latitude  = geo.ll[0];
-      const longitude = geo.ll[1];
-      const city      = geo.city;
-      let location    = "";
+  } else if (req.path === "/find-my-doctor"){
+    const props = returnLocationFromIp(req.ip);
 
-      stateInputList.forEach(state => {
-        if ( state.abbreviation === geo.region ) {
-          location = state.name;
-        }
-      })
-
-      let props = {
-        latitude,
-        longitude,
-        location,
-        city
-      };
-
+    if ( props ) {
       return cb(undefined, props)
     } else {
       return cb(undefined, {});
     }
-  }
-  else {
+  } else {
     return cb(undefined, {});
   }
 }
