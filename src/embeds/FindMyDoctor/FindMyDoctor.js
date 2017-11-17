@@ -32,7 +32,8 @@ class FindMyDoctor extends Component {
       longitude     : props.longitude,
       hasGeolocate  : window.navigator && "geolocation" in window.navigator,
       location      : props.state,
-      city          : props.city
+      city          : props.city,
+      uid           : ""
     };
     this.goNext                     = this.goNext.bind(this);
     this.goToStart                  = this.goToStart.bind(this);
@@ -48,7 +49,7 @@ class FindMyDoctor extends Component {
     });
   }
 
-  componentDidMount() {
+  checkLocation() {
     const { state } = this;
     if ( state.latitude && state.longitude ) {
       this.loadConditions(state.latitude, state.longitude);
@@ -65,15 +66,32 @@ class FindMyDoctor extends Component {
           .then(extractJSON)
           .then(data => {
             if ( data.results.length > 0 ) {
+              const geoLocation  = data.results[0].formatted_address;
+  
               this.setState({
-                location  : data.results[0].address_components[2].short_name,
-                city      : data.results[0].address_components[0].long_name
+                geoLocation,
+                latitude,
+                longitude
               });
             }
           });
         });
       }
     }
+  }
+
+  nabUid () {
+    let searchParam = window.location.search
+    // be better with uid validation
+    if ( searchParam.indexOf('uid?') === -1 && searchParam.length === 29) {
+      const uid = searchParam.substring(6);
+      this.setState({uid});
+    }
+  }
+
+  componentDidMount() {
+    this.checkLocation();
+    this.nabUid();
   }
 
   goNext() {
