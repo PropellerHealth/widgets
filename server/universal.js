@@ -18,9 +18,9 @@ const returnLocationFromIp = ip => {
     if ( geo ) {
       const latitude          = geo.ll[0];
       const longitude         = geo.ll[1];
-      const forecastLocation  = `${geo.city}, ${geo.region}, ${geo.country}`
+      const forecastLocation  = `${geo.city}, ${geo.region}, ${geo.country}`;
       
-      return { latitude, longitude, forecastLocation }
+      return { latitude, longitude, forecastLocation };
     } else {
       return undefined;
     }
