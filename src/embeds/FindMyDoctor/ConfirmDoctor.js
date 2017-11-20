@@ -153,7 +153,7 @@ class ConfirmDoctor extends Component {
             {<img src={doctorDecison} alt="DoctorDecision"/>}
             <br/>
             <br/>
-            { doctor.profile.bio && <p>{doctor.profile.bio}</p>}
+            
             <Button
               style={{
                 display         : `${showing ? "none" : "inline-block"}`,
