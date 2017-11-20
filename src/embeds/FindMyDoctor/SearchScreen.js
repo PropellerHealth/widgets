@@ -2,9 +2,12 @@ import React, { Component }           from "react";
 import Alert                          from "react-s-alert";
 import { FormGroup, FormControl, 
   InputGroup, Glyphicon, Button }     from "react-bootstrap";
+import Autosuggest                    from "react-autosuggest";
+  
 import { checkResponse, extractJSON } from "../../utilities";
+import { specialties }                from "./../../utilities";
 
-const GOOGLE_KEY        = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
+const GOOGLE_KEY  = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
 
 const INPUT_FIELD = {
   doctor          : "Doctor's Name",
@@ -20,8 +23,9 @@ const ERRORS = {
 };
 
 const BETTER_DOCTOR_API = {
-  url     : "https://api.betterdoctor.com/2016-03-01/doctors",
-  userKey : "7cfd780736f7b59580de65b9bf25ba04"
+  url           : "https://api.betterdoctor.com/2016-03-01/doctors",
+  userKey       : "7cfd780736f7b59580de65b9bf25ba04",
+  searchRadius  : 50
 };
 
 const styles = Object({
@@ -41,28 +45,121 @@ const styles = Object({
   }
 });
 
+const theme = {
+  container: {
+    position: 'relative'
+  },
+  inputFocused: {
+    outline: 'none'
+  },
+  inputOpen: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
+  },
+  suggestionsContainer: {
+    display: 'none'
+  },
+  suggestionsContainerOpen: {
+    display: 'block',
+    position: 'absolute',
+    // top: 51,
+    // width: 280,
+    border: '1px solid #aaa',
+    backgroundColor: '#fff',
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    zIndex: 10
+  },
+  suggestionsList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
+  },
+  suggestion: {
+    cursor: 'pointer',
+    padding: '10px 20px'
+  },
+  suggestionHighlighted: {
+    backgroundColor: '#ddd'
+  }
+};
+
+// Teach Autosuggest how to calculate suggestions for any given input value. 
+const getSuggestions = value => {
+  const inputValue = value.trim().toLowerCase();
+  const inputLength = inputValue.length;
+ 
+  return inputLength === 0 ? [] : specialties.filter(specialty =>
+    specialty.name.toLowerCase().slice(0, inputLength) === inputValue
+  );
+ };
+ 
+ // When suggestion is clicked, Autosuggest needs to populate the input 
+ // based on the clicked suggestion. Teach Autosuggest how to calculate the 
+ // input value for every given suggestion. 
+ const getSuggestionValue = suggestion => suggestion.name;
+ 
+ // Use your imagination to render suggestions. 
+ const renderSuggestion = suggestion => (
+  <span>{suggestion.name}</span>
+ );
+
 class SearchScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searching : false,
-      doctor    : "", 
-      specialty : "",
-      latitude  : props.latitude,
-      longitude : props.longitude, 
-      geoLocation  : props.forecastLocation,
-      location  : "",
-      uid       : props.uid,
-      showing   : "true"
+      searching     : false,
+      doctor        : "", 
+      specialty     : "",
+      latitude      : props.latitude,
+      longitude     : props.longitude, 
+      geoLocation   : props.forecastLocation || "",
+      location      : "",
+      uid           : props.uid,
+      showing       : true,
+      autocomplete  : "",
+      mapsLoaded    : false,
+      value         : "",
+      suggestions   : []
     };
 
     this.onChange           = this.onChange.bind(this);
     this.onSubmit           = this.onSubmit.bind(this);
     this.showLocationSearch = this.showLocationSearch.bind(this);
     this.initAutocomplete   = this.initAutocomplete.bind(this);
+    this.setLatLong         = this.setLatLong.bind(this);
+    this.setSpecialty       = this.setSpecialty.bind(this);
   }
 
-  autocomplete  = ""
+
+  onChange2 = (event, { newValue }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+
+  // Autosuggest will call this function every time you need to update suggestions. 
+  // You already implemented this logic above, so just use it. 
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: getSuggestions(value)
+    });
+  };
+
+  // Autosuggest will call this function every time you need to clear suggestions. 
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
+
+  setSpecialty ( specialtyName ) {
+    specialties.forEach( specialty => {
+      if ( specialtyName === specialty.name ) {
+        return specialty.uid;
+      }
+    })
+  }
 
   showLocationSearch () {
     this.setState({ showing : !this.state.showing});
@@ -71,7 +168,7 @@ class SearchScreen extends Component {
   componentWillMount () {
     const script  = document.createElement("script");
 
-    script.src    = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_KEY}&libraries=places`
+    script.src    = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_KEY}&libraries=places`;
     script.async  = true;
     script.addEventListener("load", this.initAutocomplete);
     
@@ -79,34 +176,57 @@ class SearchScreen extends Component {
   }
 
   componentWillUnmount () {
-    document.body.removeEventListener("load", this.initAutocomplete);
+    // document.body.removeEventListener("load", this.initAutocomplete);
   }
 
   initAutocomplete () {
-    this.autocomplete = new window.google.maps.places
-      .Autocomplete((document.getElementById('location')),{types: ['(cities)']})
-      .setComponentRestrictions({'country': ['us']});
-  };
+    if ( !this.state.mapsLoaded ) {
+      this.setState({ 
+        autocomplete  : new window.google.maps.places.Autocomplete((document.getElementById('location')),{types: ['(cities)']}),
+        mapsLoaded    : false
+      });
+      
+    }
+      // currently breaks everything
+    // this.setState({ autocomplete : autocomplete.setComponentRestrictions({'country': ['us']})});
+  }
 
   componentWillReceiveProps (nextProps) {
     this.setState({
-      geoLocation  : nextProps.geoLocation
+      geoLocation : nextProps.geoLocation,
+      latitude    : nextProps.latitude,
+      longitude   : nextProps.longitude
     });  
+  }
+
+  setLatLong () {
+    let latitude, longitude;
+    if ( this.state.showing ) {
+      latitude  = this.state.latitude;
+      longitude = this.state.longitude;
+    } else {
+      const wait = () => {
+        let condition = this.state.autocomplete;
+        if ( condition !== undefined && condition.getPlace() !== undefined) {
+          let place   = condition.getPlace();
+          latitude    = place.geometry.location.lat();
+          longitude   = place.geometry.location.lng();
+        } else {
+          setTimeout(()=>wait(condition), 500);
+        }
+      };
+      wait();
+    }
+    return { latitude, longitude };
   }
 
   buildRequest (doctor, specialty, location) {
     let allOfTheNames       =   `name=${doctor.trim().split(" ").join("%20")}`;
-    let allOfTheLocations   =   "";
+    let allOfTheLocations   =   `&location=${location.latitude}%2C${location.longitude}%2C${BETTER_DOCTOR_API.searchRadius}`;
     let allOfTheSpecialties =   "";
 
-    if ( this.state.latitude && this.state.longitude ) {
-      allOfTheLocations = `&location=${this.state.latitude}%2C${this.state.latitude}`;
-    } else {
-      allOfTheLocations = `&location=${location.trim().split(" ").join("%20")}`;
-    }
-
-    if (specialty) {
-      allOfTheSpecialties = `&specialty_uid=${specialty.trim().split(" ").join("%20")}`;
+    if ( specialty ) {
+      allOfTheSpecialties = `&specialty_uid=${this.setSpecialty(specialty)}`;
     }
 
     const queryParameters = allOfTheNames + allOfTheLocations + allOfTheSpecialties;
@@ -114,7 +234,6 @@ class SearchScreen extends Component {
   }
 
   onChange (e, key) {
-    console.log("onchange to check value: ", this.autocomplete)
     this.setState({ [key] : e.target.value });
   }
   
@@ -122,12 +241,13 @@ class SearchScreen extends Component {
     const { goNext, updateOrSomethingLikeThat } = this.props;
     e.preventDefault();
     
-    const data = {
+    const location  = this.setLatLong();
+    const data      = {
       doctor    : this.state.doctor,
-      specialty : this.state.specialty,
-      location  : this.state.location
+      specialty : this.state.value,
+      location 
     };
-    
+
     if (!data.doctor && !data.location) {
       this.setState({ searching: false });
       Alert.warning(ERRORS.both);
@@ -138,7 +258,7 @@ class SearchScreen extends Component {
       Alert.warning(ERRORS.doctor);
       return;
     }
-    else if (!data.location) {
+    else if ( !data.location.latitude || !data.location.longitude ) {
       this.setState({ searching: false });
       Alert.warning(ERRORS.location);
       return;
@@ -161,9 +281,18 @@ class SearchScreen extends Component {
   render () {
     const { showing } = this.state;
 
+    const { value, suggestions } = this.state;
+    
+    // Autosuggest will pass through all these props to the input. 
+    const inputProps = {
+      value,
+      onChange: this.onChange2
+    };
+
     return (
       <form onSubmit={this.onSubmit}>
         <fieldset>
+       
           <FormGroup>
             <label style={{fontSize:"1.25rem"}}>
                 {INPUT_FIELD.doctor}:
@@ -179,12 +308,23 @@ class SearchScreen extends Component {
             <label style={{fontSize:"1.25rem"}}>
               {INPUT_FIELD.specialty}:
             </label>
-            <FormControl
-              id="specialty"
-              value={this.state.specialty}
-              onChange={(e) => this.onChange(e, "specialty")}
-              title={ERRORS.specialty}
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              inputProps={inputProps}
+              theme={theme}
+              renderInputComponent={inputProps => (<FormControl
+                // id="value"
+                // value={this.state.value}
+                // onChange={(e) => this.onChange(e, "value")}
+                // title={ERRORS.specialty}
+                {...inputProps}
+              />)}
             />
+            
           </FormGroup>
           <FormGroup
             style={{ display: `${showing ? "block" : "none"}`}}
@@ -193,7 +333,8 @@ class SearchScreen extends Component {
               {INPUT_FIELD.currentLocation}:
             </label>
             <InputGroup>
-              <FormControl 
+              <FormControl
+                readOnly 
                 type="text"
                 value={this.state.geoLocation}
               />
