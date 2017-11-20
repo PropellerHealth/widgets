@@ -31,10 +31,6 @@ class SearchList extends Component {
           <div className="row">
             <div className="col-xs-6 col-md-8">
               <h2>Select a doctor</h2>
-              <Button
-                onClick={() => this.handleClick()}>
-                Back to Search
-              </Button>
             </div>
             <div 
               className="col-xs-6 col-md-4"
@@ -81,6 +77,24 @@ class SearchList extends Component {
               );
             })
           }
+          <div className="col-md-6 col-md-offset-3">
+            <Button
+              style={{
+                display         : "inline-block",
+                float           : "center",
+                width           : "50%",
+                marginTop       : "15px",
+                padding         : "12px 0",
+                fontSize        : "1.75rem",
+                textAlign       : "center",
+                backgroundColor : "gray",
+                color           : "#FFF",
+                cursor          : "pointer"
+              }}
+              onClick={() => this.handleClick()}>
+              Back to Search
+            </Button>
+          </div>
         </Grid>
       </form>
     );
