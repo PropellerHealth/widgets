@@ -14,15 +14,12 @@ const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
 // consider moving this into utilities, only use geoip if going down certain rabbit holes
 const returnLocationFromIp = ip => {
   if ( ip ) {
-    console.log("the ip from the request used for location: ", ip);
-    const geo = geoip.lookup(req.ip);
-    console.log("here is the geo object: ", geo);
+    const geo = geoip.lookup(ip);
     if ( geo ) {
       const latitude          = geo.ll[0];
       const longitude         = geo.ll[1];
       const forecastLocation  = `${geo.city}, ${geo.region}, ${geo.country}`;
       
-      console.log("test of what is beign returned: ", JSON.stringify({latitude, longitude, forecastLocation}));
       return { latitude, longitude, forecastLocation };
     } else {
       return undefined;
@@ -33,12 +30,9 @@ const returnLocationFromIp = ip => {
 };
 
 const propsForRequest = (req, cb) => {
-  console.log("checking the request path: ", req.path);
   if ( req.path === "/asthma-conditions") {
     const props = returnLocationFromIp(req.ip);
-    console.log("Props inside ac: ", props);
     if ( props ) {
-      console.log("if indeed there were props");
       request.get(`${FORECAST_URL}?latitude=${props.latitude}&longitude=${props.longitude}`, (err, resp, body) => {
         if (err) return cb(undefined, props);
         const data = JSON.parse(body);
@@ -52,7 +46,6 @@ const propsForRequest = (req, cb) => {
       return cb(undefined, {});
     }
   } else if (req.path.substring(0,15) === "/find-my-doctor"){
-    console.log("the substring worked: ", req.path)
     const props = returnLocationFromIp(req.ip);
 
     if ( props ) {
@@ -61,7 +54,6 @@ const propsForRequest = (req, cb) => {
       return cb(undefined, {});
     }
   } else {
-    console.log("calling back undefined for the path");
     return cb(undefined, {});
   }
 };
