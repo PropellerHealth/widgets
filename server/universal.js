@@ -46,11 +46,15 @@ const propsForRequest = (req, cb) => {
       return cb(undefined, {});
     }
   } else if (req.path.substring(0,15) === "/find-my-doctor"){
+    console.log("inside the fmd routing");
     const props = returnLocationFromIp(req.ip);
+    console.log("the props: ", props);
 
     if ( props ) {
+      console.log("in the conditional");
       return cb(undefined, props);
     } else {
+      console.log("slipped into the else");
       return cb(undefined, {});
     }
   } else {
