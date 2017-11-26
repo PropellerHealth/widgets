@@ -27,7 +27,13 @@ const FirstScreen = (props) => {
     <Grid>
       <Row className="show-grid">
         <Col sm={6} smPush={6}>
-          <img className="img-responsive hidden-xs" src={doctorStanding} alt=""/>
+          <div
+            style={{
+              marginTop : "25px"
+            }}
+          >
+            <img className="img-responsive hidden-xs" src={doctorStanding} alt=""/>
+          </div>
         </Col>
         <Col sm={6} smPull={6}>
           <h1 style={styles.header}>
