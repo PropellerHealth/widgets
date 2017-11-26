@@ -8,9 +8,11 @@ import { API_HEADER }  from "../../utilities";
 const styles = Object({
   formButton: {
     display         : "inline-block",
-    float           : "right",
-    width           : "100%",
+    float           : "center",
+    width           : "75%",
     marginTop       : "25px",
+    marginRight     : "12.5%",
+    marginLeft      : "12.5%",
     padding         : "12px 0",
     fontSize        : "1.75rem",
     textAlign       : "center",
@@ -18,7 +20,8 @@ const styles = Object({
     color           : "#FFF",
     border          : "2px solid #78be20",
     borderRadius    : "3px",
-    cursor          : "pointer"
+    cursor          : "pointer",
+    maxWidth        : "450px"
   }
 });
 
@@ -157,15 +160,18 @@ class ConfirmDoctor extends Component {
             <Button
               style={{
                 display         : `${showing ? "none" : "inline-block"}`,
-                float           : "right",
-                width           : "100%",
+                float           : "center",
+                width           : "75%",
                 marginTop       : "25px",
+                marginRight     : "12.5%",
+                marginLeft      : "12.5%",
                 padding         : "12px 0",
                 fontSize        : "1.75rem",
                 textAlign       : "center",
                 backgroundColor : "#78be20",
                 color           : "#FFF",
-                cursor          : "pointer"
+                cursor          : "pointer",
+                maxWidth        : "450px"
               }}
               bsStyle="success" 
               bsSize="large"
@@ -186,8 +192,7 @@ class ConfirmDoctor extends Component {
                 }}
               >
                 <FormGroup>
-                  <label
-                  >
+                  <label>
                     {INPUT_FIELD.email}:
                   </label>
                   <FormControl
@@ -200,8 +205,7 @@ class ConfirmDoctor extends Component {
                   />
                 </FormGroup>
                 <FormGroup>
-                  <label
-                  >
+                  <label>
                     {INPUT_FIELD.firstName}:
                   </label>
                   <FormControl
@@ -212,8 +216,7 @@ class ConfirmDoctor extends Component {
                   />
                 </FormGroup>
                 <FormGroup>
-                  <label
-                  >
+                  <label>
                     {INPUT_FIELD.lastName}:
                   </label>
                   <FormControl
@@ -234,7 +237,7 @@ class ConfirmDoctor extends Component {
                     onChange={(e) => this.onChange(e, "hiddenSpamFilter")}
                   />
                 </FormGroup>
-                <input
+                <Button
                   style={
                     this.state.searching
                       ? Object.assign({}, styles.formButton, {opacity: "0.5"})
@@ -243,21 +246,26 @@ class ConfirmDoctor extends Component {
                   type="submit"
                   value={this.state.searching ? "Submitting..." : "Submit"}
                   disabled={this.state.searching}
-                />
+                >
+                  Submit
+                </Button>
               </fieldset>
             </form>
             <Button
               style={{
                 display         : "inline-block",
-                float           : "right",
-                width           : "100%",
+                float           : "center",
+                width           : "75%",
+                marginRight     : "12.5%",
+                marginLeft      : "12.5%",
                 marginTop       : "5px",
                 padding         : "12px 0",
                 fontSize        : "1.75rem",
                 textAlign       : "center",
                 backgroundColor : "gray",
                 color           : "#FFF",
-                cursor          : "pointer"
+                cursor          : "pointer",
+                maxWidth        : "450px"
               }}
               onClick={() => this.handleClick()}>
               Back to Search
