@@ -70,8 +70,9 @@ class ConfirmDoctor extends Component {
   }
 
   handleClick(doctor) {
-    const { goToStart } = this.props;
-    goToStart();
+    const { goPrevious } = this.props;
+
+    goPrevious();
   }
 
   onSubmit(e) {
@@ -206,7 +207,7 @@ class ConfirmDoctor extends Component {
                       style={{
                         fontSize  : "14px",
                         height    : "34px",
-                        textAlign : "center"
+                        textAlign : "left"
                       }}
                       id="emailAdress"
                       autoComplete="email"
@@ -228,7 +229,7 @@ class ConfirmDoctor extends Component {
                       style={{
                         fontSize  : "14px",
                         height    : "34px",
-                        textAlign : "center"
+                        textAlign : "left"
                       }}
                         id="firstName"
                         value={this.state.firstName}
@@ -248,7 +249,7 @@ class ConfirmDoctor extends Component {
                       style={{
                         fontSize  : "14px",
                         height    : "34px",
-                        textAlign : "center"
+                        textAlign : "left"
                       }}
                       id="lastName"
                       value={this.state.lastName}
@@ -299,7 +300,7 @@ class ConfirmDoctor extends Component {
                 maxWidth        : "450px"
               }}
               onClick={() => this.handleClick()}>
-              Back to Search
+              Back to Search Results
             </Button>
           </div>
         </div>
