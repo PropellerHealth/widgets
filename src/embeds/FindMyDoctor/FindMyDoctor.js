@@ -26,20 +26,25 @@ class FindMyDoctor extends Component {
     super(props);
     this.state = {
       idx           : 0,
-      doctors       : [],
-      doctor        : {},
+      doctors       : props.doctors || [],
+      doctor        : props.doctor || "",
       latitude      : props.latitude,
       longitude     : props.longitude,
       hasGeolocate  : window.navigator && "geolocation" in window.navigator,
       location      : props.state,
       city          : props.city,
-      uid           : ""
+      uid           : "",
+      geoLocation   : props.geolocation || "",
+      mapsLoaded    : false
     };
     this.goNext                     = this.goNext.bind(this);
+    this.goPrevious                 = this.goPrevious.bind(this);
     this.goToStart                  = this.goToStart.bind(this);
     this.updateOrSomethingLikeThat  = this.updateOrSomethingLikeThat.bind(this);
     this.passThatDocAlong           = this.passThatDocAlong.bind(this);
     this.loadConditions             = this.loadConditions.bind(this);
+    this.searchedParams             = this.searchedParams.bind(this);
+    this.mapsScriptLoaded           = this.mapsScriptLoaded.bind(this);
   }
 
   loadConditions(latitude, longitude) {
@@ -49,7 +54,15 @@ class FindMyDoctor extends Component {
     });
   }
 
-  checkLocation() {
+  searchedParams(searchedDoctor, searchedSpecialty, searchedLocation ) {
+    this.setState({
+      searchedDoctor,
+      searchedSpecialty,
+      searchedLocation
+    });
+  }
+
+  checkLocation(lat, long) {
     const { state } = this;
     if ( state.latitude && state.longitude ) {
       this.loadConditions(state.latitude, state.longitude);
@@ -81,7 +94,7 @@ class FindMyDoctor extends Component {
   }
 
   nabUid () {
-    let searchParam = window.location.search
+    let searchParam = window.location.search;
     // be better with uid validation
     if ( searchParam.indexOf('uid?') === -1 && searchParam.length === 29) {
       const uid = searchParam.substring(6);
@@ -96,6 +109,14 @@ class FindMyDoctor extends Component {
 
   goNext() {
     this.setState({idx: this.state.idx + 1 });
+  }
+
+  goPrevious() {
+    this.setState({idx: this.state.idx - 1});
+  }
+
+  mapsScriptLoaded() {
+    this.setState({mapsLoaded : true});
   }
 
   goToStart() {
@@ -125,10 +146,13 @@ class FindMyDoctor extends Component {
         <div style={{marginBottom: "250px"}}>
         <ToRender
           goNext={this.goNext} 
+          goPrevious={this.goPrevious}
           goToStart={this.goToStart} 
           updateOrSomethingLikeThat={this.updateOrSomethingLikeThat} 
           passThatDocAlong={this.passThatDocAlong}
           loadConditions={this.loadConditions}
+          searchedParams={this.searchedParams}
+          mapsScriptLoaded={this.mapsScriptLoaded}
           {...this.state} 
         />
         </div>
