@@ -34,7 +34,7 @@ class FindMyDoctor extends Component {
       location      : props.state,
       city          : props.city,
       uid           : "",
-      geoLocation   : props.geolocation || "",
+      geoLocation   : props.geolocation || props.forecastLocation || "",
       mapsLoaded    : false
     };
     this.goNext                     = this.goNext.bind(this);
@@ -63,8 +63,9 @@ class FindMyDoctor extends Component {
   }
 
   checkLocation(lat, long) {
+    console.log("checking location with: ", lat, long);
     const { state } = this;
-    if ( state.latitude && state.longitude ) {
+    if ( state.latitude && state.longitude && (this.state.geoLocation !== "")) {
       this.loadConditions(state.latitude, state.longitude);
     } else {
       if ( state.hasGeolocate ) {
@@ -103,6 +104,7 @@ class FindMyDoctor extends Component {
   }
 
   componentDidMount() {
+    console.log("the component did in fact mount");
     this.checkLocation();
     this.nabUid();
   }
