@@ -2,7 +2,7 @@ import React, { Component }           from "react";
 import Alert                          from "react-s-alert";
 import { FormGroup, FormControl, 
   InputGroup, Glyphicon, Button }     from "react-bootstrap";
-// import Autosuggest                    from "react-autosuggest";
+import Autosuggest                    from "react-autosuggest";
   
 import { checkResponse, extractJSON } from "../../utilities";
 import { specialties }                from "./../../utilities";
@@ -45,44 +45,44 @@ const styles = Object({
   }
 });
 
-// const theme = {
-//   container: {
-//     position: 'relative'
-//   },
-//   inputFocused: {
-//     outline: 'none'
-//   },
-//   inputOpen: {
-//     borderBottomLeftRadius: 0,
-//     borderBottomRightRadius: 0
-//   },
-//   suggestionsContainer: {
-//     display: 'none'
-//   },
-//   suggestionsContainerOpen: {
-//     display: 'block',
-//     position: 'absolute',
-//     // top: 51,
-//     // width: 280,
-//     border: '1px solid #aaa',
-//     backgroundColor: '#fff',
-//     borderBottomLeftRadius: 4,
-//     borderBottomRightRadius: 4,
-//     zIndex: 10
-//   },
-//   suggestionsList: {
-//     margin: 0,
-//     padding: 0,
-//     listStyleType: 'none',
-//   },
-//   suggestion: {
-//     cursor: 'pointer',
-//     padding: '10px 20px'
-//   },
-//   suggestionHighlighted: {
-//     backgroundColor: '#ddd'
-//   }
-// };
+const theme = {
+  container: {
+    position: 'relative'
+  },
+  inputFocused: {
+    outline: 'none'
+  },
+  inputOpen: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
+  },
+  suggestionsContainer: {
+    display: 'none'
+  },
+  suggestionsContainerOpen: {
+    display: 'block',
+    position: 'absolute',
+    // top: 51,
+    // width: 280,
+    border: '1px solid #aaa',
+    backgroundColor: '#fff',
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    zIndex: 10
+  },
+  suggestionsList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
+  },
+  suggestion: {
+    cursor: 'pointer',
+    padding: '10px 20px'
+  },
+  suggestionHighlighted: {
+    backgroundColor: '#ddd'
+  }
+};
 
 // Teach Autosuggest how to calculate suggestions for any given input value. 
 const getSuggestions = value => {
@@ -97,12 +97,12 @@ const getSuggestions = value => {
  // When suggestion is clicked, Autosuggest needs to populate the input 
  // based on the clicked suggestion. Teach Autosuggest how to calculate the 
  // input value for every given suggestion. 
-//  const getSuggestionValue = suggestion => suggestion.name;
+ const getSuggestionValue = suggestion => suggestion.name;
  
  // Use your imagination to render suggestions. 
-//  const renderSuggestion = suggestion => (
-//   <span>{suggestion.name}</span>
-//  );
+ const renderSuggestion = suggestion => (
+  <span>{suggestion.name}</span>
+ );
 
 class SearchScreen extends Component {
   constructor(props) {
@@ -290,13 +290,13 @@ class SearchScreen extends Component {
   render () {
     const { showing } = this.state;
 
-    // const { value, suggestions } = this.state;
+    const { value, suggestions } = this.state;
     
     // Autosuggest will pass through all these props to the input. 
-    // const inputProps = {
-    //   value,
-    //   onChange: this.onChange2
-    // };
+    const inputProps = {
+      value,
+      onChange: this.onChange2
+    };
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -313,7 +313,28 @@ class SearchScreen extends Component {
               title={ERRORS.doctor}
             />
           </FormGroup>
-
+          <FormGroup>
+            <label style={{fontSize:"1.25rem"}}>
+              {INPUT_FIELD.specialty}:
+            </label>
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              inputProps={inputProps}
+              theme={theme}
+              renderInputComponent={inputProps => (<FormControl
+                // id="value"
+                // value={this.state.value}
+                // onChange={(e) => this.onChange(e, "value")}
+                // title={ERRORS.specialty}
+                {...inputProps}
+              />)}
+            />
+            
+          </FormGroup>
           <FormGroup
             style={{ display: `${showing ? "block" : "none"}`}}
           >
@@ -370,25 +391,3 @@ class SearchScreen extends Component {
   
   export default SearchScreen;
 
-  // <FormGroup>
-  //   <label style={{fontSize:"1.25rem"}}>
-  //     {INPUT_FIELD.specialty}:
-  //   </label>
-  //   <Autosuggest
-  //     suggestions={suggestions}
-  //     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-  //     onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-  //     getSuggestionValue={getSuggestionValue}
-  //     renderSuggestion={renderSuggestion}
-  //     inputProps={inputProps}
-  //     theme={theme}
-  //     renderInputComponent={inputProps => (<FormControl
-  //       // id="value"
-  //       // value={this.state.value}
-  //       // onChange={(e) => this.onChange(e, "value")}
-  //       // title={ERRORS.specialty}
-  //       {...inputProps}
-  //     />)}
-  //   />
-    
-  // </FormGroup>
