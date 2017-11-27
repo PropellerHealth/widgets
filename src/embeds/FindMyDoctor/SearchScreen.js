@@ -169,7 +169,7 @@ class SearchScreen extends Component {
   }
 
   componentWillMount () {
-    if ( !this.state.mapsLoaded ) {
+    if ( !this.state.mapsLoaded && "function" === typeof document.createElement ) {
       const script  = document.createElement("script");
 
       script.src    = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_KEY}&libraries=places`;
@@ -177,7 +177,7 @@ class SearchScreen extends Component {
       script.addEventListener("load", this.initAutocomplete);
       
       document.body.appendChild(script);
-    } else {
+    } else if ( "function" === typeof document.createElement ) {
       this.initAutocomplete();
     }
   }
