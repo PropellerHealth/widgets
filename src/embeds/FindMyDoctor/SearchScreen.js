@@ -163,6 +163,7 @@ class SearchScreen extends Component {
 
   showLocationSearch () {
     this.setState({ showing : !this.state.showing});
+    this.initAutocomplete();
   }
 
   componentWillMount () {
@@ -174,6 +175,8 @@ class SearchScreen extends Component {
       script.addEventListener("load", this.initAutocomplete);
       
       document.body.appendChild(script);
+    } else {
+      this.initAutocomplete();
     }
   }
   
@@ -184,10 +187,11 @@ class SearchScreen extends Component {
   initAutocomplete () {
     const { mapsScriptLoaded } =  this.props;
 
-    this.setState({ 
-      autocomplete  : new window.google.maps.places.Autocomplete((document.getElementById('location')),{types: ['(cities)']})
-    });
-
+    if ( document.getElementById("location") ) {
+      this.setState({ 
+        autocomplete  : new window.google.maps.places.Autocomplete((document.getElementById('location')),{types: ['(cities)']})
+      });
+    }
     mapsScriptLoaded();
       // currently breaks everything
     // this.setState({ autocomplete : autocomplete.setComponentRestrictions({'country': ['us']})});
@@ -309,28 +313,7 @@ class SearchScreen extends Component {
               title={ERRORS.doctor}
             />
           </FormGroup>
-          <FormGroup>
-            <label style={{fontSize:"1.25rem"}}>
-              {INPUT_FIELD.specialty}:
-            </label>
-            <Autosuggest
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              getSuggestionValue={getSuggestionValue}
-              renderSuggestion={renderSuggestion}
-              inputProps={inputProps}
-              theme={theme}
-              renderInputComponent={inputProps => (<FormControl
-                // id="value"
-                // value={this.state.value}
-                // onChange={(e) => this.onChange(e, "value")}
-                // title={ERRORS.specialty}
-                {...inputProps}
-              />)}
-            />
-            
-          </FormGroup>
+
           <FormGroup
             style={{ display: `${showing ? "block" : "none"}`}}
           >
@@ -386,3 +369,26 @@ class SearchScreen extends Component {
   }
   
   export default SearchScreen;
+
+  // <FormGroup>
+  //   <label style={{fontSize:"1.25rem"}}>
+  //     {INPUT_FIELD.specialty}:
+  //   </label>
+  //   <Autosuggest
+  //     suggestions={suggestions}
+  //     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+  //     onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+  //     getSuggestionValue={getSuggestionValue}
+  //     renderSuggestion={renderSuggestion}
+  //     inputProps={inputProps}
+  //     theme={theme}
+  //     renderInputComponent={inputProps => (<FormControl
+  //       // id="value"
+  //       // value={this.state.value}
+  //       // onChange={(e) => this.onChange(e, "value")}
+  //       // title={ERRORS.specialty}
+  //       {...inputProps}
+  //     />)}
+  //   />
+    
+  // </FormGroup>

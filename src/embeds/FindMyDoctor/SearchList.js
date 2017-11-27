@@ -94,7 +94,6 @@ class SearchList extends Component {
                 }}
               >
                 <li>Check your spelling and try again</li>
-                <li>Try another specialty</li>
                 <li>Search by last name only</li>
                 <li>Verify your doctor's primary location</li>
               </ul>
