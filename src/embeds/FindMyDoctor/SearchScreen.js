@@ -120,7 +120,7 @@ class SearchScreen extends Component {
       uid           : props.uid,
       showing       : true,
       autocomplete  : "",
-      value         : "",
+      value         : props.searchedSpecialty || "",
       suggestions   : [],
       mapsLoaded    : props.mapsLoaded
     };
