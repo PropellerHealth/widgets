@@ -47,7 +47,7 @@ const styles = Object({
 
 const theme = {
   container: {
-    position: 'relative'
+    position  : 'relative'
   },
   inputFocused: {
     outline: 'none'
@@ -61,6 +61,8 @@ const theme = {
   },
   suggestionsContainerOpen: {
     display: 'block',
+    maxHeight : "300px",
+    overflow  : "auto",
     position: 'absolute',
     // top: 51,
     // width: 280,
