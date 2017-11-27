@@ -46,11 +46,9 @@ const propsForRequest = (req, cb) => {
       return cb(undefined, {});
     }
   } else if (req.path.substring(0,15) === "/find-my-doctor"){
-    console.log("Universal line 49, substring routing worked");
     const props = returnLocationFromIp(req.ip);
 
     if ( props ) {
-      console.log("There are props: ", JSON.stringify(props));
       return cb(undefined, props);
     } else {
       return cb(undefined, {});
