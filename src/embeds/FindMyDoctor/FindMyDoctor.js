@@ -33,7 +33,7 @@ class FindMyDoctor extends Component {
       hasGeolocate  : window.navigator && "geolocation" in window.navigator,
       location      : props.state,
       city          : props.city,
-      uid           : "",
+      uid           : props.uid || "",
       geoLocation   : props.geolocation || props.forecastLocation || "",
       mapsLoaded    : false
     };
@@ -45,6 +45,7 @@ class FindMyDoctor extends Component {
     this.loadConditions             = this.loadConditions.bind(this);
     this.searchedParams             = this.searchedParams.bind(this);
     this.mapsScriptLoaded           = this.mapsScriptLoaded.bind(this);
+    this.nabUid                     = this.nabUid.bind(this);
   }
 
   loadConditions(latitude, longitude) {

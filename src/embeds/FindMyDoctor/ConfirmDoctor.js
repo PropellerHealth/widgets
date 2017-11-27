@@ -54,7 +54,8 @@ class ConfirmDoctor extends Component {
       lastName    : "",
       email       : "",
       npi         : props.doctor.npi,
-      submitting  : false
+      submitting  : false,
+      uid         : props.uid
     };
     this.showForm = this.showForm.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -77,33 +78,44 @@ class ConfirmDoctor extends Component {
 
   onSubmit(e) {
     const { goNext } = this.props;
+    let data;
 
     e.preventDefault();
 
-    const data = {
-      [SALESFORCE_LEAD_CONSTANTS.email]     : this.state.email,
-      [SALESFORCE_LEAD_CONSTANTS.npiKey]    : this.state.npi,
-      [SALESFORCE_LEAD_CONSTANTS.lastName]  : this.state.lastName,
-      [SALESFORCE_LEAD_CONSTANTS.firstName] : this.state.firstName,
-      oid                                   : SALESFORCE_LEAD_CONSTANTS.oid,
-      submit                                : "Submit"
-    };
-    
-    if (!data.email) {
-      this.setState({ submitting  : false });
-      Alert.warning(ERRORS.both);
-      return;
+    if ( this.state.showing ) {
+      data = {
+        [SALESFORCE_LEAD_CONSTANTS.email]     : this.state.email,
+        [SALESFORCE_LEAD_CONSTANTS.npiKey]    : this.state.npi,
+        [SALESFORCE_LEAD_CONSTANTS.lastName]  : this.state.lastName,
+        [SALESFORCE_LEAD_CONSTANTS.firstName] : this.state.firstName,
+        oid                                   : SALESFORCE_LEAD_CONSTANTS.oid,
+        submit                                : "Submit"
+      };
+      
+      if (!data.email) {
+        this.setState({ submitting  : false });
+        Alert.warning(ERRORS.both);
+        return;
+      }
+      else if (!data["00N21000000o78g"]) {
+        this.setState({ submitting  : false });
+        Alert.warning(ERRORS.doctor);
+        return;
+      }
+      else if (!data.first_name || !data.last_name) {
+        this.setState({ submitting  : false });
+        Alert.warning(ERRORS.name);
+        return;
+      }
+    } else {
+      data = {
+        [SALESFORCE_LEAD_CONSTANTS.email]     : this.state.uid,
+        [SALESFORCE_LEAD_CONSTANTS.npiKey]    : this.state.npi,
+        oid                                   : SALESFORCE_LEAD_CONSTANTS.oid,
+        submit                                : "Submit"
+      };
     }
-    else if (!data["00N21000000o78g"]) {
-      this.setState({ submitting  : false });
-      Alert.warning(ERRORS.doctor);
-      return;
-    }
-    else if (!data.first_name || !data.last_name) {
-      this.setState({ submitting  : false });
-      Alert.warning(ERRORS.name);
-      return;
-    }
+
     
     const formArray = [];
     Object.keys(data).forEach(key => {
@@ -154,7 +166,28 @@ class ConfirmDoctor extends Component {
               {doctor.practices[0].visit_address.city}, {doctor.practices[0].visit_address.state} {doctor.practices[0].visit_address.zip}</p>}
             {<img src={doctorDecison} alt="DoctorDecision"/>}
             <br/>
-            <Button
+            {(this.state.uid !== "") && <Button
+              style={{
+                display         : "inline-block",
+                float           : "center",
+                width           : "75%",
+                marginTop       : "25px",
+                marginRight     : "12.5%",
+                marginLeft      : "12.5%",
+                padding         : "12px 0",
+                fontSize        : "1.75rem",
+                textAlign       : "center",
+                backgroundColor : "#78be20",
+                color           : "#FFF",
+                cursor          : "pointer",
+                maxWidth        : "450px"
+              }}
+              bsStyle="success" 
+              bsSize="large"
+              onClick={this.onSubmit}>
+              This is my doctor
+            </Button>}
+            {(this.state.uid === "") && <Button
               style={{
                 display         : `${showing ? "none" : "inline-block"}`,
                 float           : "center",
@@ -174,7 +207,7 @@ class ConfirmDoctor extends Component {
               bsSize="large"
               onClick={this.showForm}>
               This is my doctor
-            </Button>
+            </Button>}
             <form 
               onSubmit={this.onSubmit}
               style={{
