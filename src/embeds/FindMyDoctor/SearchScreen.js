@@ -109,18 +109,18 @@ class SearchScreen extends Component {
     super(props);
     this.state = {
       searching     : false,
-      doctor        : "", 
-      specialty     : "",
+      doctor        : props.searchedDoctor || "", 
+      specialty     : props.searchedSpecialty || "",
       latitude      : props.latitude,
       longitude     : props.longitude, 
       geoLocation   : props.forecastLocation || "",
-      location      : "",
+      location      : props.searchedLocation || "",
       uid           : props.uid,
       showing       : true,
       autocomplete  : "",
-      mapsLoaded    : false,
       value         : "",
-      suggestions   : []
+      suggestions   : [],
+      mapsLoaded    : props.mapsLoaded
     };
 
     this.onChange           = this.onChange.bind(this);
@@ -166,27 +166,29 @@ class SearchScreen extends Component {
   }
 
   componentWillMount () {
-    const script  = document.createElement("script");
+    if ( !this.state.mapsLoaded ) {
+      const script  = document.createElement("script");
 
-    script.src    = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_KEY}&libraries=places`;
-    script.async  = true;
-    script.addEventListener("load", this.initAutocomplete);
-    
-    document.body.appendChild(script);
+      script.src    = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_KEY}&libraries=places`;
+      script.async  = true;
+      script.addEventListener("load", this.initAutocomplete);
+      
+      document.body.appendChild(script);
+    }
   }
-
+  
   componentWillUnmount () {
-    // document.body.removeEventListener("load", this.initAutocomplete);
+    document.body.removeEventListener("load", this.initAutocomplete);
   }
 
   initAutocomplete () {
-    if ( !this.state.mapsLoaded ) {
-      this.setState({ 
-        autocomplete  : new window.google.maps.places.Autocomplete((document.getElementById('location')),{types: ['(cities)']}),
-        mapsLoaded    : false
-      });
-      
-    }
+    const { mapsScriptLoaded } =  this.props;
+
+    this.setState({ 
+      autocomplete  : new window.google.maps.places.Autocomplete((document.getElementById('location')),{types: ['(cities)']})
+    });
+
+    mapsScriptLoaded();
       // currently breaks everything
     // this.setState({ autocomplete : autocomplete.setComponentRestrictions({'country': ['us']})});
   }
@@ -221,6 +223,9 @@ class SearchScreen extends Component {
   }
 
   buildRequest (doctor, specialty, location) {
+    const { searchedParams } = this.props;
+    searchedParams(doctor, specialty, location);
+
     let allOfTheNames       =   `name=${doctor.trim().split(" ").join("%20")}`;
     let allOfTheLocations   =   `&location=${location.latitude}%2C${location.longitude}%2C${BETTER_DOCTOR_API.searchRadius}`;
     let allOfTheSpecialties =   "";
