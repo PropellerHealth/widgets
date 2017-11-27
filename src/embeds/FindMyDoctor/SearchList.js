@@ -139,7 +139,7 @@ class SearchList extends Component {
                           style={{fontSize:"1.5rem"}}
                         >{doctor.profile.first_name} {doctor.profile.last_name}<br/>
                         </h3>
-                        {(doctor.specialties[0]) && <p>{doctor.specialties[0].actor}</p>}
+                        {(doctor.specialties[0]) && <p>{doctor.specialties[0].name}</p>}
                         {doctor.practices[0]    &&  <p>{doctor.practices[0].visit_address.street}, {doctor.practices[0].visit_address.street2} <br/>
                           {doctor.practices[0].visit_address.city}, {doctor.practices[0].visit_address.state} {doctor.practices[0].visit_address.zip}</p>}
                       </div>
