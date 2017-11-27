@@ -1,6 +1,6 @@
-import React, { Component }               from "react";
-import { Button, FormControl, FormGroup } from "react-bootstrap";
-import Alert                              from "react-s-alert";
+import React, { Component }                 from "react";
+import {  Button, FormControl, FormGroup }  from "react-bootstrap";
+import Alert                                from "react-s-alert";
 
 import doctorDecison   from "../../assets/images/img_docicon.png";
 import { API_HEADER }  from "../../utilities";
@@ -9,10 +9,8 @@ const styles = Object({
   formButton: {
     display         : "inline-block",
     float           : "center",
-    width           : "75%",
+    width           : "100%",
     marginTop       : "25px",
-    marginRight     : "12.5%",
-    marginLeft      : "12.5%",
     padding         : "12px 0",
     fontSize        : "1.75rem",
     textAlign       : "center",
@@ -155,8 +153,6 @@ class ConfirmDoctor extends Component {
               {doctor.practices[0].visit_address.city}, {doctor.practices[0].visit_address.state} {doctor.practices[0].visit_address.zip}</p>}
             {<img src={doctorDecison} alt="DoctorDecision"/>}
             <br/>
-            <br/>
-            
             <Button
               style={{
                 display         : `${showing ? "none" : "inline-block"}`,
@@ -185,58 +181,93 @@ class ConfirmDoctor extends Component {
               }}>
               <fieldset
                 style={{
-                  fontSize  : "2.25rem",
-                  padding   : "0.5rem",
-                  margin    : "0.7rem 0 0.5rem",
-                  textAlign : "left"
+                  fontSize    : "2.25rem",
+                  padding     : "0.5rem",
+                  marginLeft  : "12.5%",
+                  marginRight : "12.5%",
+                  textAlign   : "center"
                 }}
               >
-                <FormGroup>
-                  <label>
-                    {INPUT_FIELD.email}:
-                  </label>
-                  <FormControl
-                    id="emailAdress"
-                    autoComplete="email"
-                    type="email"
-                    value={this.state.email}
-                    onChange={(e) => this.onChange(e, "email")}
-                    title={ERRORS.email}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <label>
-                    {INPUT_FIELD.firstName}:
-                  </label>
-                  <FormControl
-                    id="firstName"
-                    value={this.state.firstName}
-                    onChange={(e) => this.onChange(e, "firstName")}
-                    title={ERRORS.name}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <label>
-                    {INPUT_FIELD.lastName}:
-                  </label>
-                  <FormControl
-                    id="lastName"
-                    value={this.state.lastName}
-                    onChange={(e) => this.onChange(e, "lastName")}
-                    title={ERRORS.name}
-                  />
-                </FormGroup>
-                <FormGroup
-                  style={{display: "none"}}>
-                  <label>
-                    {INPUT_FIELD.hiddenSpamFilter}:
-                  </label>
-                  <FormControl
-                    id="hiddenSpamFilter"
-                    value={this.state.hiddenSpamFilter}
-                    onChange={(e) => this.onChange(e, "hiddenSpamFilter")}
-                  />
-                </FormGroup>
+                <div
+                  className="row"
+                  style={{
+                    textAlign : "left"
+                  }}
+                >
+                  <FormGroup>
+                    <label style={{
+                      fontSize  : "1.25rem",
+                      maxWidth  : "75%",
+                      textAlign : "left"
+                    }}>
+                      {INPUT_FIELD.email}:
+                    </label>
+                    <FormControl
+                      style={{
+                        fontSize  : "14px",
+                        height    : "34px",
+                        textAlign : "center"
+                      }}
+                      id="emailAdress"
+                      autoComplete="email"
+                      type="email"
+                      value={this.state.email}
+                      onChange={(e) => this.onChange(e, "email")}
+                      title={ERRORS.email}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <label style={{
+                      fontSize  : "1.25rem",
+                      maxWidth  : "75%",
+                      textAlign : "left"
+                    }}>
+                      {INPUT_FIELD.firstName}:
+                    </label>
+                    <FormControl
+                      style={{
+                        fontSize  : "14px",
+                        height    : "34px",
+                        textAlign : "center"
+                      }}
+                        id="firstName"
+                        value={this.state.firstName}
+                        onChange={(e) => this.onChange(e, "firstName")}
+                        title={ERRORS.name}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <label style={{
+                      fontSize  : "1.25rem",
+                      maxWidth  : "75%",
+                      textAlign : "left"
+                    }}>
+                      {INPUT_FIELD.lastName}:
+                    </label>
+                    <FormControl
+                      style={{
+                        fontSize  : "14px",
+                        height    : "34px",
+                        textAlign : "center"
+                      }}
+                      id="lastName"
+                      value={this.state.lastName}
+                      onChange={(e) => this.onChange(e, "lastName")}
+                      title={ERRORS.name}
+                    />
+                  </FormGroup>
+                  <FormGroup
+                    style={{display: "none"}}>
+                    <label>
+                      {INPUT_FIELD.hiddenSpamFilter}:
+                    </label>
+                    <FormControl
+                      id="hiddenSpamFilter"
+                      value={this.state.hiddenSpamFilter}
+                      onChange={(e) => this.onChange(e, "hiddenSpamFilter")}
+                    />
+                  </FormGroup>
+                </div>
                 <Button
                   style={
                     this.state.searching
