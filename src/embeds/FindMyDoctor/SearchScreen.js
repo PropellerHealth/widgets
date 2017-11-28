@@ -156,11 +156,13 @@ class SearchScreen extends Component {
   };
 
   setSpecialty ( specialtyName ) {
+    let uid;
     specialties.forEach( specialty => {
       if ( specialtyName === specialty.name ) {
-        return specialty.uid;
+        uid = specialty.uid;
       }
     })
+    return uid;
   }
 
   showLocationSearch () {
