@@ -9,6 +9,8 @@ const { StaticRouter }   = require('react-router-dom');
 
 const { default: App } = require('../src/App');
 
+const FILE_PATH = path.resolve(__dirname, '..', 'build', 'index.html');
+
 const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
 
 // consider moving this into utilities, only use geoip if going down certain rabbit holes
@@ -19,7 +21,7 @@ const returnLocationFromIp = ip => {
       const latitude          = geo.ll[0];
       const longitude         = geo.ll[1];
       const forecastLocation  = `${geo.city}, ${geo.region}, ${geo.country}`;
-      
+
       return { latitude, longitude, forecastLocation };
     } else {
       return undefined;
@@ -36,7 +38,7 @@ const propsForRequest = (req, cb) => {
       request.get(`${FORECAST_URL}?latitude=${props.latitude}&longitude=${props.longitude}`, (err, resp, body) => {
         if (err) return cb(undefined, props);
         const data = JSON.parse(body);
-        
+
         return cb(undefined, Object.assign({}, props, {
           score   : data.properties.value,
           status  : data.properties.code.toLowerCase()
@@ -59,9 +61,7 @@ const propsForRequest = (req, cb) => {
 };
 
 module.exports = function universalLoader(req, res) {
-  const filePath = path.resolve(__dirname, '..', 'build', 'index.html');
-
-  fs.readFile(filePath, 'utf8', (err, htmlData) => {
+  fs.readFile(FILE_PATH, 'utf8', (err, htmlData) => {
     if (err) {
       console.error('read err', err);
       return res.status(404).end();

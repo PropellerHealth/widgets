@@ -1,0 +1,146 @@
+import React, { Component } from "react";
+import { withFauxDOM } from "react-faux-dom";
+import { scaleLinear } from "d3-scale";
+import { max as d3Max } from "d3-array";
+import { axisBottom, axisLeft, axisRight } from "d3-axis";
+import { timeDay, timeMonth } from "d3-time";
+import { timeFormat, isoParse } from "d3-time-format";
+
+import { buildChartFrame } from "../../chartUtils";
+
+const rectangle = (x, y, w, h, r) => {
+  const r2 = 2 * r;
+  return `M${x + r},${y}h${w - r2}a${r},${r} 0 0 1 ${r},${r}v${h - r2}v${r}h${-r}h${r2 - w}h${-r}v${-r}v${r2 - h}a${r},${r} 0 0 1 ${r},${-r}z`;
+};
+
+class BarChart extends Component {
+  constructor(props) {
+    super(props);
+    this.renderChart = this.renderChart.bind(this);
+  }
+
+  renderChart() {
+    const {
+      data,
+      width,
+      height,
+      margin,
+      graphHeight,
+      graphWidth,
+      xWidth,
+      xScale,
+      yLabel,
+      connectFauxDOM,
+      colors
+    } = this.props;
+
+    const yMax           = d3Max(data.map(d => d.values.eventsRescue));
+    const yHeight        = yMax < 5 ? 5 : yMax + 1;
+    const xFormatter     = timeFormat("%-d");
+    const monthFormatter = timeFormat("%b");
+
+    const yScale = scaleLinear()
+      .domain([0, yHeight])
+      .range([graphHeight, 0]);
+
+    // prepare our axes
+    // const YAxis = (<LeftAxis yMax={yMax} label={yLabel} />);
+    const leftAxis = axisLeft(yScale)
+      .ticks(yHeight > 10 ? 5 : yHeight)
+      .tickPadding(5)
+      .tickSize(0);
+
+    const rightAxis = axisRight(yScale)
+      .ticks(yHeight > 10 ? 5 : yHeight)
+      .tickSize(-graphWidth);
+
+    const bottomAxis = axisBottom(xScale)
+      .ticks(timeDay)
+      .tickSize(0)
+      .tickPadding(10)
+      .tickFormat(d => xFormatter(isoParse(d)));
+
+    const monthAxis = axisBottom(xScale)
+      .ticks(timeMonth)
+      .tickSize(0)
+      .tickPadding(25)
+      .tickFormat(d => monthFormatter(d).toUpperCase());
+
+    // initialize the chart object
+    let svg = buildChartFrame(
+      connectFauxDOM('div', 'chart'),
+      { leftAxis, rightAxis, bottomAxis, monthAxis },
+      { height, width, margin, graphWidth, graphHeight, yLabel, xWidth }
+    );
+
+    let bars = svg.selectAll('.bars')
+      .data(data)
+      .enter()
+      .append('g');
+
+    bars.append('path')
+      .attr('class', "all-rescue")
+      .attr("shape-rendering", "geometricPrecision")
+      .attr(
+        "d",
+        (d, i) => {
+          const count = d.values.eventsRescue;
+          const yPos  = yScale(count);
+          return rectangle(
+            xScale(d.date),
+            yPos,
+            xWidth,
+            (graphHeight - yPos),
+            count > 0 ? xWidth/2 : 0
+          );
+        }
+      )
+      .style("fill", colors.orange);
+
+    bars.append('path')
+      .attr('class', "night-rescue")
+      .attr("shape-rendering", "geometricPrecision")
+      .attr(
+        "d",
+        (d, i) => {
+          const count = d.values.eventsRescueNight;
+          const yPos  = yScale(count);
+          return rectangle(
+            xScale(d.date),
+            yPos,
+            xWidth,
+            (graphHeight - yPos),
+            count > 0 ? xWidth/2 : 0
+          );
+        }
+      )
+      .style("fill", colors.deepRed);
+
+  }
+
+  componentDidMount() {
+    this.renderChart();
+  }
+
+  componentDidUpdate() {
+    this.renderChart();
+  }
+
+  render() {
+    const { chart, children } = this.props;
+    return (
+      <div
+        className="barchart"
+        style={{
+          position: "relative",
+          margin: "2rem 0"
+        }}
+      >
+        {children}
+        {chart}
+      </div>
+    )
+  }
+}
+
+export default withFauxDOM(BarChart)
