@@ -5,294 +5,20 @@ import { isoParse, timeFormat } from "d3-time-format";
 import moment from "moment";
 import BarChart from "../../components/BarChart";
 import AreaChart from "../../components/AreaChart";
+import Loading from "../../components/Loading";
 import logo from "../../assets/images/logo.svg";
+import { checkResponse, extractJSON, objectFromQueryString } from "../../utilities";
 
 const COLORS = {
-  blue   : "#20C3F3",
-  purple : "#6b1671",
-  green  : "green",
-  deepRed: "#D70000",
-  red    : "#EE0037",
-  yellow : "yellow",
-  orange : "#FF7500",
-  grey   : "#888B8D"
-};
-
-const PATIENT = {
-  id: "59e8d27bd61e10001c903142",
-  age: 26,
-  birthDate: "1991-06-03",
-  createdDate: "2017-09-19T05:00:00.000Z",
-  disease: "asthma",
-  email: "ryan.gilles+armythreey@propellerhealth.com",
-  familyName: "Threey",
-  followers: [
-    {
-      id: "596fa767aef883073121222b",
-      accessLevel: "modify",
-      givenName: "Marc",
-      familyName: "Brakken",
-      role: "physician"
-    }
-  ],
-  givenName: "Army",
-  group: {
-    id: "58e3e66c71893b190740a6a5",
-    name: "meb-dev-1",
-    displayName: "MEB-Devv"
-  },
-  language: "en-US",
-  mailingAddress: {
-    street: "634 W Main St",
-    street2: "102",
-    city: "Madison",
-    postalCode: "53703",
-    country: "ES",
-    latitude: 43.0674874,
-    longitude: -89.39268849999999
-  },
-  medicalIds: [
-    { key: "study_arm_id", value: "arm-3" },
-    { key: "test_key", value: "asdf" }
-  ],
-  membership: "premium",
-  notifications: {
-    digest: { email: true },
-    notes: { email: true, push: true, sms: false },
-    quietSensor: { email: true, push: true, sms: false },
-    actInvite: { email: false, push: true, sms: false },
-    missedDose: { email: false, push: true, sms: false },
-    rescueUsage: { email: false, push: false, sms: false },
-    transition: { email: true, push: true, sms: false }
-  },
-  plan: {
-    medications: [
-      {
-        medication: {
-          id: "es_ventolin",
-          diseases: ["asthma", "copd"],
-          formFactor: "mdi",
-          name: "Ventolin",
-          shortName: "Ventolin",
-          type: "rescue",
-          sensors: ["ble1"]
-        },
-        medicationId: "es_ventolin",
-        sensors: [],
-        usageList: []
-      },
-      {
-        medication: {
-          id: "es_relvar_ellipta",
-          diseases: ["asthma"],
-          formFactor: "ellipta",
-          name: "Relvar Ellipta",
-          shortName: "Relvar Ellipta",
-          type: "controller",
-          sensors: ["stingray"]
-        },
-        medicationId: "es_relvar_ellipta",
-        sensors: [],
-        usageList: [{ doses: 1, hour: 9, minute: 0 }]
-      }
-    ]
-  },
-  role: "patient",
-  score: { code: "good", type: "naeep" },
-  sync: {
-    first: "2017-10-19T18:46:01.484Z",
-    firstController: "2017-10-19T18:46:01.484Z",
-    firstRescue: "2017-10-19T18:46:37.537Z",
-    last: "2017-10-19T18:46:42.384Z",
-    lastController: "2017-10-19T18:46:01.484Z",
-    lastRescue: "2017-10-19T18:46:42.384Z"
-  },
-  event: {
-    first: "2017-10-19T18:45:56.000Z",
-    firstController: "2017-10-19T18:45:56.000Z",
-    firstRescue: "2017-10-19T18:46:06.000Z",
-    last: "2017-10-19T18:46:06.000Z",
-    lastController: "2017-10-19T18:45:56.000Z",
-    lastRescue: "2017-10-19T18:46:06.000Z"
-  },
-  timeZone: "America/Chicago"
-};
-
-const CONTROLLER_ADHERENCE = [
-  { date: "2017-11-27T00:00:00.000-06:00", values: { adherencePercent: 25 } },
-  { date: "2017-11-20T00:00:00.000-06:00", values: { adherencePercent: 10 } },
-  { date: "2017-11-13T00:00:00.000-06:00", values: { adherencePercent: 10 } },
-  { date: "2017-11-06T00:00:00.000-06:00", values: { adherencePercent: 5 } },
-  { date: "2017-10-30T00:00:00.000-05:00", values: { adherencePercent: 0 } }
-];
-
-const CONTROLLER_USE = [
-  {
-    date: "2017-11-30T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 2, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-29T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-28T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-27T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 1, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-26T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-25T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-24T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-23T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-22T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 1, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-21T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-20T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 1, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-19T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-18T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-17T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-16T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-15T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 1, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-14T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 1, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-13T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-12T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 0, eventsControllerPrescribed: 3 }
-  },
-  {
-    date: "2017-11-11T00:00:00.000-06:00",
-    values: { eventsControllerAdministered: 1, eventsControllerPrescribed: 3 }
-  }
-];
-
-const DATA = {
-  rescue: [
-    {
-      date: "2017-11-30T00:00:00.000-06:00",
-      values: { eventsRescue: 2, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-29T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-28T00:00:00.000-06:00",
-      values: { eventsRescue: 1, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-27T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-26T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-25T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-24T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-23T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-22T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-21T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-20T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-19T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-18T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-17T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-16T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-15T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-14T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-13T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-12T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    },
-    {
-      date: "2017-11-11T00:00:00.000-06:00",
-      values: { eventsRescue: 0, eventsRescueNight: 0 }
-    }
-  ],
-  controller: CONTROLLER_ADHERENCE
+  blue     : "#20C3F3",
+  purple   : "#6b1671",
+  green    : "green",
+  deepRed  : "#D70000",
+  red      : "#EE0037",
+  yellow   : "yellow",
+  orange   : "#FF7500",
+  grey     : "#888B8D",
+  darkGrey : "#333"
 };
 
 const incrementToDays = (toCopy, days) => {
@@ -350,8 +76,7 @@ const Page = props => {
   return (
     <Grid
       style={{
-        marginTop: "1rem",
-        marginBottom: "1rem",
+        margin: "2rem 2rem",
         pageBreakAfter: "always",
         pageBreakInside: "avoid"
       }}
@@ -401,7 +126,17 @@ const Header = ({ timeFrame: range, disease = "asthma" }) => {
           <img src={logo} alt="Propeller Health" height={80} />
         </Col>
         <Col xs={6} style={{lineHeight: "6rem"}}>
-          <h1 className="text-right" style={{ fontSize: "2.5rem", lineHeight: "5rem", display: "inline-block", textAlign: "right", width: "100%", verticalAlign: "bottom" }}>
+          <h1
+            className="text-right"
+            style={{
+              color: COLORS.darkGrey,
+              fontSize: "2.5rem",
+              lineHeight: "5rem",
+              display: "inline-block",
+              textAlign: "right",
+              width: "100%",
+              verticalAlign: "bottom"
+            }}>
             {disease.toUpperCase()} HEALTH REPORT -{" "}
             <strong>{timeFrame(range).toUpperCase()}</strong>
           </h1>
@@ -420,15 +155,14 @@ const PatientInfo = ({
   birthDate,
   sync,
   plan,
-  followers
+  followers,
+  rescueMeds,
+  controllerMeds
 }) => {
   const careTeam = followers
     .filter(f => "physician" === f.role)
     .map(f => `${f.givenName} ${f.familyName}`);
 
-  const meds = plan.medications;
-  const controllerMeds = meds.filter(m => "controller" === m.medication.type);
-  const rescueMeds = meds.filter(m => "rescue" === m.medication.type);
   // console.log(controllerMeds);
   // console.log(moment);
   // const rx = /[-/\s]/;
@@ -454,7 +188,8 @@ const PatientInfo = ({
           <h2
             style={{
               margin: "1rem 0",
-              fontSize: "2.8rem"
+              fontSize: "2.8rem",
+              color: COLORS.darkGrey
             }}
           >
             <strong>
@@ -479,7 +214,7 @@ const PatientInfo = ({
         <Col xs={6}>
           <GreyText>Current Rescue Medication:</GreyText>
           <br />
-          {rescueMeds[0] && <strong>rescueMeds[0].medication.name</strong>}
+          {rescueMeds[0] && <strong>{rescueMeds[0].medication.name}</strong>}
         </Col>
         <Col xs={6}>
           <GreyText>Current Controller Medication:</GreyText>
@@ -551,10 +286,11 @@ const RoundedBox = props => {
   );
 };
 
-const GraphTitle = ({ title, medication = {shortName : "MedName"}, legend }) => {
+const GraphTitle = ({ title, medications = [], legend }) => {
 
   const colWidth = legend ? 6 : 12
-  const medName = medication && (<span>(<strong>{medication.shortName}</strong>)</span>);
+  const medNames = medications.map(m => m.medication.shortName).join(", ");
+  const medName  = medNames && (<span>(<strong>{medNames}</strong>)</span>);
 
   return (
     <Row style={{paddingLeft: "6rem"}}>
@@ -569,10 +305,11 @@ const GraphTitle = ({ title, medication = {shortName : "MedName"}, legend }) => 
 };
 
 const MetricScore = ({ style, ...rest}) => {
-  return <span style={Object.assign({}, {fontWeight: "bold", fontSize: "2.4rem", lineHeight: "1.4rem"}, style)} {...rest} />
+  return <span style={Object.assign({}, {fontWeight: "bold", fontSize: "2rem", lineHeight: "2rem"}, style)} {...rest} />
 }
 
-const PatientStatus = props => {
+const PatientStatus = ({ controlStatus, rescue, controllerAvg=0 }) => {
+  const nights = rescue.filter(r => r.values.eventsRescueNight > 0).length;
   return (
     <div style={{margin: "2rem 0"}}>
       <SectionHeader text="Patient status for the most recent" tab="30 Days" />
@@ -583,13 +320,13 @@ const PatientStatus = props => {
               <Col xs={12}>
                 <RoundedBox color="red">
                   Well Controlled:{" "}
-                  <MetricScore>{props.daysWellControlled} days</MetricScore>
+                  <MetricScore>{controlStatus.good} days</MetricScore>
                   <br />
                   Not Well Controlled:{" "}
-                  <MetricScore>{props.daysNotWellControlled} days</MetricScore>
+                  <MetricScore>{controlStatus.fair} days</MetricScore>
                   <br />
                   Poorly Controlled:{" "}
-                  <MetricScore>{props.daysPoorlyControlled} days</MetricScore>
+                  <MetricScore>{controlStatus.poor} days</MetricScore>
                 </RoundedBox>
               </Col>
             </Row>
@@ -598,14 +335,14 @@ const PatientStatus = props => {
                 <RoundedBox color="orange">
                   Controller adherence:
                   <br />
-                  <MetricScore>{props.controllerAdherence}%</MetricScore>
+                  <MetricScore>{controllerAvg}%</MetricScore>
                 </RoundedBox>
               </Col>
               <Col xs={6} style={{paddingLeft: "8px"}}>
                 <RoundedBox color="purple">
                   Nighttime rescue usage:
                   <br />
-                  <MetricScore>{props.nightTimeRescue} nights</MetricScore>
+                  <MetricScore>{nights} nights</MetricScore>
                 </RoundedBox>
               </Col>
             </Row>
@@ -677,17 +414,12 @@ const PatientStatus = props => {
   );
 };
 
-const RescueMedicationChart = ({ data, medication, ...rest }) => {
-  const _data = data.map(d => {
-    d.date = new Date(d.date);
-    return d;
-  });
-
+const RescueMedicationChart = ({ data, medications, ...rest }) => {
   return (
-    <BarChart xLabel="Days" yLabel="Puffs" data={_data} {...rest} >
+    <BarChart xLabel="Days" yLabel="Puffs" data={data} {...rest} >
       <GraphTitle
-        title="Rescue Medication Usage Graph"
-        medication={medication}
+        title="Rescue Medication Usage"
+        medications={medications}
         legend={
           <div className="text-right" style={{fontSize: "1.5rem", lineHeight: "3.2rem"}}>
             <div style={{display: "inline-block"}}>
@@ -702,26 +434,21 @@ const RescueMedicationChart = ({ data, medication, ...rest }) => {
   );
 };
 
-const ControllerMedicationChart = ({ data, medication, ...rest }) => {
-  const _data = data
-    .map(d => frozenCopy({}, d, { date: new Date(d.date) }))
-    .sort(sortDates)
-    .reduce((arr, d) => arr.concat(incrementToDays(d, 7)), []);
-
+const ControllerMedicationChart = ({ data, medications, ...rest }) => {
   return (
-    <AreaChart data={_data} {...rest} >
+    <AreaChart data={data} {...rest} >
       <GraphTitle
-        title="Rescue Medication Usage Graph"
-        medication={medication}
+        title="Controller Medication Adherence"
+        medications={medications}
       />
     </AreaChart>
   );
 };
 
-const MedicationUsage = ({ controller, rescue, range, ...rest }) => {
+const MedicationUsage = ({ controller, rescue, range, rescueMeds = [], controllerMeds = [], transitionAlerts, ...rest }) => {
   const width  = 1090;
   const height = 240;
-  const margin = { top: 10, right: 10, bottom: 30, left: 60 };
+  const margin = { top: 10, right: 35, bottom: 30, left: 60 };
   const graphWidth = width - margin.left - margin.right;
   const graphHeight = height - margin.top - margin.bottom - 18;
   const xWidth = graphWidth / rescue.length / 2;
@@ -738,11 +465,19 @@ const MedicationUsage = ({ controller, rescue, range, ...rest }) => {
     graphWidth - xWidth
   );
 
+  const alerts = transitionAlerts.map(a => new Date(a).toISOString());
+
+  const rescueData = rescue.map(r => {
+    r.date = new Date(r.date);
+    r.alert = alerts.indexOf(r.date.toISOString()) > -1;
+    return r;
+  });
+
   return (
     <div style={{margin: "2rem 0"}}>
       <SectionHeader text="Medication usage for the last" tab="30 Days" />
       <RescueMedicationChart
-        data={rescue}
+        data={rescueData}
         width={width}
         height={height}
         margin={margin}
@@ -752,6 +487,7 @@ const MedicationUsage = ({ controller, rescue, range, ...rest }) => {
         xWidth={xWidth}
         dScale={xScale}
         colors={COLORS}
+        medications={rescueMeds}
       />
       <ControllerMedicationChart
         data={controller}
@@ -764,47 +500,102 @@ const MedicationUsage = ({ controller, rescue, range, ...rest }) => {
         xWidth={xWidth}
         dScale={areaScale}
         colors={COLORS}
+        medications={controllerMeds}
         title="Controller Medication Adherence Graph"
       />
     </div>
   );
 };
 
-class PatientReport extends Component {
+const PatientSummary = function PatientSummary({
+  range,
+  patient,
+  rescue,
+  controller = [],
+  controlStatus,
+  transitionAlerts
+}) {
+  const _controller = controller
+    .map(d => frozenCopy({}, d, { date: new Date(d.date) }))
+    .sort(sortDates)
+    .reduce((arr, d) => arr.concat(incrementToDays(d, 7)), []);
 
-  componentWillMount() {
-    document.body.className = "patient-report"
+  const meds           = patient.plan.medications || [];
+  const controllerMeds = meds.filter(m => "controller" === m.medication.type);
+  const rescueMeds     = meds.filter(m => "rescue" === m.medication.type);
+  const controllerAvg  = Math.floor(_controller.reduce((tot, item) => tot + item.values.adherencePercent ,0) / _controller.length);
+
+  return (
+    <Page first>
+      <Header timeFrame={range} disease={patient.disease} />
+      <PatientInfo {...patient} rescueMeds={rescueMeds} controllerMeds={controllerMeds} />
+      <PatientStatus rescue={rescue} controlStatus={controlStatus} controller={_controller} controllerAvg={controllerAvg} />
+      <MedicationUsage
+        rescue={rescue}
+        controller={_controller}
+        range={range}
+        transitionAlerts={transitionAlerts}
+        rescueMeds={rescueMeds}
+        controllerMeds={controllerMeds}
+        controllerAvg={controllerAvg}
+      />
+    </Page>
+  );
+};
+
+class PatientReport extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      patient              : props.patient,
+      transitionAlertDates : props.transitionAlertDates,
+      dailySummary         : props.dailySummary,
+      controllerAdherence  : props.controllerAdherence,
+      locale               : props.locale
+    };
+    this.loadData = this.loadData.bind(this);
+  }
+
+  loadData() {
+    const { API_HOST = "http://localhost:8081", match, location } = this.props;
+    const { reportId }    = match.params;
+    const { accessToken } = objectFromQueryString(location.search);
+    const url = `${API_HOST}/api/reports/${reportId}/data?accessToken=${accessToken}`;
+
+    window.fetch(url, { headers : { "x-ph-api-version": "3.25.0" } })
+      .then(checkResponse)
+      .then(extractJSON)
+      .then(data => this.setState({ ...data }))
+      .catch(console.error);
+  }
+
+  componentDidMount() {
+    if (!this.state.patient) {
+      this.loadData();
+    }
   }
 
   render() {
-    const { patient = PATIENT, data = DATA } = this.props;
-    const _rescue = data.rescue.sort(sortDates);
-    const _controller = data.controller.sort(sortDates);
+    const { patient, transitionAlertDates, dailySummary = {}, controllerAdherence = [] } = this.state;
 
-    const _range = [
-      _rescue[0],
-      _controller[0],
-      _rescue[_rescue.length - 1],
-      _controller[_controller.length - 1]
-    ]
-      .filter(exists)
-      .sort(sortDates);
+    if (!patient) return <Loading />;
 
-    const range = [_range[0].date, _range[_range.length - 1].date];
+    const { controlStatus = [], rescueUsage = [] } = dailySummary;
+    const rescue     = rescueUsage.sort(sortDates);
+    const controller = controllerAdherence.sort(sortDates);
+    const range = [rescue[0], rescue[rescue.length - 1]]
+      .sort(sortDates)
+      .map(m => m.date);
 
     return (
-      <div>
-        <Page first>
-          <Header timeFrame={range} disease={patient.disease} />
-          <PatientInfo {...patient} />
-          <PatientStatus />
-          <MedicationUsage
-            rescue={_rescue}
-            controller={_controller}
-            range={range}
-          />
-        </Page>
-      </div>
+      <PatientSummary
+        range={range}
+        patient={patient}
+        rescue={rescue}
+        controller={controller}
+        controlStatus={controlStatus}
+        transitionAlerts={transitionAlertDates}
+      />
     );
   }
 }

@@ -15,11 +15,19 @@ class App extends React.Component {
       <Switch>
         <Route path="/asthma-conditions" render={() =>  <AsthmaConditions {...props}/> } />
         <Route path="/find-my-doctor" render={() =>  <FindMyDoctor {...props}/> } />
-        <Route path="/patient-report" render={() => <PatientReport {...props} /> } />
+        <Route
+          exact
+          path="/patient-summary"
+          render={routeProps => <PatientReport {...routeProps} {...props} /> }
+        />
+        <Route
+          path="/patient-summary/:reportId"
+          render={routeProps => <PatientReport {...routeProps} {...props} /> }
+        />
         <Route render={() => <div>No match</div>} />
       </Switch>
-      );
-    }
+    );
   }
+}
 
-  export default App;
+export default App;

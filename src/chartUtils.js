@@ -4,7 +4,11 @@ export const DARK_GREY  = "#888B8D";
 export const LIGHT_GREY = "#DDD";
 const FONT_SIZE = "16px";
 
-export const buildChartFrame = function buildChartFrame(el, { rightAxis, leftAxis, bottomAxis, monthAxis}, { height, width, margin, graphWidth, graphHeight, xWidth, yLabel }) {
+export const buildChartFrame = function buildChartFrame(
+  el,
+  { rightAxis, leftAxis, bottomAxis, monthAxis},
+  { height, width, margin, graphWidth, graphHeight, xWidth, yLabel }
+) {
   let svg = d3Select(el)
     .append("svg")
       .attr("height", height)

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withFauxDOM } from "react-faux-dom";
+import ReactFauxDOM from "react-faux-dom";
 import { scaleLinear } from "d3-scale";
 import { max as d3Max } from "d3-array";
 import { axisBottom, axisLeft, axisRight } from "d3-axis";
@@ -30,7 +30,6 @@ class BarChart extends Component {
       xWidth,
       xScale,
       yLabel,
-      connectFauxDOM,
       colors
     } = this.props;
 
@@ -66,9 +65,11 @@ class BarChart extends Component {
       .tickPadding(25)
       .tickFormat(d => monthFormatter(d).toUpperCase());
 
+    let el = ReactFauxDOM.createElement('div');
+
     // initialize the chart object
     let svg = buildChartFrame(
-      connectFauxDOM('div', 'chart'),
+      el,
       { leftAxis, rightAxis, bottomAxis, monthAxis },
       { height, width, margin, graphWidth, graphHeight, yLabel, xWidth }
     );
@@ -95,7 +96,14 @@ class BarChart extends Component {
           );
         }
       )
-      .style("fill", colors.orange);
+      .style("fill", colors.orange)
+      .append("text")
+        .attr("x", -20)
+        .attr("y", (d) => yScale(d.values.eventsRescue) + 20)
+        .attr("fill", "red")
+        .style("fontSize", "18px")
+        .style('text-anchor', 'end')
+        .text("HI");
 
     bars.append('path')
       .attr('class', "night-rescue")
@@ -116,18 +124,30 @@ class BarChart extends Component {
       )
       .style("fill", colors.deepRed);
 
+    bars.append('text')
+      .attr('class', 'alert-sent')
+      .attr('transform', `translate(${xWidth/2}, 0)`)
+      .attr("x", d => xScale(d.date))
+      .attr("y", d => yScale(d.values.eventsRescue) - 10)
+      .attr("fill", colors.red)
+      .style("fontSize", "18px")
+      .style('text-anchor', 'middle')
+      .text((d) => d.alert ? "!" : undefined)
+
+    return el.toReact();
   }
 
-  componentDidMount() {
-    this.renderChart();
-  }
+  // componentDidMount() {
+  //   this.renderChart();
+  // }
 
-  componentDidUpdate() {
-    this.renderChart();
-  }
+  // componentDidUpdate() {
+  //   this.renderChart();
+  // }
 
   render() {
-    const { chart, children } = this.props;
+    const { children } = this.props;
+    const chart = this.renderChart();
     return (
       <div
         className="barchart"
@@ -143,4 +163,4 @@ class BarChart extends Component {
   }
 }
 
-export default withFauxDOM(BarChart)
+export default BarChart;

@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import { withFauxDOM } from "react-faux-dom";
+import ReactFauxDOM from "react-faux-dom";
 import { scaleBand, scaleLinear, scaleTime } from "d3-scale";
-import { select as d3Select } from "d3-selection";
 import { axisBottom, axisTop, axisLeft, axisRight } from "d3-axis";
 import { timeDay, timeMonth } from "d3-time";
 import { timeFormat, isoParse } from "d3-time-format";
 import { max as d3Max } from "d3-array";
 import { area as d3Area, curveBasis, curveCardinal, curveCatmullRom, curveBundle, curveNatural, curveStep, curveMonotoneX, curveLinear } from "d3-shape";
-// import BottomAxis from "../BottomAxis";
-// import LeftAxis from "../LeftAxis";
 
 import { buildChartFrame } from "../../chartUtils";
 
@@ -30,7 +27,6 @@ class AreaChart extends Component {
       xScale,
       dScale,
       yLabel,
-      connectFauxDOM,
       colors
     } = this.props;
 
@@ -68,8 +64,10 @@ class AreaChart extends Component {
       .tickFormat(d => monthFormatter(d).toUpperCase());
 
     // initialize the chart object
+    let el = ReactFauxDOM.createElement('div');
+
     let svg = buildChartFrame(
-      connectFauxDOM('div', 'chart'),
+      el,
       { leftAxis, rightAxis, bottomAxis, monthAxis },
       { height, width, margin, graphWidth, graphHeight, yLabel, xWidth }
     );
@@ -88,22 +86,17 @@ class AreaChart extends Component {
       .attr('class', 'area')
       .attr('d', area)
       .attr('transform', `translate(0, 0)`);
-  }
 
-  componentDidMount() {
-    this.renderChart();
-  }
-
-  componentDidUpdate() {
-    this.renderChart();
+    return el.toReact();
   }
 
   render() {
-    const { chart, children } = this.props;
+    const { children } = this.props;
+    const chart = this.renderChart();
     return (
       <div
         className="areachart"
-        style={{ position: "relative", margin: "2rem 0" }}
+        style={{ position: "relative", margin: "1rem 0" }}
       >
         {children}
         {chart}
@@ -112,4 +105,4 @@ class AreaChart extends Component {
   }
 }
 
-export default withFauxDOM(AreaChart)
+export default AreaChart;
