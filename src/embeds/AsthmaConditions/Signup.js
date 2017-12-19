@@ -117,19 +117,25 @@ class Signup extends Component {
         </h2>
         <form style={{ textAlign: "left" }} onSubmit={this.onSubmit}>
           <fieldset style={{ border: "none", margin: 0, padding: 0 }}>
-            <legend style={{ fontSize: "0.9rem", textAlign: "center", width: "100%"}}>
+            <legend style={{
+              fontSize: "0.9rem",
+              textAlign: "center",
+              width: "100%",
+              borderBottom: "none",
+              marginBottom: 0
+            }}>
               Receive a text or email when your
               <br/>
               local asthma conditions are fair or poor.
             </legend>
             <div className="clearfix" style={styles.inputWrapper}>
               <div>
-                <label for="email">
+                <label htmlFor="email">
                   Email
                 </label>
                 <input
                   id="email"
-                  autocomplete="email"
+                  autoComplete="email"
                   type="email"
                   value={this.state.email}
                   onChange={(e) => this.onChange(e, "email")}
@@ -141,12 +147,12 @@ class Signup extends Component {
                 — or —
               </div>
               <div>
-                <label for="sms">
+                <label htmlFor="sms">
                   SMS Number
                 </label>
                 <input
                   id="sms"
-                  autocomplete="tel-national"
+                  autoComplete="tel-national"
                   pattern="\d{10}"
                   minLength="10"
                   maxLength="10"
@@ -158,7 +164,7 @@ class Signup extends Component {
               </div>
             </div>
             <div style={{ width: "48%", float: "left" }}>
-              <label for="postalCode">
+              <label htmlFor="postalCode">
                 Zip Code
               </label>
               <input
@@ -168,7 +174,7 @@ class Signup extends Component {
                 pattern="\d{5}"
                 minLength="5"
                 maxLength="5"
-                autocomplete="postal-code"
+                autoComplete="postal-code"
                 value={this.state.postalCode}
                 onChange={(e) => this.onChange(e, "postalCode")}
                 title={ERRORS.postalCode}

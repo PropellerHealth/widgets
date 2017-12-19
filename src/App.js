@@ -4,11 +4,7 @@ import AsthmaConditions from "./embeds/AsthmaConditions/index";
 import FindMyDoctor from "./embeds/FindMyDoctor/FindMyDoctor";
 import PatientReport from "./embeds/PatientReport";
 
-// import logo from './logo.svg';
-
-if (typeof window === "undefined") {
-  global.window = {};
-}
+import "./App.css";
 
 class App extends React.Component {
 

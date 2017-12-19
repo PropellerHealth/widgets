@@ -1,13 +1,19 @@
-@font-face {
-  font-family: "Circular-Pro-Book";
-  src: url("../../assets/fonts/lineto-circular-pro-book.eot");
-  src: url("../../assets/fonts/lineto-circular-pro-book.eot?#iefix") format("embedded-opentype"), url("../../assets/fonts/lineto-circular-pro-book.woff") format("woff");
-  font-weight: normal;
-  font-style: normal; }
+html.doctor-lookup {
+  position: relative;
+  min-height: 100%;
 
-body {
-  font-family: 'Circular-Pro-Book', 'Trebuchet MS', Arial, sans-serif;
-  margin: 0; }
+  body {
+    /* Margin bottom by footer height */
+    margin-bottom: 250px;
+  }
+  footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 250px;
+    background-color: #20c3f3;
+  }
 
   p, label {
     color: gray
@@ -23,23 +29,7 @@ body {
     background-color: #20c3f3;
     z-index: 1;
     box-sizing: border-box;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 250px;
-}
-footer {
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 250px;
-  background-color: #20c3f3;
+  }
 }
 
 .vertical-center {
