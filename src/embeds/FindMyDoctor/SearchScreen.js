@@ -1,11 +1,15 @@
 import React, { Component }           from "react";
 import Alert                          from "react-s-alert";
-import { FormGroup, FormControl, 
-  InputGroup, Glyphicon, Button }     from "react-bootstrap";
-import Autosuggest                    from "react-autosuggest";
-  
-import { checkResponse, extractJSON } from "../../utilities";
-import { specialties }                from "./../../utilities";
+import {
+  FormGroup,
+  FormControl,
+  InputGroup,
+  Glyphicon,
+  Button
+} from "react-bootstrap";
+import Autosuggest from "react-autosuggest";
+
+import { checkResponse, extractJSON, specialties, HAS_WINDOW } from "../../utilities";
 
 const GOOGLE_KEY  = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
 
@@ -86,22 +90,22 @@ const theme = {
   }
 };
 
-// Teach Autosuggest how to calculate suggestions for any given input value. 
+// Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
- 
+
   return inputLength === 0 ? [] : specialties.filter(specialty =>
     specialty.name.toLowerCase().slice(0, inputLength) === inputValue
   );
  };
- 
- // When suggestion is clicked, Autosuggest needs to populate the input 
- // based on the clicked suggestion. Teach Autosuggest how to calculate the 
- // input value for every given suggestion. 
+
+ // When suggestion is clicked, Autosuggest needs to populate the input
+ // based on the clicked suggestion. Teach Autosuggest how to calculate the
+ // input value for every given suggestion.
  const getSuggestionValue = suggestion => suggestion.name;
- 
- // Use your imagination to render suggestions. 
+
+ // Use your imagination to render suggestions.
  const renderSuggestion = suggestion => (
   <span>{suggestion.name}</span>
  );
@@ -111,10 +115,10 @@ class SearchScreen extends Component {
     super(props);
     this.state = {
       searching     : false,
-      doctor        : props.searchedDoctor || "", 
+      doctor        : props.searchedDoctor || "",
       specialty     : props.searchedSpecialty || "",
       latitude      : props.latitude,
-      longitude     : props.longitude, 
+      longitude     : props.longitude,
       geoLocation   : props.forecastLocation || "",
       location      : props.searchedLocation || "",
       uid           : props.uid,
@@ -140,15 +144,15 @@ class SearchScreen extends Component {
     });
   };
 
-  // Autosuggest will call this function every time you need to update suggestions. 
-  // You already implemented this logic above, so just use it. 
+  // Autosuggest will call this function every time you need to update suggestions.
+  // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: getSuggestions(value)
     });
   };
 
-  // Autosuggest will call this function every time you need to clear suggestions. 
+  // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
@@ -171,19 +175,19 @@ class SearchScreen extends Component {
   }
 
   componentWillMount () {
-    if ( !this.state.mapsLoaded && "function" === typeof document.createElement ) {
+    if (HAS_WINDOW && !this.state.mapsLoaded) {
       const script  = document.createElement("script");
 
       script.src    = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_KEY}&libraries=places`;
       script.async  = true;
       script.addEventListener("load", this.initAutocomplete);
-      
+
       document.body.appendChild(script);
-    } else if ( "function" === typeof document.createElement ) {
+    } else if (HAS_WINDOW) {
       this.initAutocomplete();
     }
   }
-  
+
   componentWillUnmount () {
     document.body.removeEventListener("load", this.initAutocomplete);
   }
@@ -192,7 +196,7 @@ class SearchScreen extends Component {
     const { mapsScriptLoaded } =  this.props;
 
     if ( document.getElementById("location") ) {
-      this.setState({ 
+      this.setState({
         autocomplete  : new window.google.maps.places.Autocomplete((document.getElementById('location')),{types: ['(cities)']})
       });
     }
@@ -206,7 +210,7 @@ class SearchScreen extends Component {
       geoLocation : nextProps.geoLocation,
       latitude    : nextProps.latitude,
       longitude   : nextProps.longitude
-    });  
+    });
   }
 
   setLatLong () {
@@ -249,16 +253,16 @@ class SearchScreen extends Component {
   onChange (e, key) {
     this.setState({ [key] : e.target.value });
   }
-  
+
   onSubmit (e) {
     const { goNext, updateOrSomethingLikeThat } = this.props;
     e.preventDefault();
-    
+
     const location  = this.setLatLong();
     const data      = {
       doctor    : this.state.doctor,
       specialty : this.state.value,
-      location 
+      location
     };
 
     if (!data.doctor && !data.location) {
@@ -295,8 +299,8 @@ class SearchScreen extends Component {
     const { showing } = this.state;
 
     const { value, suggestions } = this.state;
-    
-    // Autosuggest will pass through all these props to the input. 
+
+    // Autosuggest will pass through all these props to the input.
     const inputProps = {
       value,
       onChange: this.onChange2
@@ -305,7 +309,7 @@ class SearchScreen extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <fieldset>
-       
+
           <FormGroup>
             <label style={{fontSize:"1.25rem"}}>
                 {INPUT_FIELD.doctor}:
@@ -337,7 +341,7 @@ class SearchScreen extends Component {
                 {...inputProps}
               />)}
             />
-            
+
           </FormGroup>
           <FormGroup
             style={{ display: `${showing ? "block" : "none"}`}}
@@ -347,11 +351,11 @@ class SearchScreen extends Component {
             </label>
             <InputGroup>
               <FormControl
-                readOnly 
+                readOnly
                 type="text"
                 value={this.state.geoLocation}
               />
-              <InputGroup.Button onClick={() => this.showLocationSearch()}>
+              <InputGroup.Button onClick={this.showLocationSearch}>
                 <Button>
                   <Glyphicon glyph="remove" />
                 </Button>
@@ -365,11 +369,11 @@ class SearchScreen extends Component {
               {INPUT_FIELD.location}:
             </label>
             <InputGroup>
-              <FormControl 
+              <FormControl
                 type="text"
                 id="location"
               />
-                <InputGroup.Button onClick={() => this.showLocationSearch()}>
+                <InputGroup.Button onClick={this.showLocationSearch}>
                   <Button>
                     <Glyphicon glyph="globe" />
                   </Button>
@@ -392,6 +396,6 @@ class SearchScreen extends Component {
       );
     }
   }
-  
+
   export default SearchScreen;
 

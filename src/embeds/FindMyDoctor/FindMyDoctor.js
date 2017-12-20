@@ -6,7 +6,7 @@ import ConfirmDoctor  from "./ConfirmDoctor";
 import Success        from "./Success";
 import propellerLogo  from "../../assets/images/propeller-logo-white.svg";
 
-import { checkStatus, extractJSON } from "../../utilities";
+import { checkStatus, extractJSON, HAS_GEOLOCATE } from "../../utilities";
 
 import "./FindMyDoctor.css";
 import "../../assets/styles/bootstrap.css";
@@ -30,7 +30,7 @@ class FindMyDoctor extends Component {
       doctor        : props.doctor || "",
       latitude      : props.latitude,
       longitude     : props.longitude,
-      hasGeolocate  : window.navigator && "geolocation" in window.navigator,
+      hasGeolocate  : HAS_GEOLOCATE,
       location      : props.state,
       city          : props.city,
       uid           : props.uid || "",
@@ -81,7 +81,7 @@ class FindMyDoctor extends Component {
           .then(data => {
             if ( data.results.length > 0 ) {
               const geoLocation  = data.results[0].formatted_address;
-  
+
               this.setState({
                 geoLocation,
                 latitude,
@@ -100,6 +100,12 @@ class FindMyDoctor extends Component {
     if ( searchParam.indexOf('uid?') === -1 && searchParam.length === 29) {
       const uid = searchParam.substring(6);
       this.setState({uid});
+    }
+  }
+
+  componentWillMount() {
+    if ("undefined" !== typeof document) {
+      document.documentElement.className = "doctor-lookup";
     }
   }
 
@@ -146,15 +152,15 @@ class FindMyDoctor extends Component {
         </div>
         <div style={{marginBottom: "250px"}}>
         <ToRender
-          goNext={this.goNext} 
+          goNext={this.goNext}
           goPrevious={this.goPrevious}
-          goToStart={this.goToStart} 
-          updateOrSomethingLikeThat={this.updateOrSomethingLikeThat} 
+          goToStart={this.goToStart}
+          updateOrSomethingLikeThat={this.updateOrSomethingLikeThat}
           passThatDocAlong={this.passThatDocAlong}
           loadConditions={this.loadConditions}
           searchedParams={this.searchedParams}
           mapsScriptLoaded={this.mapsScriptLoaded}
-          {...this.state} 
+          {...this.state}
         />
         </div>
         <br/>

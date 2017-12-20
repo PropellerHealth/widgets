@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CurrentConditions from "./CurrentConditions";
 import Signup from "./Signup";
-import { checkStatus, extractJSON, headers, isIE11 } from "../../utilities";
+import { checkStatus, extractJSON, headers, isIE11, HAS_GEOLOCATE, HAS_WINDOW } from "../../utilities";
 // import logo from './logo.svg';
 import "./style.css";
 
@@ -57,7 +57,7 @@ class AsthmaConditions extends Component {
       latitude         : props.latitude,
       longitude        : props.longitude,
       forecastLocation : props.forecastLocation,
-      hasGeolocate     : window.navigator && "geolocation" in window.navigator,
+      hasGeolocate     : HAS_GEOLOCATE,
       flipped          : false
     };
     this.loadConditions = this.loadConditions.bind(this);
@@ -84,8 +84,17 @@ class AsthmaConditions extends Component {
       .catch(console.error);
   }
 
+  componentWillMount() {
+    if ("undefined" !== typeof document) {
+      document.documentElement.className = "asthma-conditions";
+    }
+  }
+
   componentDidMount() {
+    if (!HAS_WINDOW) return;
+
     const { state } = this;
+
     if (state.latitude && state.longitude) {
       if (!(state.status && state.score)) {
         this.loadConditions(state.latitude, state.longitude);
