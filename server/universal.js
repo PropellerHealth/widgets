@@ -61,8 +61,9 @@ const propsForRequest = (req, cb) => {
       return cb(undefined, {});
     }
   } else if (req.path.indexOf("/patient-summary") === 0) {
+    let apiHost = req.query.host || API_HOST;
     let options = {
-      url     : `${API_HOST}/api/reports/${req.params.reportId}/data?accessToken=${req.query.accessToken}`,
+      url     : `${apiHost}/api/reports/${req.params.reportId}/data?accessToken=${req.query.accessToken}`,
       method  : "GET",
       json    : true,
       headers : {
@@ -81,7 +82,7 @@ const propsForRequest = (req, cb) => {
         return cb(new Error(resp.statusMessage || "Server returned an error"));
       }
 
-      return cb(undefined, body);
+      return cb(undefined, {...body, API_HOST: apiHost});
     });
   } else {
     return cb(undefined, {});

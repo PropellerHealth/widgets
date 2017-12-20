@@ -31,6 +31,7 @@ const API_HEADER = {
 const checkResponse = response => response.ok ? response : Promise.reject(response);
 
 const objectFromQueryString = queryString => {
+  console.log(queryString);
   return queryString
     .substring(1)
     .split("&")
@@ -38,8 +39,8 @@ const objectFromQueryString = queryString => {
       if (!!query) {
         let parts = query.split("=");
         o[parts[0]] = !o[parts[0]]
-          ? parts[1]
-          : [].concat(o[parts[0]], parts[1]);
+          ? decodeURIComponent(parts[1])
+          : [].concat(o[parts[0]], decodeURIComponent(parts[1]));
       }
       return o;
     }, {});

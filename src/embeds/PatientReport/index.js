@@ -559,8 +559,8 @@ class PatientReport extends Component {
   loadData() {
     const { API_HOST = "http://localhost:8081", match, location } = this.props;
     const { reportId }    = match.params;
-    const { accessToken } = objectFromQueryString(location.search);
-    const url = `${API_HOST}/api/reports/${reportId}/data?accessToken=${accessToken}`;
+    const { accessToken, host = API_HOST } = objectFromQueryString(location.search);
+    const url = `${host}/api/reports/${reportId}/data?accessToken=${accessToken}`;
 
     window.fetch(url, { headers : { "x-ph-api-version": "3.25.0" } })
       .then(checkResponse)
