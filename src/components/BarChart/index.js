@@ -96,14 +96,7 @@ class BarChart extends Component {
           );
         }
       )
-      .style("fill", colors.orange)
-      .append("text")
-        .attr("x", -20)
-        .attr("y", (d) => yScale(d.values.eventsRescue) + 20)
-        .attr("fill", "red")
-        .style("fontSize", "18px")
-        .style('text-anchor', 'end')
-        .text("HI");
+      .style("fill", colors.orange);
 
     bars.append('path')
       .attr('class', "night-rescue")

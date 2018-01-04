@@ -95,7 +95,11 @@ const GreyText = ({ style, ...rest }) => {
 const Hr = () => {
   return (
     <hr
-      style={{ margin: "1.5rem 0", color: COLORS.blue, borderColor: COLORS.blue }}
+      style={{
+        margin: "1.5rem 0",
+        color: COLORS.blue,
+        borderColor: COLORS.blue
+      }}
     />
   );
 };
@@ -175,8 +179,12 @@ const PatientInfo = ({
     }
 
     const puffs = usageList[0].doses;
-    const times = usageList.map(u => moment().hour(u.hour).minute(u.minute).format("h:mma"));
-    const scheduled = times.length === 0 ? "taken as needed" : ` scheduled daily at ${times.join(", ")}`;
+    const times = usageList.map(
+      u => moment().hour(u.hour).minute(u.minute).format("h:mma")
+    );
+    const scheduled = times.length === 0
+      ? "taken as needed"
+      : ` scheduled daily at ${times.join(", ")}`;
 
     return `${puffs} inhalation BID, ${scheduled}.`;
   }
@@ -195,7 +203,7 @@ const PatientInfo = ({
             <strong>
               {givenName} {familyName}
             </strong>{" "}
-            <GreyText style={{padding: "0 0.7rem"}}>|</GreyText> {age}yo, {displayedDate(birthDate)}, {disease}
+            <GreyText style={{padding: "0 0.7rem"}}>|</GreyText> {age}, {displayedDate(birthDate)}, {disease}
           </h2>
         </Col>
       </Row>
@@ -305,7 +313,16 @@ const GraphTitle = ({ title, medications = [], legend }) => {
 };
 
 const MetricScore = ({ style, ...rest}) => {
-  return <span style={Object.assign({}, {fontWeight: "bold", fontSize: "2rem", lineHeight: "2rem"}, style)} {...rest} />
+  return (
+    <span
+      style={Object.assign(
+        {},
+        {fontWeight: "bold", fontSize: "2rem", lineHeight: "2rem"},
+        style)
+      }
+      {...rest}
+    />
+  );
 }
 
 const PatientStatus = ({ controlStatus, rescue, controllerAvg=0 }) => {
@@ -414,16 +431,23 @@ const PatientStatus = ({ controlStatus, rescue, controllerAvg=0 }) => {
   );
 };
 
-const RescueMedicationChart = ({ data, medications, ...rest }) => {
+const RescueMedicationChart = ({ data, medications, title, ...rest }) => {
   return (
     <BarChart xLabel="Days" yLabel="Puffs" data={data} {...rest} >
       <GraphTitle
-        title="Rescue Medication Usage"
+        title={title}
         medications={medications}
         legend={
           <div className="text-right" style={{fontSize: "1.5rem", lineHeight: "3.2rem"}}>
             <div style={{display: "inline-block"}}>
-              <span style={{color: COLORS.red, fontSize: "2.7rem", verticalAlign: "bottom", fontWeight: "bold"}}>!</span> = Notification sent for change in control status
+              <span
+                style={{
+                  color: COLORS.red,
+                  fontSize: "2.7rem",
+                  verticalAlign: "bottom",
+                  fontWeight: "bold"
+                }}
+              >!</span> = Notification sent for change in control status
             </div>
             <div style={{display: "inline-block", paddingLeft: "3rem"}}>
               <span style={{color: COLORS.deepRed, fontSize: "2.2rem", verticalAlign: "bottom"}}>●</span> <strong>Nighttime</strong>
@@ -434,11 +458,11 @@ const RescueMedicationChart = ({ data, medications, ...rest }) => {
   );
 };
 
-const ControllerMedicationChart = ({ data, medications, ...rest }) => {
+const ControllerMedicationChart = ({ data, medications, title, ...rest }) => {
   return (
     <AreaChart data={data} {...rest} >
       <GraphTitle
-        title="Controller Medication Adherence"
+        title={title}
         medications={medications}
       />
     </AreaChart>
@@ -488,6 +512,7 @@ const MedicationUsage = ({ controller, rescue, range, rescueMeds = [], controlle
         dScale={xScale}
         colors={COLORS}
         medications={rescueMeds}
+        title="Rescue Medication Usage"
       />
       <ControllerMedicationChart
         data={controller}
@@ -501,7 +526,7 @@ const MedicationUsage = ({ controller, rescue, range, rescueMeds = [], controlle
         dScale={areaScale}
         colors={COLORS}
         medications={controllerMeds}
-        title="Controller Medication Adherence Graph"
+        title="Controller Medication Adherence"
       />
     </div>
   );
