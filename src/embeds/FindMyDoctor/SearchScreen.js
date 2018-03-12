@@ -9,7 +9,8 @@ import {
 } from "react-bootstrap";
 import Autosuggest from "react-autosuggest";
 
-import { checkResponse, extractJSON, specialties, HAS_WINDOW } from "../../utilities";
+import { checkResponse, extractJSON, HAS_WINDOW } from "../../utilities";
+import specialties from "../../specialties";
 
 const GOOGLE_KEY  = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
 
