@@ -46,6 +46,23 @@ const objectFromQueryString = queryString => {
     }, {});
 };
 
+const COLORS = {
+  blue     : "#20C3F3",
+  purple   : "#6b1671",
+  green    : "green",
+  deepRed  : "#D70000",
+  red      : "#EE0037",
+  yellow   : "yellow",
+  orange   : "#FF7500",
+  grey     : "#888B8D",
+  darkGrey : "#333"
+};
+
+const sortDates = (a, b) => {
+  const _a = a.date,
+    _b = b.date;
+  return _a > _b ? 1 : _a < _b ? -1 : 0;
+};
 
 export {
   checkStatus,
@@ -56,5 +73,7 @@ export {
   isIE11,
   HAS_GEOLOCATE,
   HAS_WINDOW,
-  objectFromQueryString
+  objectFromQueryString,
+  COLORS,
+  sortDates
 };
