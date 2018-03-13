@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { translate } from "react-i18next";
 import { Row, Col } from "react-bootstrap";
 import GreyText from "./GreyText";
 import Hr from "./Hr";
@@ -18,7 +19,8 @@ const PatientInfo = function PatientInfo({
   plan,
   followers,
   rescueMeds,
-  controllerMeds
+  controllerMeds,
+  t
 }) {
   const careTeam = followers
     .filter(f => "physician" === f.role)
@@ -32,7 +34,7 @@ const PatientInfo = function PatientInfo({
 
   const controllerSchedule = usageList => {
     if (!usageList || usageList.length === 0) {
-      return "As needed";
+      return t("AS_NEEDED");
     }
 
     const puffs = usageList[0].doses;
@@ -40,14 +42,14 @@ const PatientInfo = function PatientInfo({
       moment()
         .hour(u.hour)
         .minute(u.minute)
-        .format("h:mma")
+        .format("LT")
     );
-    const scheduled =
+    const schedule =
       times.length === 0
-        ? "taken as needed"
-        : ` scheduled daily at ${times.join(", ")}`;
+        ? t("TAKEN_AS_NEEDED")
+        : t("SCHEDULED_DAILY_AT", {times: times.join(", ")});
 
-    return `${puffs} inhalation BID, ${scheduled}.`;
+    return `${t("NUM_INHALATION", {number: puffs})}, ${schedule}`;
   };
 
   return (
@@ -65,29 +67,29 @@ const PatientInfo = function PatientInfo({
               {givenName} {familyName}
             </strong>{" "}
             <GreyText style={{ padding: "0 0.7rem" }}>|</GreyText> {age},{" "}
-            {displayedDate(birthDate)}, {disease}
+            {displayedDate(birthDate)}, {t(disease.toUpperCase())}
           </h2>
         </Col>
       </Row>
       <Hr />
       <Row>
         <Col xs={6}>
-          <GreyText>Care Team:</GreyText> <strong>{careTeam.join(", ")}</strong>
+          <GreyText>{t("CARE_TEAM")}:</GreyText> <strong>{careTeam.join(", ")}</strong>
         </Col>
         <Col xs={6} className="text-right">
-          <GreyText>Last Sensor Sync:</GreyText>{" "}
-          <strong>{displayedDate(sync.last, "D MMM YYYY")}</strong>
+          <GreyText>{t("LAST_SENSOR_SYNC")}:</GreyText>{" "}
+          <strong>{displayedDate(sync.last, "ll")}</strong>
         </Col>
       </Row>
       <Hr />
       <Row>
         <Col xs={6}>
-          <GreyText>Current Rescue Medication:</GreyText>
+          <GreyText>{t("CURRENT_RESCUE_MEDICATION")}:</GreyText>
           <br />
           {rescueMeds[0] && <strong>{rescueMeds[0].medication.name}</strong>}
         </Col>
         <Col xs={6}>
-          <GreyText>Current Controller Medication:</GreyText>
+          <GreyText>{t("CURRENT_CONTROLLER_MEDICATION")}:</GreyText>
           {controllerMeds.map((m, i) => (
             <div key={`controller-med-${i}`}>
               <strong>{m.medication.name}</strong>
@@ -102,4 +104,4 @@ const PatientInfo = function PatientInfo({
   );
 };
 
-export default PatientInfo;
+export default translate("patient-report")(PatientInfo);

@@ -1,4 +1,5 @@
 import React from "react";
+import { translate } from "react-i18next";
 import { scaleTime } from "d3-scale";
 import { isoParse } from "d3-time-format";
 import SectionHeader from "./SectionHeader";
@@ -20,7 +21,7 @@ const MedicationUsage = function MedicationUsage({
   rescueMeds = [],
   controllerMeds = [],
   transitionAlerts,
-  ...rest
+  t
 }) {
   const width = 1090;
   const height = 240;
@@ -51,7 +52,7 @@ const MedicationUsage = function MedicationUsage({
 
   return (
     <div style={{ margin: "2rem 0" }}>
-      <SectionHeader text="Medication usage for the last" tab="30 Days" />
+      <SectionHeader text={t("MEDICATION_USAGE_FOR_LAST")} tab={t("NUM_DAYS", {number: 30})} />
       <RescueMedicationChart
         data={rescueData}
         width={width}
@@ -64,7 +65,7 @@ const MedicationUsage = function MedicationUsage({
         dScale={xScale}
         colors={COLORS}
         medications={rescueMeds}
-        title="Rescue Medication Usage"
+        title={t("RESCUE_MEDICATION_USAGE")}
       />
       <ControllerMedicationChart
         data={controller}
@@ -78,10 +79,10 @@ const MedicationUsage = function MedicationUsage({
         dScale={areaScale}
         colors={COLORS}
         medications={controllerMeds}
-        title="Controller Medication Adherence"
+        title={t("CONTROLLER_MEDICATION_ADHERENCE")}
       />
     </div>
   );
 };
 
-export default MedicationUsage;
+export default translate("patient-report")(MedicationUsage);

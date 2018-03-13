@@ -1,4 +1,5 @@
 import React from "react";
+import { translate } from "react-i18next";
 import BarChart from "../../components/BarChart";
 import GraphTitle from "./GraphTitle";
 
@@ -8,10 +9,11 @@ const RescueMedicationChart = function RescueMedicationChart({
   data,
   medications,
   title,
+  t,
   ...rest
 }) {
   return (
-    <BarChart xLabel="Days" yLabel="Puffs" data={data} {...rest}>
+    <BarChart xLabel={t("DAYS")} yLabel={t("PUFFS")} data={data} {...rest}>
       <GraphTitle
         title={title}
         medications={medications}
@@ -31,7 +33,7 @@ const RescueMedicationChart = function RescueMedicationChart({
               >
                 !
               </span>{" "}
-              = Notification sent for change in control status
+              = {t("CONTROL_STATUS_LEGEND")}
             </div>
             <div style={{ display: "inline-block", paddingLeft: "3rem" }}>
               <span
@@ -43,7 +45,7 @@ const RescueMedicationChart = function RescueMedicationChart({
               >
                 ●
               </span>{" "}
-              <strong>Nighttime</strong>
+              <strong>{t("NIGHTTIME_USAGE_LEGEND")}</strong>
             </div>
           </div>
         }
@@ -52,4 +54,4 @@ const RescueMedicationChart = function RescueMedicationChart({
   );
 };
 
-export default RescueMedicationChart;
+export default translate("patient-report")(RescueMedicationChart);

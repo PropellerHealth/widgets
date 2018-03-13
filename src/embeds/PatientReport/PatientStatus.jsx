@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
+import { translate } from "react-i18next";
 import SectionHeader from "./SectionHeader";
 import GreyText from "./GreyText";
 import RoundedBox from "./RoundedBox";
@@ -7,41 +8,57 @@ import MetricScore from "./MetricScore";
 
 import { COLORS } from "../../utilities";
 
-const PatientStatus = function PatientStatus({ controlStatus, rescue, controllerAvg=0 }) {
+const PatientStatus = function PatientStatus({
+  controlStatus,
+  rescue,
+  controllerAvg = 0,
+  t
+}) {
   const nights = rescue.filter(r => r.values.eventsRescueNight > 0).length;
   return (
-    <div style={{margin: "2rem 0"}}>
-      <SectionHeader text="Patient status for the most recent" tab="30 Days" />
+    <div style={{ margin: "2rem 0" }}>
+      <SectionHeader
+        text={t("PATIENT_STATUS_HEADER")}
+        tab={t("NUM_DAYS", { number: 30 })}
+      />
       <div style={{ position: "relative" }}>
         <Row>
           <Col xs={6}>
             <Row>
               <Col xs={12}>
                 <RoundedBox color="red">
-                  Well Controlled:{" "}
-                  <MetricScore>{controlStatus.good} days</MetricScore>
+                  {t("WELL_CONTROLLED")}:{" "}
+                  <MetricScore>
+                    {t("NUM_DAYS", { number: controlStatus.good })}
+                  </MetricScore>
                   <br />
-                  Not Well Controlled:{" "}
-                  <MetricScore>{controlStatus.fair} days</MetricScore>
+                  {t("NOT_WELL_CONTROLLED")}:{" "}
+                  <MetricScore>
+                    {t("NUM_DAYS", { number: controlStatus.fair })}
+                  </MetricScore>
                   <br />
-                  Poorly Controlled:{" "}
-                  <MetricScore>{controlStatus.poor} days</MetricScore>
+                  {t("POORLY_CONTROLLED")}:{" "}
+                  <MetricScore>
+                    {t("NUM_DAYS", { number: controlStatus.poor })}
+                  </MetricScore>
                 </RoundedBox>
               </Col>
             </Row>
             <Row>
-              <Col xs={6} style={{paddingRight: "8px"}}>
+              <Col xs={6} style={{ paddingRight: "8px" }}>
                 <RoundedBox color="orange">
-                  Controller adherence:
+                  {t("CONTROLLER_ADHERENCE")}:
                   <br />
                   <MetricScore>{controllerAvg}%</MetricScore>
                 </RoundedBox>
               </Col>
-              <Col xs={6} style={{paddingLeft: "8px"}}>
+              <Col xs={6} style={{ paddingLeft: "8px" }}>
                 <RoundedBox color="purple">
-                  Nighttime rescue usage:
+                  {t("NIGHTTIME_RESUCE_USAGE")}:
                   <br />
-                  <MetricScore>{nights} nights</MetricScore>
+                  <MetricScore>
+                    {t("NUM_NIGHTS", { number: nights })}
+                  </MetricScore>
                 </RoundedBox>
               </Col>
             </Row>
@@ -85,7 +102,7 @@ const PatientStatus = function PatientStatus({ controlStatus, rescue, controller
               >
                 !
               </span>
-              PHYSICIAN EVALUATION:
+              {t("PHYSICIAN_EVALUATION")}:
               <div
                 style={{
                   position: "absolute",
@@ -94,7 +111,7 @@ const PatientStatus = function PatientStatus({ controlStatus, rescue, controller
                   left: "1.2rem"
                 }}
               >
-                <GreyText>Sign:</GreyText>
+                <GreyText>{t("SIGN")}:</GreyText>
                 <GreyText
                   style={{
                     borderBottom: "1px solid",
@@ -113,4 +130,4 @@ const PatientStatus = function PatientStatus({ controlStatus, rescue, controller
   );
 };
 
-export default PatientStatus;
+export default translate("patient-report")(PatientStatus);

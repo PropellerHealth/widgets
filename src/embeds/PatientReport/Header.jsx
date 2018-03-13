@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { translate } from "react-i18next";
 import { Row, Col } from "react-bootstrap";
 import PageHeader from "./PageHeader";
 
@@ -20,14 +21,14 @@ const timeFrame = range => {
   }
 };
 
-const Header = ({ timeFrame: range, disease = "asthma" }) => {
+const Header = ({ timeFrame: range, disease = "asthma", t }) => {
   return (
     <div>
       <Row>
         <Col xs={6}>
           <img src={logo} alt="Propeller Health" height={80} />
         </Col>
-        <Col xs={6} style={{lineHeight: "6rem"}}>
+        <Col xs={6} style={{ lineHeight: "6rem" }}>
           <h1
             className="text-right"
             style={{
@@ -38,15 +39,18 @@ const Header = ({ timeFrame: range, disease = "asthma" }) => {
               textAlign: "right",
               width: "100%",
               verticalAlign: "bottom"
-            }}>
-            {disease.toUpperCase()} HEALTH REPORT -{" "}
-            <strong>{timeFrame(range).toUpperCase()}</strong>
+            }}
+          >
+            {t("DISEASE_HEALTH_REPORT", {
+              disease: t(disease.toUpperCase()).toUpperCase()
+            })}{" "}
+            - <strong>{timeFrame(range).toUpperCase()}</strong>
           </h1>
         </Col>
       </Row>
-      <PageHeader>Summary</PageHeader>
+      <PageHeader>{t("SUMMARY")}</PageHeader>
     </div>
   );
 };
 
-export default Header;
+export default translate("patient-report")(Header);
