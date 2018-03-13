@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 import "./index.css";
 
-let el = document.getElementById('app-props');
+let el = document.getElementById("app-props");
 let props;
 let data;
 if (el) {
@@ -16,5 +16,5 @@ ReactDOM.render(
   <BrowserRouter>
     <App {...data}/>
   </BrowserRouter>,
-  document.getElementById('ph-status')
+  document.getElementById("ph-status")
 );

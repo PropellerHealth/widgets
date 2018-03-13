@@ -52,27 +52,27 @@ const styles = Object({
 
 const theme = {
   container: {
-    position  : 'relative'
+    position  : "relative"
   },
   inputFocused: {
-    outline: 'none'
+    outline: "none"
   },
   inputOpen: {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0
   },
   suggestionsContainer: {
-    display: 'none'
+    display: "none"
   },
   suggestionsContainerOpen: {
-    display: 'block',
+    display: "block",
     maxHeight : "300px",
     overflow  : "auto",
-    position: 'absolute',
+    position: "absolute",
     // top: 51,
     // width: 280,
-    border: '1px solid #aaa',
-    backgroundColor: '#fff',
+    border: "1px solid #aaa",
+    backgroundColor: "#fff",
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
     zIndex: 10
@@ -80,14 +80,14 @@ const theme = {
   suggestionsList: {
     margin: 0,
     padding: 0,
-    listStyleType: 'none',
+    listStyleType: "none",
   },
   suggestion: {
-    cursor: 'pointer',
-    padding: '10px 20px'
+    cursor: "pointer",
+    padding: "10px 20px"
   },
   suggestionHighlighted: {
-    backgroundColor: '#ddd'
+    backgroundColor: "#ddd"
   }
 };
 
@@ -99,17 +99,17 @@ const getSuggestions = value => {
   return inputLength === 0 ? [] : specialties.filter(specialty =>
     specialty.name.toLowerCase().slice(0, inputLength) === inputValue
   );
- };
+};
 
- // When suggestion is clicked, Autosuggest needs to populate the input
- // based on the clicked suggestion. Teach Autosuggest how to calculate the
- // input value for every given suggestion.
- const getSuggestionValue = suggestion => suggestion.name;
+// When suggestion is clicked, Autosuggest needs to populate the input
+// based on the clicked suggestion. Teach Autosuggest how to calculate the
+// input value for every given suggestion.
+const getSuggestionValue = suggestion => suggestion.name;
 
- // Use your imagination to render suggestions.
- const renderSuggestion = suggestion => (
+// Use your imagination to render suggestions.
+const renderSuggestion = suggestion => (
   <span>{suggestion.name}</span>
- );
+);
 
 class SearchScreen extends Component {
   constructor(props) {
@@ -166,7 +166,7 @@ class SearchScreen extends Component {
       if ( specialtyName === specialty.name ) {
         uid = specialty.uid;
       }
-    })
+    });
     return uid;
   }
 
@@ -198,11 +198,11 @@ class SearchScreen extends Component {
 
     if ( document.getElementById("location") ) {
       this.setState({
-        autocomplete  : new window.google.maps.places.Autocomplete((document.getElementById('location')),{types: ['(cities)']})
+        autocomplete  : new window.google.maps.places.Autocomplete((document.getElementById("location")),{types: ["(cities)"]})
       });
     }
     mapsScriptLoaded();
-      // currently breaks everything
+    // currently breaks everything
     // this.setState({ autocomplete : autocomplete.setComponentRestrictions({'country': ['us']})});
   }
 
@@ -313,7 +313,7 @@ class SearchScreen extends Component {
 
           <FormGroup>
             <label style={{fontSize:"1.25rem"}}>
-                {INPUT_FIELD.doctor}:
+              {INPUT_FIELD.doctor}:
             </label>
             <FormControl
               id="doctor"
@@ -374,10 +374,10 @@ class SearchScreen extends Component {
                 type="text"
                 id="location"
               />
-                <InputGroup.Button onClick={this.showLocationSearch}>
-                  <Button>
-                    <Glyphicon glyph="globe" />
-                  </Button>
+              <InputGroup.Button onClick={this.showLocationSearch}>
+                <Button>
+                  <Glyphicon glyph="globe" />
+                </Button>
               </InputGroup.Button>
             </InputGroup>
           </FormGroup>
@@ -385,8 +385,8 @@ class SearchScreen extends Component {
           <input
             style={
               this.state.searching
-              ? Object.assign({}, styles.formButton, {opacity: "0.5"})
-              : styles.formButton
+                ? Object.assign({}, styles.formButton, {opacity: "0.5"})
+                : styles.formButton
             }
             type="submit"
             value={this.state.searching ? "Searching..." : "Search"}
@@ -394,9 +394,9 @@ class SearchScreen extends Component {
           />
         </fieldset>
       </form>
-      );
-    }
+    );
   }
+}
 
-  export default SearchScreen;
+export default SearchScreen;
 

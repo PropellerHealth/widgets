@@ -14,11 +14,11 @@ export const buildChartFrame = function buildChartFrame(
       .attr("height", height)
       .attr("width", width)
     .append("g")
-      .attr('transform', `translate(${margin.left}, ${margin.top})`);
+      .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  svg.append('g')
-    .attr('class', 'y axis right-axis')
-    .attr('transform', `translate(${graphWidth}, 0)`)
+  svg.append("g")
+    .attr("class", "y axis right-axis")
+    .attr("transform", `translate(${graphWidth}, 0)`)
     .call(g => {
       g.call(rightAxis);
       g.select(".domain")
@@ -33,9 +33,9 @@ export const buildChartFrame = function buildChartFrame(
     });
 
   svg
-    .append('g')
-      .attr('class', 'y axis left-axis')
-      .attr('transform', 'translate(0, 0)')
+    .append("g")
+      .attr("class", "y axis left-axis")
+      .attr("transform", "translate(0, 0)")
       .call(g => {
         g.call(leftAxis);
         g.select(".domain")
@@ -49,31 +49,31 @@ export const buildChartFrame = function buildChartFrame(
         // console.log(fText);
         // fText.text(`${yLabel} ${fText.text()}`);
       })
-    .append('text')
-      .attr('class', 'label')
+    .append("text")
+      .attr("class", "label")
       .attr("x", -20)
       .attr("y", 4)
       .attr("fill", DARK_GREY)
       .style("fontSize", FONT_SIZE)
-      .style('text-anchor', 'end')
+      .style("text-anchor", "end")
       .text(yLabel);
 
-  svg.append('g')
-    .attr('class', 'x axis bottom-axis')
-    .attr('transform', `translate(0, ${graphHeight})`)
+  svg.append("g")
+    .attr("class", "x axis bottom-axis")
+    .attr("transform", `translate(0, ${graphHeight})`)
     .call(g => {
       g.call(bottomAxis);
       g.select(".domain")
         .attr("stroke", DARK_GREY);
       g.selectAll(".tick text")
         .attr("fill", DARK_GREY)
-        .style('text-anchor', 'start')
+        .style("text-anchor", "start")
         .style("fontSize", FONT_SIZE);
     });
 
-  svg.append('g')
-    .attr('class', 'x axis month-axis')
-    .attr('transform', `translate(${xWidth/2}, ${graphHeight + 10})`)
+  svg.append("g")
+    .attr("class", "x axis month-axis")
+    .attr("transform", `translate(${xWidth/2}, ${graphHeight + 10})`)
     .call(g => {
       g.call(monthAxis);
       g.select(".domain").remove();

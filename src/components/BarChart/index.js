@@ -65,7 +65,7 @@ class BarChart extends Component {
       .tickPadding(25)
       .tickFormat(d => monthFormatter(d).toUpperCase());
 
-    let el = ReactFauxDOM.createElement('div');
+    let el = ReactFauxDOM.createElement("div");
 
     // initialize the chart object
     let svg = buildChartFrame(
@@ -74,13 +74,13 @@ class BarChart extends Component {
       { height, width, margin, graphWidth, graphHeight, yLabel, xWidth }
     );
 
-    let bars = svg.selectAll('.bars')
+    let bars = svg.selectAll(".bars")
       .data(data)
       .enter()
-      .append('g');
+      .append("g");
 
-    bars.append('path')
-      .attr('class', "all-rescue")
+    bars.append("path")
+      .attr("class", "all-rescue")
       .attr("shape-rendering", "geometricPrecision")
       .attr(
         "d",
@@ -98,8 +98,8 @@ class BarChart extends Component {
       )
       .style("fill", colors.orange);
 
-    bars.append('path')
-      .attr('class', "night-rescue")
+    bars.append("path")
+      .attr("class", "night-rescue")
       .attr("shape-rendering", "geometricPrecision")
       .attr(
         "d",
@@ -117,15 +117,15 @@ class BarChart extends Component {
       )
       .style("fill", colors.deepRed);
 
-    bars.append('text')
-      .attr('class', 'alert-sent')
-      .attr('transform', `translate(${xWidth/2}, 0)`)
+    bars.append("text")
+      .attr("class", "alert-sent")
+      .attr("transform", `translate(${xWidth/2}, 0)`)
       .attr("x", d => xScale(d.date))
       .attr("y", d => yScale(d.values.eventsRescue) - 10)
       .attr("fill", colors.red)
       .style("fontSize", "18px")
-      .style('text-anchor', 'middle')
-      .text((d) => d.alert ? "!" : undefined)
+      .style("text-anchor", "middle")
+      .text((d) => d.alert ? "!" : undefined);
 
     return el.toReact();
   }
@@ -152,7 +152,7 @@ class BarChart extends Component {
         {children}
         {chart}
       </div>
-    )
+    );
   }
 }
 
