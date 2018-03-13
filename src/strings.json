@@ -1,7 +1,7 @@
 {
   "ASTHMA": "asthma",
   "COPD": "COPD",
-  "HEALTH_REPORT": "HEALTH REPORT",
+  "DISEASE_HEALTH_REPORT": "{{disease}} HEALTH REPORT",
   "SUMMARY": "Summary",
   "AS_NEEDED": "As needed",
   "TAKEN_AS_NEEDED": "taken as needed",
@@ -20,7 +20,7 @@
   "POORLY_CONTROLLED": "Poorly Controlled",
   "CONTROLLER_ADHERENCE": "Controller adherence",
   "NIGHTTIME_RESUCE_USAGE": "Nighttime rescue usage",
-  "NUM_NIGHTS": "{{nunber}} nights",
+  "NUM_NIGHTS": "{{number}} nights",
   "PHYSICIAN_EVALUATION": "PHYSICIAN EVALUATION",
   "SIGN": "Sign",
   "RESCUE_MEDICATION_USAGE": "Rescue Medication Usage",
