@@ -2,6 +2,8 @@ import i18n from "i18next";
 import XHR from "i18next-xhr-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import moment from "moment";
+import { timeFormatLocale } from "d3-time-format";
+import d3Locales from "./d3Locales";
 
 i18n
   .use(XHR)
@@ -18,7 +20,7 @@ i18n
       nl       : ["nl-NL"],
       default  : ["en-US"]
     },
-    ns: ["patient-report"],
+    ns: ["translations", "patient-report"],
     defaultNS: "translations",
     debug: true,
 
@@ -36,6 +38,7 @@ i18n
   })
   .on("languageChanged", function(lng) {
     moment.locale(lng);
+    timeFormatLocale(d3Locales[lng]);
   });
 
 export default i18n;
