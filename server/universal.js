@@ -1,15 +1,17 @@
-const path    = require('path');
-const fs      = require('fs');
-const request = require('request');
+const path    = require("path");
+const fs      = require("fs");
+const request = require("request");
 const geoip   = require("geoip-lite");
 
-const React = require('react');
-const { renderToString } = require('react-dom/server');
-const { StaticRouter }   = require('react-router-dom');
+const React = require("react");
+const { renderToString }  = require("react-dom/server");
+const { StaticRouter }    = require("react-router-dom");
+const { I18nextProvider } =  require("react-i18next");
 
-const { default: App } = require('../src/App');
 
-const FILE_PATH = path.resolve(__dirname, '..', 'build', 'index.html');
+const { default: App } = require("../src/App");
+
+const FILE_PATH = path.resolve(__dirname, "..", "build", "index.html");
 
 const FORECAST_URL = "https://open.propellerhealth.com/prod/forecast";
 const API_HOST     = "http://localhost:8081";
@@ -62,16 +64,20 @@ const propsForRequest = (req, cb) => {
     }
   } else if (req.path.indexOf("/patient-summary") === 0) {
     let apiHost = req.query.host || API_HOST;
+    let url = `${apiHost}/api/reports/${req.params.reportId}/data?accessToken=${req.query.accessToken}`;
+    console.log(url);
     let options = {
-      url     : `${apiHost}/api/reports/${req.params.reportId}/data?accessToken=${req.query.accessToken}`,
+      url     : url,
       method  : "GET",
       json    : true,
       headers : {
-        "x-ph-api-version": "3.28.0"
+        "x-ph-api-version": "3.34.0"
       }
     };
 
     request(options, (err, resp, body) => {
+      console.log(err);
+      console.log(body);
       if (err) {
         return cb(err);
       }
@@ -90,9 +96,9 @@ const propsForRequest = (req, cb) => {
 };
 
 module.exports = function universalLoader(req, res) {
-  fs.readFile(FILE_PATH, 'utf8', (err, htmlData) => {
+  fs.readFile(FILE_PATH, "utf8", (err, htmlData) => {
     if (err) {
-      console.error('read err', err);
+      console.error("read err", err);
       return res.status(500).end();
     }
 
@@ -104,16 +110,16 @@ module.exports = function universalLoader(req, res) {
         const context   = {};
 
         const markup = (
-          `<div>
-             <script id='app-props' type='application/json'>
+          `<script id='app-props' type='application/json'>
               <![CDATA[${dataProps}]]>
             </script>
-            <div>${renderToString(
-              <StaticRouter location={req.url} context={context}>
+            ${renderToString(
+            <StaticRouter location={req.url} context={context}>
+              <I18nextProvider i18n={req.i18n} initialLanguage={(props && props.locale) || req.language}>
                 <App {...props}/>
-              </StaticRouter>
-            )}</div>
-          </div>`
+              </I18nextProvider>
+            </StaticRouter>
+          )}`
         );
 
         if (context.url) {
@@ -121,46 +127,13 @@ module.exports = function universalLoader(req, res) {
           res.redirect(301, context.url);
         } else {
           // we're good, send the response
-          const RenderedApp = htmlData.replace('{{SSR}}', markup);
+          const RenderedApp = htmlData.replace("{{SSR}}", markup);
           res.send(RenderedApp);
         }
       } catch (error) {
+        console.error(error);
         res.status(500).end();
       }
     });
   });
-}
-
-
-// const propsForRequest = (req, cb) => {
-//   switch (req.path) {
-//     case "/asthma-conditions":
-//       // const geo = geoip.lookup("172.102.4.178");
-//       const geo = geoip.lookup(req.ip);
-//       if (geo) {
-//         const lat = geo.ll[0];
-//         const lng = geo.ll[1];
-
-//         let props = {
-//           latitude         : lat,
-//           longitude        : lng,
-//           forecastLocation : `${geo.city}, ${geo.region}, ${geo.country}`
-//         };
-//         request.get(`${FORECAST_URL}?latitude=${lat}&longitude=${lng}`, (err, resp, body) => {
-//           if (err) return cb(undefined, props);
-//           const data = JSON.parse(body);
-
-//           return cb(undefined, Object.assign({}, props, {
-//             score: data.properties.value,
-//             status: data.properties.code.toLowerCase()
-//           }));
-//         });
-//       } else {
-//         return cb(undefined, {});
-//       }
-//       break;
-
-//     default:
-//       return cb(undefined, {});
-//   }
-// }
+};
