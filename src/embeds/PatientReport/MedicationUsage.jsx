@@ -1,7 +1,8 @@
 import React from "react";
 import { translate } from "react-i18next";
-import { scaleTime } from "d3-scale";
-import { isoParse } from "d3-time-format";
+import { scaleTime, scaleUtc } from "d3-scale";
+import { utcParse } from "d3-time-format";
+import { utcDay, timeDay } from "d3-time";
 import SectionHeader from "./SectionHeader";
 import RescueMedicationChart from "./RescueMedicationChart";
 import ControllerMedicationChart from "./ControllerMedicationChart";
@@ -9,21 +10,24 @@ import ControllerMedicationChart from "./ControllerMedicationChart";
 import { COLORS } from "../../utilities";
 
 const createTimeScale = (a, b, width) =>
-  scaleTime()
-    .domain([isoParse(a), isoParse(b)])
-    .rangeRound([0, width])
-    .clamp(true);
+  scaleUtc()
+    .domain([
+      new Date(a),
+      utcDay.offset(new Date(b), + 1)
+    ])
+    .range([0, width])
+    .clamp(true)
+    .nice(utcDay);
 
 const MedicationUsage = function MedicationUsage({
-  controller,
-  rescue,
   range,
-  rescueMeds = [],
-  controllerMeds = [],
+  days,
+  medications,
+  controller,
   transitionAlerts,
   t
 }) {
-  const width = 1090;
+  const width  = 1090;
   const height = 240;
   const margin = { top: 10, right: 35, bottom: 30, left: 60 };
   const graphWidth = width - margin.left - margin.right;
@@ -37,22 +41,23 @@ const MedicationUsage = function MedicationUsage({
   );
 
   const xScale = createTimeScale(
-    new Date(range[0]),
-    new Date(range[1]),
-    graphWidth - xWidth
+    range[0],
+    range[1],
+    graphWidth
   );
 
   const alerts = transitionAlerts.map(a => new Date(a).toISOString());
 
-  const rescueData = rescue.map(r => {
-    r.date = new Date(r.date);
-    r.alert = alerts.indexOf(r.date.toISOString()) > -1;
-    return r;
+  const rescueData = days.map(d => {
+    let newDate = new Date(d.date.split("T")[0]);
+    d.date  = newDate;
+    d.alert = alerts.indexOf(newDate.toISOString()) > -1;
+    return d;
   });
 
   return (
     <div style={{ margin: "2rem 0" }}>
-      <SectionHeader text={t("MEDICATION_USAGE_FOR_LAST")} tab={t("NUM_DAYS", {number: 30})} />
+      <SectionHeader text={t("MEDICATION_USAGE")} tab={t("LAST_NUM_DAYS", {number: 30})} />
       <RescueMedicationChart
         data={rescueData}
         width={width}
@@ -64,7 +69,7 @@ const MedicationUsage = function MedicationUsage({
         xWidth={xWidth}
         dScale={xScale}
         colors={COLORS}
-        medications={rescueMeds}
+        medications={medications.rescue}
         title={t("RESCUE_MEDICATION_USAGE")}
       />
       <ControllerMedicationChart
@@ -76,9 +81,9 @@ const MedicationUsage = function MedicationUsage({
         graphWidth={graphWidth}
         xScale={xScale}
         xWidth={xWidth}
-        dScale={areaScale}
+        dScale={xScale}
         colors={COLORS}
-        medications={controllerMeds}
+        medications={medications.controller}
         title={t("CONTROLLER_MEDICATION_ADHERENCE")}
       />
     </div>

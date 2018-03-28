@@ -13,13 +13,14 @@ const Subtitle = ({ children }) => (
 );
 
 const PatientStatus = function PatientStatus({
-  days = [],
+  rescueNights,
   medications,
   controlStatus,
+  trends,
   t
 }) {
-  const nights = days.filter(d => d.rescue.nightEvents > 0).length;
   const controller = medications.controller || [];
+  const { dayofweek, timeofday } = trends;
 
   const adherence = controller.map(med => {
     const items = med.adherence;

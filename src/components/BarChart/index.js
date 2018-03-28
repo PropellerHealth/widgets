@@ -33,7 +33,7 @@ class BarChart extends Component {
       colors
     } = this.props;
 
-    const yMax           = d3Max(data.map(d => d.values.eventsRescue));
+    const yMax           = d3Max(data.map(d => d.rescue.totalEvents));
     const yHeight        = yMax < 5 ? 5 : yMax + 1;
     const xFormatter     = timeFormat("%-d");
     const monthFormatter = timeFormat("%b");
@@ -85,10 +85,10 @@ class BarChart extends Component {
       .attr(
         "d",
         (d, i) => {
-          const count = d.values.eventsRescue;
+          const count = d.rescue.totalEvents;
           const yPos  = yScale(count);
           return rectangle(
-            xScale(d.date),
+            xScale(d.date) + (xWidth/2),
             yPos,
             xWidth,
             (graphHeight - yPos),
@@ -104,10 +104,10 @@ class BarChart extends Component {
       .attr(
         "d",
         (d, i) => {
-          const count = d.values.eventsRescueNight;
+          const count = d.rescue.nightEvents;
           const yPos  = yScale(count);
           return rectangle(
-            xScale(d.date),
+            xScale(d.date) + (xWidth/2),
             yPos,
             xWidth,
             (graphHeight - yPos),
@@ -121,7 +121,7 @@ class BarChart extends Component {
       .attr("class", "alert-sent")
       .attr("transform", `translate(${xWidth/2}, 0)`)
       .attr("x", d => xScale(d.date))
-      .attr("y", d => yScale(d.values.eventsRescue) - 10)
+      .attr("y", d => yScale(d.rescue.totalEvents) - 10)
       .attr("fill", colors.red)
       .style("fontSize", "18px")
       .style("text-anchor", "middle")
