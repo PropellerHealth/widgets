@@ -29,7 +29,8 @@ class PatientReport extends Component {
       transitionAlertDates : props.transitionAlertDates,
       dailySummary         : props.dailySummary,
       controllerAdherence  : props.controllerAdherence,
-      locale               : props.locale
+      locale               : props.locale,
+      alerts               : props.alerts
     };
     this.loadData = this.loadData.bind(this);
   }
@@ -37,7 +38,9 @@ class PatientReport extends Component {
   loadData() {
     const { API_HOST = "http://localhost:8081", match, location } = this.props;
     const { reportId } = match.params;
-    const { accessToken, host = API_HOST } = objectFromQueryString(location.search);
+    const { accessToken, host = API_HOST } = objectFromQueryString(
+      location.search
+    );
 
     const url = `${host}/api/reports/${reportId}/data?accessToken=${accessToken}`;
 
@@ -58,30 +61,51 @@ class PatientReport extends Component {
   render() {
     const {
       patient,
+      medications = [],
       transitionAlertDates,
       dailySummary = {},
       controllerAdherence = [],
+      alerts,
       locale
     } = this.state;
 
     if (!patient) return <Loading />;
 
-    const { controlStatus = [], rescueUsage = [] } = dailySummary;
+    const { controlStatus = [], days = [], trends = {} } = dailySummary;
 
-    const rescue     = rescueUsage.sort(sortDates);
-    const controller = controllerAdherence.sort(sortDates);
-    const range      = [rescue[0], rescue[rescue.length - 1]]
-      .sort(sortDates)
-      .map(m => m.date);
+    const sortedDays = days.sort(sortDates);
+    const adherence  = controllerAdherence.sort(sortDates);
+    const range      = [sortedDays[0], sortedDays[sortedDays.length - 1]]
+      .map(m => m.date.split("T")[0]);
+
+    const rescueMeds = medications.filter(m => "rescue" === m.medication.type);
+
+    const controllerMeds = medications
+      .filter(m => "controller" === m.medication.type)
+      .map(med => {
+        med.adherence = days.map(day => ({
+          date   : day.date,
+          values : day.controller.meds.find(m => m.mid === med.medicationId)
+        }));
+        return med;
+      });
+
+    // console.log(controllerMeds);
+    // console.log("sortedDaus", sortedDays);
+    // console.log(range);
+    // console.log(adherence);
 
     return (
       <PatientSummary
         range={range}
         patient={patient}
-        rescue={rescue}
-        controller={controller}
+        medications={{ rescue: rescueMeds, controller: controllerMeds }}
+        days={sortedDays}
+        adherence={adherence}
         controlStatus={controlStatus}
         transitionAlerts={transitionAlertDates}
+        alerts={alerts}
+        trends={trends}
         locale={locale}
       />
     );

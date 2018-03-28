@@ -49,35 +49,46 @@ class PatientSummary extends React.Component {
     const {
       range,
       patient,
-      rescue,
-      controller = [],
+      medications,
+      days,
+      adherence = [],
       controlStatus,
       transitionAlerts,
+      alerts,
+      trends
     } = this.props;
 
-    const _controller = controller
+    const _controller = adherence
       .map(d => frozenCopy({}, d, { date: new Date(d.date) }))
       .sort(sortDates)
       .reduce((arr, d) => arr.concat(incrementToDays(d, 7)), []);
 
-    const meds           = patient.plan.medications || [];
-    const controllerMeds = meds.filter(m => "controller" === m.medication.type);
-    const rescueMeds     = meds.filter(m => "rescue" === m.medication.type);
-    const controllerAvg  = Math.floor(_controller.reduce((tot, item) => tot + item.values.adherencePercent ,0) / _controller.length);
+    const rescueNights = days.filter(d => d.rescue.nightEvents > 0).length;
+
+    // console.log("_controller", _controller);
+    // console.log(days);
+    // console.log(medications);
 
     return (
       <Page first>
         <Header timeFrame={range} disease={patient.disease} />
-        <PatientInfo {...patient} rescueMeds={rescueMeds} controllerMeds={controllerMeds} />
-        <PatientStatus rescue={rescue} controlStatus={controlStatus} controller={_controller} controllerAvg={controllerAvg} />
+        <PatientInfo
+          patient={patient}
+          medications={medications}
+        />
+        <PatientStatus
+          medications={medications}
+          controlStatus={controlStatus}
+          rescueNights={rescueNights}
+          trends={trends}
+        />
         <MedicationUsage
-          rescue={rescue}
-          controller={_controller}
           range={range}
+          days={days}
+          medications={medications}
+          controller={_controller}
+          alerts={alerts}
           transitionAlerts={transitionAlerts}
-          rescueMeds={rescueMeds}
-          controllerMeds={controllerMeds}
-          controllerAvg={controllerAvg}
         />
       </Page>
     );

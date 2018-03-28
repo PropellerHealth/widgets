@@ -12,11 +12,12 @@ const RescueMedicationChart = function RescueMedicationChart({
   t,
   ...rest
 }) {
+
   return (
-    <BarChart xLabel={t("DAYS")} yLabel={t("PUFFS")} data={data} {...rest}>
+    <BarChart data={data} {...rest}>
       <GraphTitle
         title={title}
-        medications={medications}
+        medications={medications.rescue}
         legend={
           <div
             className="text-right"

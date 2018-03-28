@@ -17,18 +17,18 @@ const SectionHeader = props => {
             lineHeight: "2rem"
           }}
         >
-          {props.text}{" "}
           <span
             style={{
               background: COLORS.blue,
               color: "white",
               padding: "0.7rem 1.2rem 1.2rem",
               borderRadius: "10px 10px 0 0",
-              margin: "0 0.7rem"
+              margin: "0 1rem 0 0"
             }}
           >
             {props.tab}
           </span>
+          {props.text}
         </h3>
       </Col>
     </Row>

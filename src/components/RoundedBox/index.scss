@@ -1,0 +1,24 @@
+.rounded-box {
+  border: 2px solid;
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 1.5rem;
+  margin: 1rem auto;
+  border-color: #888B8D;
+
+  &.blue {
+    border-color: #20C3F3;
+  }
+
+  &.purple {
+    border-color: #6b1671;
+  }
+
+  &.red {
+    border-color: #EE0037;
+  }
+
+  h4 {
+    margin-top: 0;
+  }
+}

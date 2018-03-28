@@ -3,23 +3,41 @@ import { Row, Col } from "react-bootstrap";
 import { translate } from "react-i18next";
 import SectionHeader from "./SectionHeader";
 import GreyText from "./GreyText";
-import RoundedBox from "./RoundedBox";
+import RoundedBox from "../../components/RoundedBox";
 import MetricScore from "./MetricScore";
 
 import { COLORS } from "../../utilities";
 
+const Subtitle = ({ children }) => (
+  <GreyText style={{ fontSize: "15px" }}>{children}</GreyText>
+);
+
 const PatientStatus = function PatientStatus({
+  days = [],
+  medications,
   controlStatus,
-  rescue,
-  controllerAvg = 0,
   t
 }) {
-  const nights = rescue.filter(r => r.values.eventsRescueNight > 0).length;
+  const nights = days.filter(d => d.rescue.nightEvents > 0).length;
+  const controller = medications.controller || [];
+
+  const adherence = controller.map(med => {
+    const items = med.adherence;
+
+    return {
+      name: med.medication.name,
+      adherence: Math.round(
+        items.reduce((total, item) => total + item.values.percent, 0) /
+          items.length
+      )
+    };
+  });
+
   return (
     <div style={{ margin: "2rem 0" }}>
       <SectionHeader
-        text={t("PATIENT_STATUS_HEADER")}
-        tab={t("NUM_DAYS", { number: 30 })}
+        text={t("HEALTH_STATUS")}
+        tab={t("LAST_NUM_DAYS", { number: 30 })}
       />
       <div style={{ position: "relative" }}>
         <Row>
@@ -27,38 +45,52 @@ const PatientStatus = function PatientStatus({
             <Row>
               <Col xs={12}>
                 <RoundedBox color="red">
+                  <h4>{t("ASTHMA_CONTROL_STATUS")}</h4>
                   {t("WELL_CONTROLLED")}:{" "}
                   <MetricScore>
-                    {t("NUM_DAYS", { number: controlStatus.good })}
+                    {t("NUM_DAY", { count: controlStatus.good })}
                   </MetricScore>
                   <br />
                   {t("NOT_WELL_CONTROLLED")}:{" "}
                   <MetricScore>
-                    {t("NUM_DAYS", { number: controlStatus.fair })}
+                    {t("NUM_DAY", { count: controlStatus.fair })}
                   </MetricScore>
                   <br />
                   {t("POORLY_CONTROLLED")}:{" "}
                   <MetricScore>
-                    {t("NUM_DAYS", { number: controlStatus.poor })}
+                    {t("NUM_DAY", { count: controlStatus.poor })}
                   </MetricScore>
                 </RoundedBox>
               </Col>
-            </Row>
-            <Row>
-              <Col xs={6} style={{ paddingRight: "8px" }}>
-                <RoundedBox color="orange">
-                  {t("CONTROLLER_ADHERENCE")}:
-                  <br />
-                  <MetricScore>{controllerAvg}%</MetricScore>
-                </RoundedBox>
-              </Col>
-              <Col xs={6} style={{ paddingLeft: "8px" }}>
+              <Col xs={12}>
                 <RoundedBox color="purple">
-                  {t("NIGHTTIME_RESUCE_USAGE")}:
-                  <br />
-                  <MetricScore>
-                    {t("NUM_NIGHTS", { number: nights })}
-                  </MetricScore>
+                  <h4>
+                    {t("NIGHTTIME_RESUCE_USE")}
+                    <br />
+                    <Subtitle>
+                      {t("LAST_NUM_DAYS", { number: 30 }).toLowerCase()}
+                    </Subtitle>
+                  </h4>
+                  <MetricScore>{t("NUM_NIGHT", { count: nights })}</MetricScore>
+                </RoundedBox>
+              </Col>
+              <Col xs={12}>
+                <RoundedBox color="blue">
+                  <h4>
+                    {t("CONTROLLER_ADHERENCE")}{" "}
+                    <Subtitle>
+                      {t("LAST_NUM_DAYS", { number: 30 }).toLowerCase()}
+                    </Subtitle>
+                  </h4>
+                  <Row>
+                    {adherence.map((med, i) => (
+                      <Col xs={6} key={`adherence-${i}`}>
+                        <strong>{med.name}</strong>
+                        <br />
+                        <MetricScore>{med.adherence}%</MetricScore>
+                      </Col>
+                    ))}
+                  </Row>
                 </RoundedBox>
               </Col>
             </Row>
@@ -102,7 +134,7 @@ const PatientStatus = function PatientStatus({
               >
                 !
               </span>
-              {t("PHYSICIAN_EVALUATION")}:
+              <h4>{t("PHYSICIAN_EVALUATION")}:</h4>
               <div
                 style={{
                   position: "absolute",

@@ -3,7 +3,6 @@ import moment from "moment";
 import { translate } from "react-i18next";
 import { Row, Col } from "react-bootstrap";
 import PageHeader from "./PageHeader";
-
 import { COLORS } from "../../utilities";
 import logo from "../../assets/images/logo.svg";
 
@@ -26,29 +25,29 @@ const Header = ({ timeFrame: range, disease = "asthma", t }) => {
     <div>
       <Row>
         <Col xs={6}>
-          <img src={logo} alt="Propeller Health" height={80} />
+          <img src={logo} alt="Propeller Health" height={60} />
         </Col>
         <Col xs={6} style={{ lineHeight: "6rem" }}>
           <h1
             className="text-right"
             style={{
               color: COLORS.darkGrey,
-              fontSize: "2.5rem",
-              lineHeight: "5rem",
+              margin: 0,
+              fontSize: "2rem",
+              lineHeight: "2.5rem",
               display: "inline-block",
               textAlign: "right",
               width: "100%",
               verticalAlign: "bottom"
             }}
           >
-            {t("DISEASE_HEALTH_REPORT", {
-              disease: t(disease.toUpperCase()).toUpperCase()
-            })}{" "}
-            - <strong>{timeFrame(range).toUpperCase()}</strong>
+            {t("MONTHLY_HEALTH_REPORT")}
+            <br/>
+            <strong>{timeFrame(range).toUpperCase()}</strong>
           </h1>
         </Col>
       </Row>
-      <PageHeader>{t("SUMMARY")}</PageHeader>
+      <PageHeader></PageHeader>
     </div>
   );
 };
