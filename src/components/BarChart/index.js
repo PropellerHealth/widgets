@@ -10,7 +10,19 @@ import { buildChartFrame } from "../../chartUtils";
 
 const rectangle = (x, y, w, h, r) => {
   const r2 = 2 * r;
-  return `M${x + r},${y}h${w - r2}a${r},${r} 0 0 1 ${r},${r}v${h - r2}v${r}h${-r}h${r2 - w}h${-r}v${-r}v${r2 - h}a${r},${r} 0 0 1 ${r},${-r}z`;
+  return `
+    M${x + r},${y}
+    h${w - r2}
+    a${r},${r} 0 0 1 ${r},${r}
+    v${h - r2}
+    v${r}
+    h${-r}
+    h${r2 - w}
+    h${-r}
+    v${-r}
+    v${r2 - h}
+    a${r},${r} 0 0 1 ${r},${-r}
+    z`;
 };
 
 class BarChart extends Component {

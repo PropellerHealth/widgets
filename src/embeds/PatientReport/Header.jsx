@@ -20,7 +20,7 @@ const timeFrame = range => {
   }
 };
 
-const Header = ({ timeFrame: range, disease = "asthma", t }) => {
+const Header = ({ range, disease = "asthma", t }) => {
   return (
     <div>
       <Row>
