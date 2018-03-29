@@ -21,16 +21,18 @@ import {
   sortDates
 } from "../../utilities";
 
+import "./index.css";
+
 class PatientReport extends Component {
   constructor(props) {
     super(props);
     this.state = {
       patient              : props.patient,
-      transitionAlertDates : props.transitionAlertDates,
       dailySummary         : props.dailySummary,
       controllerAdherence  : props.controllerAdherence,
       locale               : props.locale,
-      alerts               : props.alerts
+      alerts               : props.alerts,
+      quiz                 : props.quiz
     };
     this.loadData = this.loadData.bind(this);
   }
@@ -62,11 +64,11 @@ class PatientReport extends Component {
     const {
       patient,
       medications = [],
-      transitionAlertDates,
       dailySummary = {},
       controllerAdherence = [],
       alerts,
-      locale
+      locale,
+      quiz
     } = this.state;
 
     if (!patient) return <Loading />;
@@ -76,15 +78,15 @@ class PatientReport extends Component {
     const sortedDays = days.sort(sortDates);
     const adherence  = controllerAdherence.sort(sortDates);
     const range      = [sortedDays[0], sortedDays[sortedDays.length - 1]]
-      .map(m => m.date.split("T")[0]);
+      .map(m => new Date(m.date));
 
     const rescueMeds = medications.filter(m => "rescue" === m.medication.type);
 
     const controllerMeds = medications
       .filter(m => "controller" === m.medication.type)
       .map(med => {
-        med.adherence = days.map(day => ({
-          date   : day.date,
+        med.adherence = sortedDays.map(day => ({
+          date   : new Date(day.date),
           values : day.controller.meds.find(m => m.mid === med.medicationId)
         }));
         return med;
@@ -103,9 +105,9 @@ class PatientReport extends Component {
         days={sortedDays}
         adherence={adherence}
         controlStatus={controlStatus}
-        transitionAlerts={transitionAlertDates}
         alerts={alerts}
         trends={trends}
+        quiz={quiz}
         locale={locale}
       />
     );
