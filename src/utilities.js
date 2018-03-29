@@ -64,6 +64,11 @@ const sortDates = (a, b) => {
   return _a > _b ? 1 : _a < _b ? -1 : 0;
 };
 
+const precisionRound = function precisionRound(number, precision) {
+  var factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}
+
 export {
   checkStatus,
   API_HEADER,
@@ -75,5 +80,6 @@ export {
   HAS_WINDOW,
   objectFromQueryString,
   COLORS,
-  sortDates
+  sortDates,
+  precisionRound
 };
