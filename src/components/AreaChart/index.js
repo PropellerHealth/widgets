@@ -64,7 +64,7 @@ class AreaChart extends Component {
       .tickFormat(d => monthFormatter(d).toUpperCase());
 
     // initialize the chart object
-    let el = ReactFauxDOM.createElement('div');
+    let el = ReactFauxDOM.createElement("div");
 
     let svg = buildChartFrame(
       el,
@@ -73,19 +73,19 @@ class AreaChart extends Component {
     );
 
     let area = d3Area()
+      // .curve(curveCatmullRom.alpha(1))
+      // curve(curveMonotoneX)
+      .curve(curveBasis)
       .x(d => dScale(d.date))
       .y0(yScale(0))
-      .y1(d => yScale(Math.round(d.values.adherencePercent) || 0))
-      .curve(curveBasis);
-      // .curve(curveCatmullRom.alpha(1));
-      // .curve(curveMonotoneX);
+      .y1(d => yScale(Math.round(d.values.adherencePercent) || 0));
 
-    svg.append('path')
+    svg.append("path")
       .datum(data)
       .attr("fill", colors.blue)
-      .attr('class', 'area')
-      .attr('d', area)
-      .attr('transform', `translate(0, 0)`);
+      .attr("class", "area")
+      .attr("d", area)
+      .attr("transform", "translate(0, 0)");
 
     return el.toReact();
   }
@@ -101,7 +101,7 @@ class AreaChart extends Component {
         {children}
         {chart}
       </div>
-    )
+    );
   }
 }
 
