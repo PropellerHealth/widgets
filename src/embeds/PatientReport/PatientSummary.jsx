@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import { translate } from "react-i18next";
 
-import Page from "./Page";
+import Page from "../../components/Page";
 import Header from "./Header";
 import PatientInfo from "./PatientInfo";
 import PatientStatus from "./PatientStatus";

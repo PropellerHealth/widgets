@@ -4,7 +4,7 @@ import { translate } from "react-i18next";
 
 import RoundedBox from "../RoundedBox";
 import COLORS from "../../utilities";
-import GreyText from "../../embeds/PatientReport/GreyText";
+import GreyText from "../GreyText";
 
 const PhysicianNotes = ({ t }) => {
   return (

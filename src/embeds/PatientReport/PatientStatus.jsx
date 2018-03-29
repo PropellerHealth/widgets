@@ -2,11 +2,11 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { translate } from "react-i18next";
 import SectionHeader from "./SectionHeader";
-import GreyText from "./GreyText";
+import GreyText from "../../components/GreyText";
 import RoundedBox from "../../components/RoundedBox";
 import TimesOfDay from "../../components/TimesOfDay";
 import DaysOfWeek from "../../components/DaysOfWeek";
-import MetricScore from "./MetricScore";
+import MetricScore from "../../components/MetricScore";
 
 import { COLORS } from "../../utilities";
 

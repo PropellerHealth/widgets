@@ -3,7 +3,7 @@ import moment from "moment";
 import { translate } from "react-i18next";
 import { Row, Col } from "react-bootstrap";
 
-import GreyText from "./GreyText";
+import GreyText from "../../components/GreyText";
 
 import { COLORS } from "../../utilities";
 
