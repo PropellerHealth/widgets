@@ -6,18 +6,23 @@ import GraphTitle from "./GraphTitle";
 import { COLORS } from "../../utilities";
 
 const RescueMedicationChart = function RescueMedicationChart({
-  data,
   medications,
   title,
+  disease,
   t,
   ...rest
 }) {
 
+  const includeBaseline   = disease === "copd";
+  const NOTIFICATION_TEXT = disease === "copd"
+    ? "AT_RISK_OF_COPD_EXACERBATION"
+    : "CONTROL_STATUS_LEGEND";
+
   return (
-    <BarChart data={data} {...rest}>
+    <BarChart includeBaseline={includeBaseline} {...rest}>
       <GraphTitle
         title={title}
-        medications={medications.rescue}
+        medications={medications}
         legend={
           <div
             className="text-right"
@@ -34,12 +39,12 @@ const RescueMedicationChart = function RescueMedicationChart({
               >
                 !
               </span>{" "}
-              = {t("CONTROL_STATUS_LEGEND")}
+              = {t(NOTIFICATION_TEXT)}
             </div>
             <div style={{ display: "inline-block", paddingLeft: "3rem" }}>
               <span
                 style={{
-                  color: COLORS.deepRed,
+                  color: COLORS.brown,
                   fontSize: "2.2rem",
                   verticalAlign: "bottom"
                 }}

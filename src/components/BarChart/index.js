@@ -5,6 +5,7 @@ import { max as d3Max } from "d3-array";
 import { axisBottom, axisLeft, axisRight } from "d3-axis";
 import { timeDay, timeMonth } from "d3-time";
 import { timeFormat, isoParse } from "d3-time-format";
+import { line as d3Line, curveBasis, curveCardinal, curveCatmullRom, curveBundle, curveNatural, curveStep, curveMonotoneX, curveLinear} from "d3-shape";
 
 import { buildChartFrame } from "../../chartUtils";
 
@@ -42,7 +43,9 @@ class BarChart extends Component {
       xWidth,
       xScale,
       yLabel,
-      colors
+      dScale,
+      colors,
+      includeBaseline
     } = this.props;
 
     const yMax           = d3Max(data.map(d => d.rescue.totalEvents));
@@ -127,17 +130,33 @@ class BarChart extends Component {
           );
         }
       )
-      .style("fill", colors.deepRed);
+      .style("fill", colors.brown);
 
     bars.append("text")
       .attr("class", "alert-sent")
-      .attr("transform", `translate(${xWidth/2}, 0)`)
+      .attr("transform", `translate(${xWidth}, 0)`)
       .attr("x", d => xScale(d.date))
       .attr("y", d => yScale(d.rescue.totalEvents) - 10)
       .attr("fill", colors.red)
-      .style("fontSize", "18px")
+      .style("fontSize", "20px")
       .style("text-anchor", "middle")
       .text((d) => d.alert ? "!" : undefined);
+
+    if (includeBaseline) {
+      let baseline = d3Line()
+        .curve(curveBasis)
+        .x(d => dScale(d.date))
+        .y(d => yScale(d.rescue.baseline));
+
+      svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", colors.green)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 1.5)
+        .attr("d", baseline);
+    }
 
     return el.toReact();
   }
@@ -153,6 +172,7 @@ class BarChart extends Component {
   render() {
     const { children } = this.props;
     const chart = this.renderChart();
+
     return (
       <div
         className="barchart"

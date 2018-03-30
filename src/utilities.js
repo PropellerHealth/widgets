@@ -31,7 +31,6 @@ const API_HEADER = {
 const checkResponse = response => response.ok ? response : Promise.reject(response);
 
 const objectFromQueryString = queryString => {
-  console.log(queryString);
   return queryString
     .substring(1)
     .split("&")
@@ -47,15 +46,17 @@ const objectFromQueryString = queryString => {
 };
 
 const COLORS = {
-  blue     : "#20C3F3",
-  purple   : "#6b1671",
-  green    : "green",
-  deepRed  : "#D70000",
-  red      : "#EE0037",
-  yellow   : "yellow",
-  orange   : "#FF7500",
-  grey     : "#888B8D",
-  darkGrey : "#333"
+  blue      : "#20C3F3",
+  purple    : "#6b1671",
+  green     : "#40AD00",
+  deepRed   : "#D70000",
+  red       : "#EE0037",
+  yellow    : "yellow",
+  orange    : "#FF7500",
+  grey      : "#888B8D",
+  darkGrey  : "#333",
+  lightGrey : "#C0C0C0",
+  brown     : "#823700"
 };
 
 const sortDates = (a, b) => {
@@ -67,7 +68,7 @@ const sortDates = (a, b) => {
 const precisionRound = function precisionRound(number, precision) {
   var factor = Math.pow(10, precision);
   return Math.round(number * factor) / factor;
-}
+};
 
 export {
   checkStatus,
