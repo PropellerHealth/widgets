@@ -56,7 +56,7 @@ const MedicationUsage = function MedicationUsage({
   });
 
   return (
-    <div style={{ margin: "2rem 0" }}>
+    <div style={{ marginTop: "1rem" }}>
       <SectionHeader
         text={t("MEDICATION_USAGE")}
         tab={t("LAST_NUM_DAYS", {number: 30})}

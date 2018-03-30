@@ -156,9 +156,9 @@ class DaysOfWeek extends Component {
     bars.append("text")
       .attr("class", "value")
       .attr("x", d => xScale(d.label) + (xWidth / 2))
-      .attr("y", d => yScale(d.value) - 2)
-      .attr("fill", COLORS.grey)
-      .style("fontSize", "12px")
+      .attr("y", d => yScale(d.value) - 5)
+      .attr("fill", COLORS.darkGrey)
+      .style("fontSize", "16px")
       .style("text-anchor", "middle")
       .text((d) => d.minmax ? `${d.value * 100}%` : "");
 

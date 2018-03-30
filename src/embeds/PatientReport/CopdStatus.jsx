@@ -31,7 +31,8 @@ const CopdStatus = ({ days, totalDays, rescueNights, t }) => {
             </strong>{" "}
             <br />
             <Subtitle>
-              {t("LAST_NUM_DAYS", { number: 7 }).toLowerCase()}
+              {t("LAST_NUM_DAYS", { number: 7 }).toLowerCase()}{" "}
+              ({moment(lastSevenDays[0].date).format("ll")} - {moment(lastSevenDays[lastSevenDays.length - 1].date).format("ll")})
             </Subtitle>
           </h4>
           <div>
@@ -63,7 +64,7 @@ const CopdStatus = ({ days, totalDays, rescueNights, t }) => {
           </div>
         </RoundedBox>
       </Col>
-      <Col xs={6}>
+      <Col xs={6} className="col-left">
         <RoundedBox color="purple">
           <h4>
             <strong>{t("NIGHTTIME_RESUCE_USE")}</strong>
@@ -75,7 +76,7 @@ const CopdStatus = ({ days, totalDays, rescueNights, t }) => {
           <MetricScore>{t("NUM_NIGHT", { count: rescueNights })}</MetricScore>
         </RoundedBox>
       </Col>
-      <Col xs={6}>
+      <Col xs={6} className="col-right">
         <RoundedBox color="orange">
           <h4>
             <strong>{t("RESCUE_BASELINE")}</strong>
