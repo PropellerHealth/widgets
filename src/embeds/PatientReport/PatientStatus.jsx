@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { Row, Col } from "react-bootstrap";
 import { translate } from "react-i18next";
 import SectionHeader from "./SectionHeader";
@@ -20,19 +21,22 @@ const PatientStatus = function PatientStatus({
   controlStatus,
   trends,
   quiz = {},
+  lastSync,
+  sensors = [],
   t
 }) {
-  const controller = medications.controller || [];
+
   const { dayofweek, timeofday } = trends;
 
-  const totalDays = period > 31 ? 30 : period;
+  const totalDays  = period > 31 ? 30 : period;
+  const controller = medications.controller || [];
 
   const adherence = controller.map(med => {
     const items = med.adherenceByDay;
 
     return {
-      name: med.medication.name,
-      adherence: Math.round(
+      name      : med.medication.name,
+      adherence : Math.round(
         items.reduce((total, item) => total + item.values.percent, 0) /
           items.length
       )
@@ -40,14 +44,14 @@ const PatientStatus = function PatientStatus({
   });
 
   return (
-    <div style={{ margin: "2rem 0" }}>
+    <div style={{ marginTop: "1rem" }}>
       <SectionHeader
         text={t("HEALTH_STATUS")}
         tab={t("LAST_NUM_DAYS", { number: totalDays })}
       />
       <div style={{ position: "relative" }}>
         <Row>
-          <Col xs={6}>
+          <Col xs={6} className="col-left">
             {disease === "asthma"
               ? (
                 <AsthmaStatus
@@ -64,7 +68,7 @@ const PatientStatus = function PatientStatus({
               )
             }
           </Col>
-          <Col xs={6}>
+          <Col xs={6} className="col-right">
             <Row className="text-center" style={{marginTop: "1rem", marginBottom: "1rem"}}>
               <TimesOfDay data={ timeofday } width={280} height={210} />
               <DaysOfWeek data={ dayofweek } width={280} height={210} />
@@ -72,7 +76,7 @@ const PatientStatus = function PatientStatus({
           </Col>
         </Row>
         <Row>
-          <Col xs={6}>
+          <Col xs={6} className="col-left">
             <RoundedBox color="blue">
               <h4>
                 {t("CONTROLLER_ADHERENCE")}{" "}
@@ -91,8 +95,16 @@ const PatientStatus = function PatientStatus({
               </Row>
             </RoundedBox>
           </Col>
-          <Col xs={6}>
+          <Col xs={6} className="col-right">
             <QuizScore quiz={quiz} disease={disease} />
+            <div className="text-right" dangerouslySetInnerHTML={
+              {
+                __html : t("LAST_SENSOR_SYNC", {
+                  count : sensors.length,
+                  date  : lastSync ? moment(lastSync).format("ll") : t("N_A")
+                })
+              }
+            }/>
           </Col>
         </Row>
       </div>

@@ -34,8 +34,7 @@ const PatientInfo = function PatientInfo({ patient, medications, t }) {
     familyName,
     disease,
     age,
-    birthDate,
-    sync
+    birthDate
   } = patient;
 
   const { rescue, controller } = medications;

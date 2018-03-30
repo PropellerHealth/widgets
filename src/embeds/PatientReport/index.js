@@ -85,15 +85,26 @@ class PatientReport extends Component {
 
     if (!patient) return <Loading />;
 
+    // do all of our heavy data munging here and just feed the result downstream
     const { controlStatus = [], days = [], trends = {} } = dailySummary;
 
-    const sortedDays = days.sort(sortDates);
-    const adherence = controllerAdherence.sort(sortDates);
-    const range = [sortedDays[0], sortedDays[sortedDays.length - 1]].map(
-      m => new Date(m.date)
-    );
+    const rescueNights = days.filter(d => d.rescue.nightEvents > 0).length;
+    const rescueMeds   = medications.filter(m => "rescue" === m.medication.type);
+    const sortedDays   = days.sort(sortDates);
+    const range        = [
+      sortedDays[0],
+      sortedDays[sortedDays.length - 1]
+    ].map(m => new Date(m.date));
 
-    const rescueMeds = medications.filter(m => "rescue" === m.medication.type);
+    // moment diff is not inclusive of the range, so add 1
+    const period = moment(range[1]).diff(moment(range[0]), "days") + 1;
+
+    const oldestLastSync = medications
+      .map(med => med.sensors.map(s => s.lastSyncDate))
+      .reduce((ary, times) => ary.concat(times))
+      .sort(sortDates)[0];
+
+    const adherence  = controllerAdherence.sort(sortDates);
 
     const controllerMeds = medications
       .filter(m => "controller" === m.medication.type)
@@ -121,6 +132,7 @@ class PatientReport extends Component {
       <PatientSummary
         range={range}
         patient={patient}
+        lastSync={oldestLastSync}
         medications={{ rescue: rescueMeds, controller: controllerMeds }}
         days={sortedDays}
         controlStatus={controlStatus}
@@ -128,6 +140,8 @@ class PatientReport extends Component {
         trends={trends}
         quiz={quiz}
         locale={locale}
+        period={period}
+        rescueNights={rescueNights}
       />
     );
   }

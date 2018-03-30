@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import { translate } from "react-i18next";
 
 import Page from "../../components/Page";
@@ -38,12 +37,11 @@ class PatientSummary extends React.Component {
       controlStatus,
       alerts,
       trends,
-      quiz
+      quiz,
+      lastSync,
+      period,
+      rescueNights
     } = this.props;
-
-    // moment diff is not inclusive of the range, so add 1
-    const period  = moment(range[1]).diff(moment(range[0]), "days") + 1;
-    const rescueNights = days.filter(d => d.rescue.nightEvents > 0).length;
 
     return (
       <Page first>
@@ -61,6 +59,7 @@ class PatientSummary extends React.Component {
           rescueNights={rescueNights}
           trends={trends}
           quiz={quiz}
+          lastSync={lastSync}
         />
         <MedicationUsage
           disease={patient.disease}
@@ -68,6 +67,8 @@ class PatientSummary extends React.Component {
           days={days}
           medications={medications}
           alerts={alerts}
+          lastSync={lastSync}
+          sync={patient.sync}
         />
       </Page>
     );
