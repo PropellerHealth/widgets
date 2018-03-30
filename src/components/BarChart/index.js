@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import ReactFauxDOM from "react-faux-dom";
 import { scaleLinear } from "d3-scale";
 import { max as d3Max } from "d3-array";
-import { axisBottom, axisLeft, axisRight } from "d3-axis";
-import { timeDay, timeMonth } from "d3-time";
+import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
+import { timeDay, timeMonth, timeWeek } from "d3-time";
 import { timeFormat, isoParse } from "d3-time-format";
-import { line as d3Line, curveBasis, curveCardinal, curveCatmullRom, curveBundle, curveNatural, curveStep, curveMonotoneX, curveLinear} from "d3-shape";
+import { line as d3Line, curveBasis } from "d3-shape";
 
 import { buildChartFrame } from "../../chartUtils";
 
@@ -45,7 +45,7 @@ class BarChart extends Component {
       yLabel,
       dScale,
       colors,
-      includeBaseline
+      baseline
     } = this.props;
 
     const yMax           = d3Max(data.map(d => d.rescue.totalEvents));
@@ -80,12 +80,16 @@ class BarChart extends Component {
       .tickPadding(25)
       .tickFormat(d => monthFormatter(d).toUpperCase());
 
+    const weekAxis = axisTop(xScale)
+      .ticks(timeWeek)
+      .tickSize(-graphHeight);
+
     let el = ReactFauxDOM.createElement("div");
 
     // initialize the chart object
     let svg = buildChartFrame(
       el,
-      { leftAxis, rightAxis, bottomAxis, monthAxis },
+      { leftAxis, rightAxis, bottomAxis, monthAxis, weekAxis },
       { height, width, margin, graphWidth, graphHeight, yLabel, xWidth }
     );
 
@@ -142,8 +146,8 @@ class BarChart extends Component {
       .style("text-anchor", "middle")
       .text((d) => d.alert ? "!" : undefined);
 
-    if (includeBaseline) {
-      let baseline = d3Line()
+    if (baseline) {
+      let line = d3Line()
         .curve(curveBasis)
         .x(d => dScale(d.date))
         .y(d => yScale(d.rescue.baseline));
@@ -155,7 +159,7 @@ class BarChart extends Component {
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
-        .attr("d", baseline);
+        .attr("d", line);
     }
 
     return el.toReact();
@@ -176,10 +180,7 @@ class BarChart extends Component {
     return (
       <div
         className="barchart"
-        style={{
-          position: "relative",
-          margin: "2rem 0"
-        }}
+        style={{ position: "relative" }}
       >
         {children}
         {chart}

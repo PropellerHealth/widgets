@@ -1,9 +1,47 @@
 import React from "react";
+import { Col } from "react-bootstrap";
 import { translate } from "react-i18next";
 import BarChart from "../../components/BarChart";
+import ColorMark from "../../components/ColorMark";
 import GraphTitle from "./GraphTitle";
 
 import { COLORS } from "../../utilities";
+
+const Legend = ({ medications, disease, baseline, incomplete, t }) => {
+  const NOTIFICATION_TEXT = disease === "copd"
+    ? "AT_RISK_OF_COPD_EXACERBATION"
+    : "CONTROL_STATUS_LEGEND";
+
+  return (
+    <Col xs={12} style={{ verticalAlign: "middle", lineHeight: "2rem" }}>
+      <div style={{display: "inline-block", fontSize: "1.5rem"}}>
+        { medications.map(m => m.medication.shortName).join(", ") }
+      </div>
+      <div
+        className="text-right"
+        style={{ fontSize: "1.5rem", float: "right" }}
+      >
+        <div style={{ display: "inline-block" }}>
+          <span
+            style={{
+              color: COLORS.red,
+              fontSize: "2.7rem",
+              verticalAlign: "middle",
+              fontWeight: "bold"
+            }}
+          >
+            !
+          </span>{" "}
+          = {t(NOTIFICATION_TEXT)}
+        </div>
+        <ColorMark text={t("TOTAL")} color={COLORS.orange} right />
+        <ColorMark text={t("NIGHTTIME_USAGE_LEGEND")} color={COLORS.brown} right />
+        {baseline && <ColorMark text={t("RESCUE_BASELINE")} color={COLORS.green} right />}
+        {incomplete && <ColorMark text={t("INCOMPLETE_DATA")} color={COLORS.lightGrey} right />}
+      </div>
+    </Col>
+  );
+};
 
 const RescueMedicationChart = function RescueMedicationChart({
   medications,
@@ -13,47 +51,15 @@ const RescueMedicationChart = function RescueMedicationChart({
   ...rest
 }) {
 
-  const includeBaseline   = disease === "copd";
-  const NOTIFICATION_TEXT = disease === "copd"
-    ? "AT_RISK_OF_COPD_EXACERBATION"
-    : "CONTROL_STATUS_LEGEND";
+  const baseline = disease === "copd";
 
   return (
-    <BarChart includeBaseline={includeBaseline} {...rest}>
+    <BarChart baseline={baseline} {...rest}>
       <GraphTitle
         title={title}
         medications={medications}
         legend={
-          <div
-            className="text-right"
-            style={{ fontSize: "1.5rem", lineHeight: "3.2rem" }}
-          >
-            <div style={{ display: "inline-block" }}>
-              <span
-                style={{
-                  color: COLORS.red,
-                  fontSize: "2.7rem",
-                  verticalAlign: "bottom",
-                  fontWeight: "bold"
-                }}
-              >
-                !
-              </span>{" "}
-              = {t(NOTIFICATION_TEXT)}
-            </div>
-            <div style={{ display: "inline-block", paddingLeft: "3rem" }}>
-              <span
-                style={{
-                  color: COLORS.brown,
-                  fontSize: "2.2rem",
-                  verticalAlign: "bottom"
-                }}
-              >
-                ●
-              </span>{" "}
-              <strong>{t("NIGHTTIME_USAGE_LEGEND")}</strong>
-            </div>
-          </div>
+          <Legend medications={medications} disease={disease} baseline={baseline} t={t} />
         }
       />
     </BarChart>

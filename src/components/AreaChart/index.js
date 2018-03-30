@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ReactFauxDOM from "react-faux-dom";
 import { scaleLinear } from "d3-scale";
-import { axisBottom, axisLeft, axisRight } from "d3-axis";
-import { timeDay, timeMonth } from "d3-time";
+import { axisBottom, axisLeft, axisRight, axisTop} from "d3-axis";
+import { timeDay, timeMonth, timeWeek } from "d3-time";
 import { timeFormat, isoParse } from "d3-time-format";
 import { max as d3Max } from "d3-array";
 import { area as d3Area, line as d3Line, curveBasis } from "d3-shape";
@@ -68,12 +68,16 @@ class AreaChart extends Component {
       .tickPadding(25)
       .tickFormat(d => monthFormatter(d).toUpperCase());
 
+    const weekAxis = axisTop(xScale)
+      .ticks(timeWeek)
+      .tickSize(-graphHeight);
+
     // initialize the chart object
     let el = ReactFauxDOM.createElement("div");
 
     let svg = buildChartFrame(
       el,
-      { leftAxis, rightAxis, bottomAxis, monthAxis },
+      { leftAxis, rightAxis, bottomAxis, monthAxis, weekAxis },
       { height, width, margin, graphWidth, graphHeight, yLabel, xWidth }
     );
 
@@ -124,7 +128,7 @@ class AreaChart extends Component {
     return (
       <div
         className="areachart"
-        style={{ position: "relative", margin: "1rem 0" }}
+        style={{ position: "relative" }}
       >
         {children}
         {chart}

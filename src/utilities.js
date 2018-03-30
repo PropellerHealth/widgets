@@ -56,6 +56,7 @@ const COLORS = {
   grey      : "#888B8D",
   darkGrey  : "#333",
   lightGrey : "#C0C0C0",
+  lightestGrey : "#E0E0E0",
   brown     : "#823700"
 };
 

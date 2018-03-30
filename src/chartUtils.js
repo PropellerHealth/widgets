@@ -1,12 +1,13 @@
 import { select as d3Select } from "d3-selection";
+import { COLORS } from "./utilities";
 
-export const DARK_GREY  = "#888B8D";
-export const LIGHT_GREY = "#DDD";
+export const DARK_GREY  = COLORS.darkGrey;
+export const LIGHT_GREY = COLORS.lightGrey;
 const FONT_SIZE = "12px";
 
 export const buildChartFrame = function buildChartFrame(
   el,
-  { rightAxis, leftAxis, bottomAxis, monthAxis},
+  { rightAxis, leftAxis, bottomAxis, monthAxis, weekAxis },
   { height, width, margin, graphWidth, graphHeight, xWidth, yLabel }
 ) {
   let svg = d3Select(el)
@@ -16,6 +17,7 @@ export const buildChartFrame = function buildChartFrame(
     .append("g")
       .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+  // right axis with tick marks
   svg.append("g")
     .attr("class", "y axis right-axis")
     .attr("transform", `translate(${graphWidth}, 0)`)
@@ -32,6 +34,19 @@ export const buildChartFrame = function buildChartFrame(
       g.selectAll(".tick text").remove();
     });
 
+  svg.append("g")
+    .attr("class", "x axis week-axis")
+    .call(g => {
+      g.call(weekAxis);
+      g.select(".domain")
+        .attr("stroke", DARK_GREY);
+      g.selectAll(".tick line")
+        .attr("stroke", COLORS.lightestGrey)
+        .attr("transform", `translate(${xWidth/2}, 0)`);
+      g.selectAll(".tick text").remove();
+    });
+
+  // left axis with labels
   svg
     .append("g")
       .attr("class", "y axis left-axis")
@@ -58,6 +73,7 @@ export const buildChartFrame = function buildChartFrame(
       .style("text-anchor", "end")
       .text(yLabel);
 
+  // bottom primary axis
   svg.append("g")
     .attr("class", "x axis bottom-axis")
     .attr("transform", `translate(0, ${graphHeight})`)
@@ -71,6 +87,7 @@ export const buildChartFrame = function buildChartFrame(
         .style("fontSize", FONT_SIZE);
     });
 
+  // bottom month axis
   svg.append("g")
     .attr("class", "x axis month-axis")
     .attr("transform", `translate(${xWidth/2}, ${graphHeight})`)
