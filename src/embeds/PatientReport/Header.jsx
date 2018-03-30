@@ -41,7 +41,7 @@ const Header = ({ range, disease = "asthma", t }) => {
               verticalAlign: "bottom"
             }}
           >
-            {t("MONTHLY_HEALTH_REPORT")}
+            {t("DISEASE_INSIGHT_REPORT", {disease: t(disease.toUpperCase())})}
             <br/>
             <strong>{timeFrame(range).toUpperCase()}</strong>
           </h1>

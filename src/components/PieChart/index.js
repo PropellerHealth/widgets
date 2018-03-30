@@ -35,8 +35,8 @@ class PieChart extends Component {
       .outerRadius((radius - 40) * 0.66);
 
     const outerLabel = d3Arc()
-      .innerRadius(radius - 8)
-      .outerRadius(radius - 8);
+      .innerRadius(radius - 15)
+      .outerRadius(radius - 15);
 
     // setup our elements
     const arc = svg.selectAll(".arc")

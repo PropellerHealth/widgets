@@ -2,7 +2,7 @@ import { select as d3Select } from "d3-selection";
 
 export const DARK_GREY  = "#888B8D";
 export const LIGHT_GREY = "#DDD";
-const FONT_SIZE = "16px";
+const FONT_SIZE = "12px";
 
 export const buildChartFrame = function buildChartFrame(
   el,
@@ -73,7 +73,7 @@ export const buildChartFrame = function buildChartFrame(
 
   svg.append("g")
     .attr("class", "x axis month-axis")
-    .attr("transform", `translate(${xWidth/2}, ${graphHeight + 10})`)
+    .attr("transform", `translate(${xWidth/2}, ${graphHeight})`)
     .call(g => {
       g.call(monthAxis);
       g.select(".domain").remove();
