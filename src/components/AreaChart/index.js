@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import ReactFauxDOM from "react-faux-dom";
-import { scaleBand, scaleLinear, scaleTime } from "d3-scale";
-import { axisBottom, axisTop, axisLeft, axisRight } from "d3-axis";
+import { scaleLinear } from "d3-scale";
+import { axisBottom, axisLeft, axisRight } from "d3-axis";
 import { timeDay, timeMonth } from "d3-time";
 import { timeFormat, isoParse } from "d3-time-format";
 import { max as d3Max } from "d3-array";
-import { area as d3Area, curveBasis, curveCardinal, curveCatmullRom, curveBundle, curveNatural, curveStep, curveMonotoneX, curveLinear } from "d3-shape";
+import { area as d3Area, line as d3Line, curveBasis } from "d3-shape";
 
 import { buildChartFrame } from "../../chartUtils";
 
@@ -17,7 +17,7 @@ class AreaChart extends Component {
 
   renderChart() {
     const {
-      data,
+      medications,
       width,
       height,
       margin,
@@ -32,8 +32,13 @@ class AreaChart extends Component {
 
     const xFormatter     = timeFormat("%-d");
     const monthFormatter = timeFormat("%b");
-    const _yMax          = d3Max(data.map(d => d.values.adherencePercent));
-    const yMax           = _yMax < 100 ? 100 : Math.ceil(_yMax / 20) * 20;
+    const _yMax          = d3Max(
+      medications.reduce((ary, med) => {
+        ary = ary.concat(med.adherenceByWeek.map(day => day.values.percentActual));
+        return ary;
+      }, [])
+    );
+    const yMax = _yMax < 100 ? 100 : Math.ceil(_yMax / 20) * 20;
 
     const yScale = scaleLinear()
       .domain([0, yMax])
@@ -72,20 +77,43 @@ class AreaChart extends Component {
       { height, width, margin, graphWidth, graphHeight, yLabel, xWidth }
     );
 
-    let area = d3Area()
-      // .curve(curveCatmullRom.alpha(1))
-      // curve(curveMonotoneX)
-      .curve(curveBasis)
-      .x(d => dScale(d.date))
-      .y0(yScale(0))
-      .y1(d => yScale(Math.round(d.values.adherencePercent) || 0));
+    let curve = curveBasis;
 
-    svg.append("path")
-      .datum(data)
-      .attr("fill", colors.blue)
-      .attr("class", "area")
-      .attr("d", area)
-      .attr("transform", "translate(0, 0)");
+    medications.forEach((med, idx) => {
+      let data = med.adherenceByWeek;
+
+      let area = d3Area()
+        .curve(curve)
+        .x(d => dScale(d.date))
+        .y0(yScale(0))
+        .y1(d => yScale(Math.round(d.values.percentActual) || 0));
+
+      let line = d3Line()
+        .curve(curve)
+        .x(d => dScale(d.date))
+        .y(d => yScale(Math.round(d.values.percentActual) || 0));
+
+      svg.append("path")
+        .datum(data)
+        .attr("fill", colors[idx])
+        .attr("fill-opacity", "0.6")
+        .attr("class", "area")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("d", area)
+        .attr("transform", "translate(0, 0)");
+
+      // add the valueline path.
+      svg.append("path")
+        .datum(data)
+        .attr("class", "line")
+        .attr("d", line)
+        .attr("stroke", colors[idx])
+        .attr("fill", "none")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 2);
+    });
 
     return el.toReact();
   }

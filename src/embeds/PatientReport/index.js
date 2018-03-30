@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Loading from "../../components/Loading";
 import PatientSummary from "./PatientSummary";
-import "moment";
+import moment from "moment";
 import "moment/locale/ca.js";
 import "moment/locale/de.js";
 import "moment/locale/en-ca.js";
@@ -23,16 +23,28 @@ import {
 
 import "./index.css";
 
+const incrementToDays = (toCopy, days) => {
+  const ary = new Array(days);
+  for (let i = 0; i < days; i++) {
+    ary[i] = Object.assign({}, toCopy, {
+      date: moment(toCopy.date)
+        .add(i, "days")
+        .toDate()
+    });
+  }
+  return ary;
+};
+
 class PatientReport extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      patient              : props.patient,
-      dailySummary         : props.dailySummary,
-      controllerAdherence  : props.controllerAdherence,
-      locale               : props.locale,
-      alerts               : props.alerts,
-      quiz                 : props.quiz
+      patient             : props.patient,
+      dailySummary        : props.dailySummary,
+      controllerAdherence : props.controllerAdherence,
+      locale              : props.locale,
+      alerts              : props.alerts,
+      quiz                : props.quiz
     };
     this.loadData = this.loadData.bind(this);
   }
@@ -76,16 +88,24 @@ class PatientReport extends Component {
     const { controlStatus = [], days = [], trends = {} } = dailySummary;
 
     const sortedDays = days.sort(sortDates);
-    const adherence  = controllerAdherence.sort(sortDates);
-    const range      = [sortedDays[0], sortedDays[sortedDays.length - 1]]
-      .map(m => new Date(m.date));
+    const adherence = controllerAdherence.sort(sortDates);
+    const range = [sortedDays[0], sortedDays[sortedDays.length - 1]].map(
+      m => new Date(m.date)
+    );
 
     const rescueMeds = medications.filter(m => "rescue" === m.medication.type);
 
     const controllerMeds = medications
       .filter(m => "controller" === m.medication.type)
       .map(med => {
-        med.adherence = sortedDays.map(day => ({
+        med.adherenceByWeek = adherence
+          .map(week => ({
+            date   : new Date(week.date),
+            values : week.medications.find(m => med.medicationId === m.mid)
+          }))
+          .reduce((arr, d) => arr.concat(incrementToDays(d, 7)), []);
+
+        med.adherenceByDay = sortedDays.map(day => ({
           date   : new Date(day.date),
           values : day.controller.meds.find(m => m.mid === med.medicationId)
         }));
@@ -103,7 +123,6 @@ class PatientReport extends Component {
         patient={patient}
         medications={{ rescue: rescueMeds, controller: controllerMeds }}
         days={sortedDays}
-        adherence={adherence}
         controlStatus={controlStatus}
         alerts={alerts}
         trends={trends}

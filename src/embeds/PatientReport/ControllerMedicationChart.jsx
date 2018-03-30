@@ -2,8 +2,13 @@ import React from "react";
 import AreaChart from "../../components/AreaChart";
 import GraphTitle from "./GraphTitle";
 
-const ControllerMedicationChart = ({ data, medications, title, ...rest }) => (
-  <AreaChart data={data} {...rest}>
+const idxColors = [
+  "#00B5F5",
+  "#005786"
+];
+
+const ControllerMedicationChart = ({ medications, title, ...rest }) => (
+  <AreaChart medications={medications} {...rest} colors={idxColors} >
     <GraphTitle title={title} medications={medications} />
   </AreaChart>
 );

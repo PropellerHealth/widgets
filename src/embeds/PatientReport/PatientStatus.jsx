@@ -28,7 +28,7 @@ const PatientStatus = function PatientStatus({
   const totalDays = period > 31 ? 30 : period;
 
   const adherence = controller.map(med => {
-    const items = med.adherence;
+    const items = med.adherenceByDay;
 
     return {
       name: med.medication.name,

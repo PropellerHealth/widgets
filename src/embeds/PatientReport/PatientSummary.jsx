@@ -8,23 +8,6 @@ import PatientInfo from "./PatientInfo";
 import PatientStatus from "./PatientStatus";
 import MedicationUsage from "./MedicationUsage";
 
-import { sortDates } from "../../utilities";
-
-const incrementToDays = (toCopy, days) => {
-  const ary = new Array(days);
-  for (let i = 0; i < days; i++) {
-    ary[i] = Object.assign({}, toCopy, {
-      date: moment(toCopy.date)
-        .add(i, "days")
-        .toDate()
-    });
-  }
-  return ary;
-};
-
-const frozenCopy = (dst, src, ...rest) =>
-  Object.freeze(Object.assign(dst, Object.freeze(src), ...rest));
-
 class PatientSummary extends React.Component {
 
   updateLocale = function updateLocale(locale) {
@@ -34,6 +17,7 @@ class PatientSummary extends React.Component {
   constructor(props) {
     super(props);
     const { locale, i18n } = props;
+
     if (locale && locale !== i18n.language) {
       this.updateLocale(locale);
     }
@@ -51,44 +35,39 @@ class PatientSummary extends React.Component {
       patient,
       medications,
       days,
-      adherence = [],
       controlStatus,
-      transitionAlerts,
       alerts,
-      trends
+      trends,
+      quiz
     } = this.props;
 
-    const _controller = adherence
-      .map(d => frozenCopy({}, d, { date: new Date(d.date) }))
-      .sort(sortDates)
-      .reduce((arr, d) => arr.concat(incrementToDays(d, 7)), []);
-
+    // moment diff is not inclusive of the range, so add 1
+    const period  = moment(range[1]).diff(moment(range[0]), "days") + 1;
     const rescueNights = days.filter(d => d.rescue.nightEvents > 0).length;
-
-    // console.log("_controller", _controller);
-    // console.log(days);
-    // console.log(medications);
 
     return (
       <Page first>
-        <Header timeFrame={range} disease={patient.disease} />
+        <Header range={range} disease={patient.disease} />
         <PatientInfo
           patient={patient}
           medications={medications}
         />
         <PatientStatus
+          period={period}
+          days={days}
+          disease={patient.disease}
           medications={medications}
           controlStatus={controlStatus}
           rescueNights={rescueNights}
           trends={trends}
+          quiz={quiz}
         />
         <MedicationUsage
+          disease={patient.disease}
           range={range}
           days={days}
           medications={medications}
-          controller={_controller}
           alerts={alerts}
-          transitionAlerts={transitionAlerts}
         />
       </Page>
     );
