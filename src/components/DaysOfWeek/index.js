@@ -10,6 +10,8 @@ import moment from "moment";
 
 import { COLORS } from "../../utilities";
 
+console.log(moment);
+
 const rectangle = (x, y, w, h, rad) => {
   const diam = 2 * rad;
   return `
@@ -31,21 +33,18 @@ const rectangle = (x, y, w, h, rad) => {
 const ORDER = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
 const structureData = data => {
-  const localeOrder = moment.weekdaysMin(true);
+  const initialOrder = moment.weekdaysMin();
+  const localeOrder  = moment.weekdaysMin(true);
 
-  return ORDER.map((day, i) => {
-    return {
-      value : data[day] / 100,
-      key   : day,
-      label : moment(day, "ddd").format("dd")
-    };
-  }).sort((day1, day2) => {
-    const A = day1.label, B = day2.label;
-
-    return localeOrder.indexOf(A) > localeOrder.indexOf(B)
+  return ORDER.map((day, i) => ({
+    value : data[day] / 100,
+    key   : day,
+    label : initialOrder[i]
+  })).sort((day1, day2) =>
+    localeOrder.indexOf(day1.label) > localeOrder.indexOf(day2.label)
       ? 1
-      : -1;
-  });
+      : -1
+  );
 };
 
 class DaysOfWeek extends Component {
@@ -54,6 +53,7 @@ class DaysOfWeek extends Component {
     const { data, width, height } = this.props;
 
     const _data  = structureData(data);
+    console.log("structuredData", _data);
     const values = _data.map(d => d.value);
     const vMax   = max(values);
     const vMin   = min(values);

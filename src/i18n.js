@@ -15,14 +15,16 @@ i18n
       "en-IE"  : ["en-GB"],
       es       : ["es-ES"],
       "es-419" : ["es-US"],
-      "es-xl"  : ["es-US"],
+      "es-XL"  : ["es-US"],
       fr       : ["fr-FR"],
+      ko       : ["ko-KR"],
       nl       : ["nl-NL"],
+      ru       : ["ru-RU"],
       default  : ["en-US"]
     },
     ns: ["translations", "patient-report"],
     defaultNS: "translations",
-    debug: true,
+    debug: false,
 
     interpolation: {
       escapeValue: false, // not needed for react!!

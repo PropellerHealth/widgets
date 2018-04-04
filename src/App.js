@@ -4,6 +4,22 @@ import AsthmaConditions from "./embeds/AsthmaConditions/index";
 import FindMyDoctor from "./embeds/FindMyDoctor/FindMyDoctor";
 import PatientReport from "./embeds/PatientReport";
 
+import "moment";
+import "moment/locale/ca.js";
+import "moment/locale/de.js";
+import "moment/locale/en-au.js";
+import "moment/locale/en-ca.js";
+import "moment/locale/en-gb.js";
+import "moment/locale/en-ie.js";
+import "moment/locale/es.js";
+import "moment/locale/es-us.js";
+import "moment/locale/fr.js";
+import "moment/locale/fr-ca.js";
+import "moment/locale/it.js";
+import "moment/locale/ko.js";
+import "moment/locale/nl.js";
+import "moment/locale/ru.js";
+
 import "./App.css";
 
 class App extends React.Component {

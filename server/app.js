@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const compression = require("compression");
 const express = require("express");
 const path = require("path");
-const fs = require("fs");
+// const fs = require("fs");
 
 require("babel-register")({
   ignore: /\/(build|node_modules)\//,
@@ -22,7 +22,23 @@ function initialize(cb){
     .use(Backend)
     .use(i18nextMiddleware.LanguageDetector)
     .init({
-      preload: ["ca-ES", "de-DE", "en-GB", "en-US", "es-ES", "es-US", "fr-CA", "fr-FR", "it-IT", "ja-JP", "nl-NL"],
+      preload: [
+        "ca-ES",
+        "de-DE",
+        "en-AU",
+        "en-GB",
+        "en-US",
+        "es-AR",
+        "es-ES",
+        "es-MX",
+        "es-US",
+        "fr-CA",
+        "fr-FR",
+        "it-IT",
+        "ko-KR",
+        "nl-NL",
+        "ru-RY"
+      ],
       ns: ["translations", "patient-report"],
       backend: {
         loadPath: path.join(__dirname, "..", "public", "/locales/{{lng}}/{{ns}}.json")
