@@ -15,7 +15,6 @@ import MetricScore from "../../components/MetricScore";
 const PatientStatus = function PatientStatus({
   disease,
   days,
-  period,
   rescueNights,
   medications,
   controlStatus,
@@ -28,7 +27,7 @@ const PatientStatus = function PatientStatus({
 
   const { dayofweek, timeofday } = trends;
 
-  const totalDays  = period > 31 ? 30 : period;
+  const totalDays  = days.length > 31 ? 30 : days.length;
   const controller = medications.controller || [];
 
   const adherence = controller.map(med => {

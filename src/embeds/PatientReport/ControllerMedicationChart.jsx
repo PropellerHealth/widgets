@@ -1,8 +1,11 @@
 import React from "react";
 import { Col } from "react-bootstrap";
+import { translate } from "react-i18next";
 import AreaChart from "../../components/AreaChart";
 import ColorMark from "../../components/ColorMark";
 import GraphTitle from "./GraphTitle";
+
+import { COLORS } from "../../utilities";
 
 const idxColors = [
   "#20C3F3",
@@ -11,7 +14,7 @@ const idxColors = [
   "#8ADFCC"
 ];
 
-const Legend = ({ medications }) => {
+const Legend = ({ medications, incomplete, t }) => {
   return (
     <Col xs={12} style={{ fontSize: "1.5rem", lineHeight: "2rem", verticalAlign: "middle", margin: "0.5rem 0" }}>
       { medications.map((m, i) => (
@@ -22,18 +25,26 @@ const Legend = ({ medications }) => {
           left
         />
       ))}
+      <div
+        className="text-right"
+        style={{ float: "right" }}
+      >
+        {incomplete && <ColorMark text={t("INCOMPLETE_DATA")} color={COLORS.lightGrey} right />}
+      </div>
     </Col>
   );
 };
 
-const ControllerMedicationChart = ({ medications, title, ...rest }) => (
-  <AreaChart medications={medications} {...rest} colors={idxColors} >
+const ControllerMedicationChart = ({ medications, title, lastSync, t, ...rest }) => (
+  <AreaChart medications={medications} lastSync={lastSync} {...rest} colors={idxColors} >
     <GraphTitle
       title={title}
       medications={medications}
-      legend={<Legend medications={medications}/>}
+      legend={
+        <Legend medications={medications} incomplete={lastSync} t={t}/>
+      }
     />
   </AreaChart>
 );
 
-export default ControllerMedicationChart;
+export default translate("patient-report")(ControllerMedicationChart);

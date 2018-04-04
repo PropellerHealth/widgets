@@ -39,7 +39,6 @@ class PatientSummary extends React.Component {
       trends,
       quiz,
       lastSync,
-      period,
       rescueNights
     } = this.props;
 
@@ -51,7 +50,6 @@ class PatientSummary extends React.Component {
           medications={medications}
         />
         <PatientStatus
-          period={period}
           days={days}
           disease={patient.disease}
           medications={medications}

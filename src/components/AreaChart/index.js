@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import ReactFauxDOM from "react-faux-dom";
 import { scaleLinear } from "d3-scale";
-import { axisBottom, axisLeft, axisRight, axisTop} from "d3-axis";
-import { timeDay, timeMonth, timeWeek } from "d3-time";
-import { timeFormat, isoParse } from "d3-time-format";
+import { axisLeft, axisRight } from "d3-axis";
 import { max as d3Max } from "d3-array";
 import { area as d3Area, line as d3Line, curveBasis } from "d3-shape";
 
 import { buildChartFrame } from "../../chartUtils";
+
+const scaleForY = percent => Math.round(percent || 0);
 
 class AreaChart extends Component {
   constructor(props) {
@@ -25,14 +25,15 @@ class AreaChart extends Component {
       graphWidth,
       xWidth,
       xScale,
-      dScale,
       yLabel,
-      colors
+      colors,
+      lastSync,
+      bottomAxis,
+      monthAxis,
+      weekAxis
     } = this.props;
 
-    const xFormatter     = timeFormat("%-d");
-    const monthFormatter = timeFormat("%b");
-    const _yMax          = d3Max(
+    const _yMax = d3Max(
       medications.reduce((ary, med) => {
         ary = ary.concat(med.adherenceByWeek.map(day => day.values.percentActual));
         return ary;
@@ -56,22 +57,6 @@ class AreaChart extends Component {
       .ticks(5)
       .tickSize(-graphWidth);
 
-    const bottomAxis = axisBottom(xScale)
-      .ticks(timeDay)
-      .tickSize(0)
-      .tickPadding(10)
-      .tickFormat(d => xFormatter(isoParse(d)));
-
-    const monthAxis = axisBottom(xScale)
-      .ticks(timeMonth)
-      .tickSize(0)
-      .tickPadding(25)
-      .tickFormat(d => monthFormatter(d).toUpperCase());
-
-    const weekAxis = axisTop(xScale)
-      .ticks(timeWeek)
-      .tickSize(-graphHeight);
-
     // initialize the chart object
     let el = ReactFauxDOM.createElement("div");
 
@@ -88,14 +73,14 @@ class AreaChart extends Component {
 
       let area = d3Area()
         .curve(curve)
-        .x(d => dScale(d.date))
+        .x(d => xScale(d.date))
         .y0(yScale(0))
-        .y1(d => yScale(Math.round(d.values.percentActual) || 0));
+        .y1(d => yScale(scaleForY(d.values.percentActual)));
 
       let line = d3Line()
         .curve(curve)
-        .x(d => dScale(d.date))
-        .y(d => yScale(Math.round(d.values.percentActual) || 0));
+        .x(d => xScale(d.date))
+        .y(d => yScale(scaleForY(d.values.percentActual)));
 
       svg.append("path")
         .datum(data)
@@ -118,6 +103,17 @@ class AreaChart extends Component {
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 2);
     });
+
+    if (lastSync) {
+      svg.append("g")
+        .attr("class", "missing-data")
+        .append("rect")
+        .attr("height", graphHeight)
+        .attr("width", graphWidth - xScale(lastSync))
+        .attr("transform", `translate(${xScale(lastSync)}, 0)`)
+        .attr("fill", "#9B9B9B")
+        .attr("fill-opacity", "0.4");
+    }
 
     return el.toReact();
   }

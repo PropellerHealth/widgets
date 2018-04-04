@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import ReactFauxDOM from "react-faux-dom";
 import { scaleLinear } from "d3-scale";
 import { max as d3Max } from "d3-array";
-import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
-import { timeDay, timeMonth, timeWeek } from "d3-time";
-import { timeFormat, isoParse } from "d3-time-format";
+import { axisLeft, axisRight } from "d3-axis";
 import { line as d3Line, curveBasis } from "d3-shape";
 
 import { buildChartFrame } from "../../chartUtils";
@@ -45,13 +43,15 @@ class BarChart extends Component {
       yLabel,
       dScale,
       colors,
-      baseline
+      baseline,
+      lastSync,
+      weekAxis,
+      monthAxis,
+      bottomAxis
     } = this.props;
 
-    const yMax           = d3Max(data.map(d => d.rescue.totalEvents));
-    const yHeight        = yMax < 5 ? 5 : yMax + 1;
-    const xFormatter     = timeFormat("%-d");
-    const monthFormatter = timeFormat("%b");
+    const yMax    = d3Max(data.map(d => d.rescue.totalEvents));
+    const yHeight = yMax < 5 ? 5 : yMax + 1;
 
     const yScale = scaleLinear()
       .domain([0, yHeight])
@@ -67,22 +67,6 @@ class BarChart extends Component {
     const rightAxis = axisRight(yScale)
       .ticks(yHeight > 10 ? 5 : yHeight)
       .tickSize(-graphWidth);
-
-    const bottomAxis = axisBottom(xScale)
-      .ticks(timeDay)
-      .tickSize(0)
-      .tickPadding(10)
-      .tickFormat(d => xFormatter(isoParse(d)));
-
-    const monthAxis = axisBottom(xScale)
-      .ticks(timeMonth)
-      .tickSize(0)
-      .tickPadding(25)
-      .tickFormat(d => monthFormatter(d).toUpperCase());
-
-    const weekAxis = axisTop(xScale)
-      .ticks(timeWeek)
-      .tickSize(-graphHeight);
 
     let el = ReactFauxDOM.createElement("div");
 
@@ -160,6 +144,17 @@ class BarChart extends Component {
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
         .attr("d", line);
+    }
+
+    if (lastSync) {
+      svg.append("g")
+        .attr("class", "missing-data")
+        .append("rect")
+        .attr("height", graphHeight)
+        .attr("width", graphWidth - xScale(lastSync))
+        .attr("transform", `translate(${xScale(lastSync)}, 0)`)
+        .attr("fill", "#9B9B9B")
+        .attr("fill-opacity", "0.4");
     }
 
     return el.toReact();

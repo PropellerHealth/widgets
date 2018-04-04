@@ -54,7 +54,7 @@ class PieChart extends Component {
     arc.append("text")
       .attr("transform", d => `translate(${innerLabel.centroid(d)})`)
       .attr("dy", "0.35em")
-      .text(d => `${d.data.percent}%`)
+      .text(d => d.data.percent > 0 ? `${d.data.percent}%` : "")
       .attr("fill", "#FFF")
       .style("fontSize", "16px")
       .style("text-anchor", "middle");
@@ -73,14 +73,14 @@ class PieChart extends Component {
       .append("tspan")
       .attr("x", "0")
       .style("text-anchor", "middle")
-      .text(d => d.data.label);
+      .text(d =>  d.data.percent > 0 ? d.data.label : "");
 
     label
       .append("tspan")
       .attr("x", "0")
       .attr("dy", "13px")
       .style("text-anchor", "middle")
-      .text(d => d.data.times.join("-"));
+      .text(d => d.data.percent > 0 ? d.data.times.join("-") : "");
 
     return el.toReact();
   }

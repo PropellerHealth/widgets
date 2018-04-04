@@ -13,13 +13,13 @@ const Legend = ({ medications, disease, baseline, incomplete, t }) => {
     : "CONTROL_STATUS_LEGEND";
 
   return (
-    <Col xs={12} style={{ verticalAlign: "middle", lineHeight: "2rem" }}>
-      <div style={{display: "inline-block", fontSize: "1.5rem"}}>
-        { medications.map(m => m.medication.shortName).join(", ") }
+    <Col xs={12} style={{ verticalAlign: "middle", lineHeight: "2rem", fontSize: "1.5rem" }}>
+      <div style={{ display: "inline-block" }}>
+        <strong>{ medications.map(m => m.medication.shortName).join(", ") }</strong>
       </div>
       <div
         className="text-right"
-        style={{ fontSize: "1.5rem", float: "right" }}
+        style={{ float: "right" }}
       >
         <div style={{ display: "inline-block" }}>
           <span
@@ -48,18 +48,19 @@ const RescueMedicationChart = function RescueMedicationChart({
   title,
   disease,
   t,
+  lastSync,
   ...rest
 }) {
 
   const baseline = disease === "copd";
 
   return (
-    <BarChart baseline={baseline} {...rest}>
+    <BarChart baseline={baseline} lastSync={lastSync} {...rest}>
       <GraphTitle
         title={title}
         medications={medications}
         legend={
-          <Legend medications={medications} disease={disease} baseline={baseline} t={t} />
+          <Legend medications={medications} disease={disease} baseline={baseline} incomplete={lastSync} t={t} />
         }
       />
     </BarChart>

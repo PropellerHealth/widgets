@@ -42,9 +42,10 @@ class PatientReport extends Component {
       patient             : props.patient,
       dailySummary        : props.dailySummary,
       controllerAdherence : props.controllerAdherence,
+      medications         : props.medications || [],
       locale              : props.locale,
-      alerts              : props.alerts,
-      quiz                : props.quiz
+      alerts              : props.alerts || {},
+      quiz                : props.quiz   || {}
     };
     this.loadData = this.loadData.bind(this);
   }
@@ -96,9 +97,6 @@ class PatientReport extends Component {
       sortedDays[sortedDays.length - 1]
     ].map(m => new Date(m.date));
 
-    // moment diff is not inclusive of the range, so add 1
-    const period = moment(range[1]).diff(moment(range[0]), "days") + 1;
-
     const oldestLastSync = medications
       .map(med => med.sensors.map(s => s.lastSyncDate))
       .reduce((ary, times) => ary.concat(times))
@@ -123,11 +121,6 @@ class PatientReport extends Component {
         return med;
       });
 
-    // console.log(controllerMeds);
-    // console.log("sortedDaus", sortedDays);
-    // console.log(range);
-    // console.log(adherence);
-
     return (
       <PatientSummary
         range={range}
@@ -140,7 +133,6 @@ class PatientReport extends Component {
         trends={trends}
         quiz={quiz}
         locale={locale}
-        period={period}
         rescueNights={rescueNights}
       />
     );

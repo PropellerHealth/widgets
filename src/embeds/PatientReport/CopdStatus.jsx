@@ -14,7 +14,7 @@ const CopdStatus = ({ days, totalDays, rescueNights, t }) => {
       .slice(days.length - totalDays)
       .reduce((tot, day) => tot + day.rescue.baseline, 0) / totalDays;
 
-  const baseline24Hours  = days[totalDays - 1].rescue.baseline;
+  const baseline24Hours  = days[days.length - 1].rescue.baseline;
   const lastSevenDays    = days.slice(days.length - 7);
   const totalEvents7Days = lastSevenDays.reduce(
     (tot, day) => tot + day.rescue.totalEvents,

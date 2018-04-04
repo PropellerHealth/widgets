@@ -1,7 +1,10 @@
 import React from "react";
+import moment from "moment";
 import { translate } from "react-i18next";
 import { scaleUtc } from "d3-scale";
-import { utcDay } from "d3-time";
+import { utcDay, timeDay, timeMonth, timeWeek } from "d3-time";
+import { axisBottom, axisTop } from "d3-axis";
+import { timeFormat, isoParse } from "d3-time-format";
 import SectionHeader from "./SectionHeader";
 import RescueMedicationChart from "./RescueMedicationChart";
 import ControllerMedicationChart from "./ControllerMedicationChart";
@@ -26,6 +29,8 @@ const MedicationUsage = function MedicationUsage({
   medications,
   alerts,
   disease,
+  sync,
+  lastSync,
   t
 }) {
   const width  = 1090;
@@ -35,7 +40,10 @@ const MedicationUsage = function MedicationUsage({
   const graphHeight = height - margin.top - margin.bottom - 18;
   const xWidth      = graphWidth / days.length / 2;
 
-  const areaScale = createTimeScale(
+  const xFormatter     = timeFormat("%-d");
+  const monthFormatter = timeFormat("%b");
+
+  const lineScale = createTimeScale(
     range[0],
     range[1],
     graphWidth + (xWidth * 2)
@@ -47,6 +55,22 @@ const MedicationUsage = function MedicationUsage({
     graphWidth
   );
 
+  const bottomAxis = axisBottom(xScale)
+    .ticks(timeDay)
+    .tickSize(0)
+    .tickPadding(10)
+    .tickFormat(d => xFormatter(isoParse(d)));
+
+  const monthAxis = axisBottom(xScale)
+    .ticks(timeMonth)
+    .tickSize(0)
+    .tickPadding(25)
+    .tickFormat(d => monthFormatter(d).toUpperCase());
+
+  const weekAxis = axisTop(xScale)
+    .ticks(timeWeek)
+    .tickSize(-graphHeight);
+
   const alertDates = alerts[ALERT_FOR_DISEASE[disease]].map(a => new Date(a).toISOString());
 
   const rescueData = days.map(d => {
@@ -54,6 +78,9 @@ const MedicationUsage = function MedicationUsage({
     d.alert = alertDates.indexOf(d.date.toISOString()) > -1;
     return d;
   });
+
+  // lastSync = moment(lastSync).subtract(5, "days").toDate();
+  const _lastSync = moment(lastSync).diff(moment(range[1]), "d") < 0 ? lastSync : false;
 
   return (
     <div style={{ marginTop: "1rem" }}>
@@ -64,6 +91,7 @@ const MedicationUsage = function MedicationUsage({
       <RescueMedicationChart
         disease={disease}
         data={rescueData}
+        lastSync={_lastSync}
         alertDates={alertDates}
         width={width}
         height={height}
@@ -72,12 +100,16 @@ const MedicationUsage = function MedicationUsage({
         graphWidth={graphWidth}
         xScale={xScale}
         xWidth={xWidth}
-        dScale={areaScale}
+        dScale={lineScale}
+        bottomAxis={bottomAxis}
+        monthAxis={monthAxis}
+        weekAxis={weekAxis}
         colors={COLORS}
         medications={medications.rescue}
         title={t("RESCUE_MEDICATION_USAGE")}
       />
       <ControllerMedicationChart
+        lastSync={_lastSync}
         width={width}
         height={height}
         margin={margin}
@@ -85,7 +117,9 @@ const MedicationUsage = function MedicationUsage({
         graphWidth={graphWidth}
         xScale={xScale}
         xWidth={xWidth}
-        dScale={xScale}
+        bottomAxis={bottomAxis}
+        monthAxis={monthAxis}
+        weekAxis={weekAxis}
         colors={COLORS}
         medications={medications.controller}
         title={t("CONTROLLER_MEDICATION_ADHERENCE")}
