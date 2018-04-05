@@ -5,6 +5,7 @@ import moment from "moment";
 import { timeFormatLocale } from "d3-time-format";
 import d3Locales from "./d3Locales";
 
+// is there a way to disable trying to load language-only resources? eg. `en`?
 i18n
   .use(XHR)
   .use(LanguageDetector)
@@ -12,6 +13,7 @@ i18n
     fallbackLng: {
       ca       : ["ca-ES"],
       de       : ["de-DE"],
+      en       : ["en-US"],
       "en-IE"  : ["en-GB"],
       es       : ["es-ES"],
       "es-419" : ["es-US"],
@@ -37,10 +39,11 @@ i18n
       bindStore: "added removed",
       nsMode: "default"
     }
-  })
-  .on("languageChanged", function(lng) {
-    moment.locale(lng);
-    timeFormatLocale(d3Locales[lng]);
   });
+
+i18n.on("languageChanged", function(lng) {
+  moment.locale(lng);
+  timeFormatLocale(d3Locales[lng] || d3Locales["en-US"]);
+});
 
 export default i18n;

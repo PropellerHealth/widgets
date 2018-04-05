@@ -65,7 +65,7 @@ const propsForRequest = (req, cb) => {
   } else if (req.path.indexOf("/patient-summary") === 0) {
     let apiHost = req.query.host || API_HOST;
     let url = `${apiHost}/api/reports/${req.params.reportId}/data?accessToken=${req.query.accessToken}`;
-    console.log(url);
+    // console.log(url);
     let options = {
       url     : url,
       method  : "GET",
@@ -76,8 +76,8 @@ const propsForRequest = (req, cb) => {
     };
 
     request(options, (err, resp, body) => {
-      console.log(err);
-      console.log(body);
+      // console.log(err);
+      // console.log(body);
       if (err) {
         return cb(err);
       }

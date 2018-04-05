@@ -10,8 +10,6 @@ import moment from "moment";
 
 import { COLORS } from "../../utilities";
 
-console.log(moment);
-
 const rectangle = (x, y, w, h, rad) => {
   const diam = 2 * rad;
   return `
@@ -53,7 +51,6 @@ class DaysOfWeek extends Component {
     const { data, width, height } = this.props;
 
     const _data  = structureData(data);
-    console.log("structuredData", _data);
     const values = _data.map(d => d.value);
     const vMax   = max(values);
     const vMin   = min(values);

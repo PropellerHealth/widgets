@@ -37,13 +37,14 @@ function initialize(cb){
         "it-IT",
         "ko-KR",
         "nl-NL",
-        "ru-RY"
+        "ru-RU"
       ],
       ns: ["translations", "patient-report"],
       backend: {
         loadPath: path.join(__dirname, "..", "public", "/locales/{{lng}}/{{ns}}.json")
       }
-    }, () => {
+    },
+    () => {
       const app = express();
       app.set("trust proxy", true);
       app.use(compression());
@@ -51,7 +52,6 @@ function initialize(cb){
       app.use(bodyParser.urlencoded({ extended: false }));
       app.use(i18nextMiddleware.handle(i18nInstance));
       app.use("/", index);
-      app.use("/locales", express.static(path.join(__dirname, "..", "/locales")));
       app.use(express.static(path.resolve(__dirname, "..", "build")));
       app.use("/api", api);
       app.use("/", universalLoader);

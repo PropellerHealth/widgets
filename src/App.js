@@ -1,10 +1,12 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import { timeFormatLocale } from "d3-time-format";
 import AsthmaConditions from "./embeds/AsthmaConditions/index";
 import FindMyDoctor from "./embeds/FindMyDoctor/FindMyDoctor";
 import PatientReport from "./embeds/PatientReport";
+import d3Locales from "./d3Locales";
 
-import "moment";
+import moment from "moment";
 import "moment/locale/ca.js";
 import "moment/locale/de.js";
 import "moment/locale/en-au.js";
@@ -23,6 +25,18 @@ import "moment/locale/ru.js";
 import "./App.css";
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    if (props.locale) {
+      // this is ugly, but otherwise we're using defaults,
+      // which for moment is the last locale loaded
+      // consider restructuring how we init the I18nextProvider, wrapping it
+      // to see if we can handle it inside there, leveraging the initial language
+      moment.locale(props.locale);
+      timeFormatLocale(d3Locales[props.locale] || d3Locales["en-US"]);
+    }
+  }
 
   render() {
     const { props } = this;
