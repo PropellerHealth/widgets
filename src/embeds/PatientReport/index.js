@@ -99,13 +99,13 @@ class PatientReport extends Component {
         med.adherenceByWeek = adherence
           .map(week => ({
             date   : new Date(week.date),
-            values : week.medications.find(m => med.medicationId === m.mid)
+            values : week.medications && week.medications.find(m => med.medicationId === m.mid)
           }))
           .reduce((arr, d) => arr.concat(incrementToDays(d, 7)), []);
 
         med.adherenceByDay = sortedDays.map(day => ({
           date   : new Date(day.date),
-          values : day.controller.meds.find(m => m.mid === med.medicationId)
+          values : day.controller && day.controller.meds.find(m => m.mid === med.medicationId)
         }));
         return med;
       });
