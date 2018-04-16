@@ -36,7 +36,7 @@ const PatientStatus = function PatientStatus({
     return {
       name      : med.medication.name,
       adherence : Math.round(
-        items.reduce((total, item) => total + item.values.percent, 0) /
+        items.reduce((total, item) => total + ((item.values && item.values.percent) || 0), 0) /
           items.length
       )
     };
