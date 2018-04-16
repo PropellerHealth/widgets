@@ -35,7 +35,7 @@ class AreaChart extends Component {
 
     const _yMax = d3Max(
       medications.reduce((ary, med) => {
-        ary = ary.concat(med.adherenceByWeek.map(day => day.values.percentActual));
+        ary = ary.concat(med.adherenceByWeek.map(day => day.values.percent));
         return ary;
       }, [])
     );
@@ -75,12 +75,12 @@ class AreaChart extends Component {
         .curve(curve)
         .x(d => xScale(d.date))
         .y0(yScale(0))
-        .y1(d => yScale(scaleForY(d.values.percentActual)));
+        .y1(d => yScale(scaleForY(d.values.percent)));
 
       let line = d3Line()
         .curve(curve)
         .x(d => xScale(d.date))
-        .y(d => yScale(scaleForY(d.values.percentActual)));
+        .y(d => yScale(scaleForY(d.values.percent)));
 
       svg.append("path")
         .datum(data)
