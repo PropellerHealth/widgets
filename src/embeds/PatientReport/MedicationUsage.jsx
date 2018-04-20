@@ -23,14 +23,17 @@ const ALERT_FOR_DISEASE = {
   copd   : "atrisk"
 };
 
+const lastSync = (date, end) => moment(date).diff(moment(end), "d") < 0 ? date : false;
+const prehistoryDate = (date, start) => moment(date).diff(moment(start), "d") > 0 ? date : false;
+
 const MedicationUsage = function MedicationUsage({
+  disease,
   range,
   days,
   medications,
   alerts,
-  disease,
   sync,
-  lastSync,
+  startDate,
   t
 }) {
   const width  = 1090;
@@ -79,8 +82,11 @@ const MedicationUsage = function MedicationUsage({
     return d;
   });
 
-  // lastSync = moment(lastSync).subtract(5, "days").toDate();
-  const _lastSync = moment(lastSync).diff(moment(range[1]), "d") < 0 ? lastSync : false;
+  const lastRescue     = lastSync(sync.lastRescue, range[1]);
+  const lastController = lastSync(sync.lastController, range[1]);
+  console.log('startDate', startDate);
+  const firstDate      = prehistoryDate(startDate, range[0]);
+  console.log('firstDate', firstDate);
 
   return (
     <div style={{ marginTop: "1rem" }}>
@@ -91,7 +97,8 @@ const MedicationUsage = function MedicationUsage({
       <RescueMedicationChart
         disease={disease}
         data={rescueData}
-        lastSync={_lastSync}
+        firstDate={firstDate}
+        lastSync={lastRescue}
         alertDates={alertDates}
         width={width}
         height={height}
@@ -109,7 +116,8 @@ const MedicationUsage = function MedicationUsage({
         title={t("RESCUE_MEDICATION_USAGE")}
       />
       <ControllerMedicationChart
-        lastSync={_lastSync}
+        firstDate={firstDate}
+        lastSync={lastController}
         width={width}
         height={height}
         margin={margin}

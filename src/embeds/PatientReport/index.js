@@ -47,7 +47,7 @@ class PatientReport extends Component {
     const url = `${host}/api/reports/${reportId}/data?accessToken=${accessToken}`;
 
     window
-      .fetch(url, { headers: { "x-ph-api-version": "3.33.0" } })
+      .fetch(url, { headers: { "x-ph-api-version": "3.35.0" } })
       .then(checkResponse)
       .then(extractJSON)
       .then(data => this.setState({ ...data }))
@@ -86,9 +86,22 @@ class PatientReport extends Component {
     const rescueMeds   = medications.filter(m => "rescue" === m.medication.type);
     const sortedDays   = days.sort(sortDates);
     const range        = [
-      sortedDays[0],
-      sortedDays[sortedDays.length - 1]
-    ].map(m => new Date(m.date));
+      sortedDays[0].date,
+      sortedDays[sortedDays.length - 1].date
+    ];
+
+    const sync = patient.sync;
+
+    const syncTimes = {
+      first           : moment(sync.first).tz(timeZone),
+      last            : moment(sync.last).tz(timeZone),
+      firstController : moment(sync.firstController).tz(timeZone),
+      lastController  : moment(sync.lastController).tz(timeZone),
+      firstRescue     : moment(sync.firstRescue).tz(timeZone),
+      lastRescue      : moment(sync.lastRescue).tz(timeZone),
+    };
+
+    const startDate = moment(patient.createdDate);
 
     const oldestLastSync = moment(medications
       .map(med => med.sensors.map(s => s.lastSyncDate))
@@ -119,6 +132,8 @@ class PatientReport extends Component {
       <PatientSummary
         range={range}
         patient={patient}
+        startDate={startDate}
+        sync={syncTimes}
         lastSync={oldestLastSync}
         medications={{ rescue: rescueMeds, controller: controllerMeds }}
         days={sortedDays}

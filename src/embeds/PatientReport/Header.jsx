@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import { translate } from "react-i18next";
 import { Row, Col } from "react-bootstrap";
 import PageHeader from "./PageHeader";
@@ -7,8 +6,8 @@ import { COLORS } from "../../utilities";
 import logo from "../../assets/images/logo.svg";
 
 const timeFrame = range => {
-  const d1 = moment(range[0]);
-  const d2 = moment(range[1]);
+  const d1 = range[0];
+  const d2 = range[1];
 
   if (
     d1.month() === d2.month() ||
