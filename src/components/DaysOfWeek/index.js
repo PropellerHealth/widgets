@@ -157,7 +157,7 @@ class DaysOfWeek extends Component {
       .attr("fill", COLORS.darkGrey)
       .style("fontSize", "16px")
       .style("text-anchor", "middle")
-      .text((d) => d.minmax ? `${d.value * 100}%` : "");
+      .text((d) => d.minmax ? `${Math.round(d.value * 100)}%` : "");
 
     return el.toReact();
   }
