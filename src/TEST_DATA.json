@@ -1,0 +1,1330 @@
+{
+  "patient": {
+    "age": 27,
+    "birthDate": "1990-08-04",
+    "createdDate": "2017-09-14T16:56:59.065Z",
+    "disease": "asthma",
+    "email": "sepi.shokri+1arm@propellerhealth.com",
+    "givenName": "Arm1",
+    "familyName": "Shokri",
+    "followers": [
+      {
+        "id": "596fa767aef883073121222b",
+        "accessLevel": "modify",
+        "givenName": "Marc",
+        "familyName": "Brakken",
+        "role": "physician"
+      }
+    ],
+    "language": "en-US",
+    "medicalIds": [],
+    "membership": "premium",
+    "plan": {
+      "medications": [
+        {
+          "medication": {
+            "shortName": "Breo Ellipta",
+            "name": "Breo Ellipta",
+            "type": "controller",
+            "formFactor": "ellipta",
+            "id": "breo_ellipta",
+            "diseases": [
+              "asthma",
+              "copd"
+            ]
+          },
+          "medicationId": "breo_ellipta",
+          "sensors": [
+            {
+              "firstSyncDate": "2018-04-06T20:37:30.621+00:00",
+              "lastSyncDate": "2018-04-06T21:19:20.626+00:00",
+              "mac": "F8:FE:5C:3F:DD:01",
+              "model": "ble1",
+              "batteryLevel": 100,
+              "lastTransmitDevice": {
+                "name": "Propeller Health Positronic",
+                "platform": "android",
+                "bluetoothStatus": "on",
+                "date": "2018-04-06T21:19:20.626+00:00",
+                "appVersion": "4.3.0",
+                "operatingSystem": "android:propellerhealth:positronic 10"
+              }
+            }
+          ],
+          "usageList": [
+            {
+              "doses": 2,
+              "hour": 8,
+              "minute": 0
+            },
+            {
+              "doses": 2,
+              "hour": 14,
+              "minute": 0
+            },
+            {
+              "doses": 2,
+              "hour": 20,
+              "minute": 0
+            }
+          ]
+        },
+        {
+          "medication": {
+            "shortName": "Albuterol",
+            "name": "Albuterol",
+            "type": "rescue",
+            "formFactor": "mdi",
+            "id": "albuterol",
+            "diseases": [
+              "asthma",
+              "copd"
+            ]
+          },
+          "medicationId": "albuterol",
+          "sensors": [
+            {
+              "mac": "F8:FE:5C:32:00:FE",
+              "model": "ble1",
+              "lastTransmitDevice": {}
+            },
+            {
+              "mac": "F8:FE:5C:D1:04:AE",
+              "model": "ble1",
+              "lastTransmitDevice": {}
+            }
+          ],
+          "usageList": []
+        },
+        {
+          "medication": {
+            "shortName": "Accuneb",
+            "name": "Accuneb Nebulizer",
+            "type": "rescue",
+            "formFactor": "nebulizer",
+            "id": "accuneb",
+            "diseases": [
+              "asthma",
+              "copd"
+            ]
+          },
+          "medicationId": "accuneb",
+          "sensors": [],
+          "usageList": []
+        }
+      ]
+    },
+    "role": "patient",
+    "score": {
+      "code": "good",
+      "type": "naeep"
+    },
+    "sync": {
+      "first": "2018-04-06T20:37:30.621+00:00",
+      "firstController": "2018-04-06T20:37:30.621+00:00",
+      "firstRescue": "2018-04-06T20:37:48.813+00:00",
+      "last": "2018-04-10T14:14:38.861+00:00",
+      "lastController": "2018-04-06T21:19:20.626+00:00",
+      "lastRescue": "2018-04-10T14:14:38.861+00:00",
+      "total": 10
+    },
+    "event": {
+      "first": "2018-03-29T21:19:10.000+00:00",
+      "firstController": "2018-03-29T21:19:10.000+00:00",
+      "firstRescue": "2018-03-30T21:23:59.000+00:00",
+      "last": "2018-04-10T14:14:16.000+00:00",
+      "lastController": "2018-04-04T20:37:15.000+00:00",
+      "lastRescue": "2018-04-10T14:14:16.000+00:00",
+      "totalRescue": 7
+    },
+    "timeZone": "America/Chicago"
+  },
+  "locale": "en-US",
+  "medications": [
+    {
+      "medication": {
+        "shortName": "Breo Ellipta",
+        "name": "Breo Ellipta",
+        "type": "controller",
+        "formFactor": "ellipta",
+        "id": "breo_ellipta",
+        "diseases": [
+          "asthma",
+          "copd"
+        ]
+      },
+      "medicationId": "breo_ellipta",
+      "sensors": [
+        {
+          "firstSyncDate": "2018-04-06T20:37:30.621+00:00",
+          "lastSyncDate": "2018-04-06T21:19:20.626+00:00",
+          "mac": "F8:FE:5C:3F:DD:01",
+          "model": "ble1",
+          "batteryLevel": 100,
+          "lastTransmitDevice": {
+            "name": "Propeller Health Positronic",
+            "platform": "android",
+            "bluetoothStatus": "on",
+            "date": "2018-04-06T21:19:20.626+00:00",
+            "appVersion": "4.3.0",
+            "operatingSystem": "android:propellerhealth:positronic 10"
+          }
+        }
+      ],
+      "usageList": [
+        {
+          "doses": 2,
+          "hour": 8,
+          "minute": 0
+        },
+        {
+          "doses": 2,
+          "hour": 14,
+          "minute": 0
+        },
+        {
+          "doses": 2,
+          "hour": 20,
+          "minute": 0
+        }
+      ]
+    },
+    {
+      "medication": {
+        "shortName": "Albuterol",
+        "name": "Albuterol",
+        "type": "rescue",
+        "formFactor": "mdi",
+        "id": "albuterol",
+        "diseases": [
+          "asthma",
+          "copd"
+        ]
+      },
+      "medicationId": "albuterol",
+      "sensors": [
+        {
+          "mac": "F8:FE:5C:32:00:FE",
+          "model": "ble1",
+          "lastTransmitDevice": {}
+        },
+        {
+          "mac": "F8:FE:5C:D1:04:AE",
+          "model": "ble1",
+          "lastTransmitDevice": {}
+        }
+      ],
+      "usageList": []
+    },
+    {
+      "medication": {
+        "shortName": "Accuneb",
+        "name": "Accuneb Nebulizer",
+        "type": "rescue",
+        "formFactor": "nebulizer",
+        "id": "accuneb",
+        "diseases": [
+          "asthma",
+          "copd"
+        ]
+      },
+      "medicationId": "accuneb",
+      "sensors": [],
+      "usageList": []
+    }
+  ],
+  "dailySummary": {
+    "trends": {
+      "endDate": "2018-04-19",
+      "startDate": "2018-03-20",
+      "trigger_event_coverage": 0,
+      "triggers": {
+        "unknown": 0,
+        "exercise": 0,
+        "airPollution": 0,
+        "workplaceExposure": 0,
+        "outdoorAllergens": 0,
+        "dust": 0,
+        "animals": 0,
+        "coldAir": 0,
+        "tobacco": 0,
+        "respiratoryInfection": 0,
+        "smellsOrScents": 0
+      },
+      "symptom_event_coverage": 0,
+      "symptoms": {
+        "activityLimitations": 0,
+        "chestTightness": 0,
+        "shortnessOfBreath": 0,
+        "difficultyBreathing": 0,
+        "wheeze": 0,
+        "cough": 0,
+        "wokenAtNight": 0
+      },
+      "nightevents": 0,
+      "timeofday": {
+        "night": 0,
+        "evening": 29,
+        "afternoon": 57,
+        "morning": 14
+      },
+      "dayofweek": {
+        "sat": 14,
+        "fri": 14,
+        "thu": 0,
+        "wed": 14,
+        "tue": 43,
+        "mon": 14,
+        "sun": 0
+      }
+    },
+    "controlStatus": {
+      "good": 22,
+      "fair": 7,
+      "poor": 0,
+      "unknown": null
+    },
+    "rescueUsage": [
+      {
+        "date": "2018-04-19T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-18T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-17T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-16T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-15T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-14T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-13T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-12T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-11T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-10T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 1,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-09T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-08T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-07T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-06T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-05T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-04T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 1,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-03T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 2,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-02T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 1,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-04-01T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-31T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 1,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-30T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 1,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-29T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-28T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-27T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-26T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-25T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-24T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-23T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-22T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      },
+      {
+        "date": "2018-03-21T00:00:00.000+00:00",
+        "values": {
+          "eventsRescue": 0,
+          "eventsRescueNight": 0
+        }
+      }
+    ],
+    "days": [
+      {
+        "date": "2018-04-19T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-18T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-17T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-16T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-15T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-14T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-13T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-12T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-11T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-10T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 1,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-09T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-08T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-07T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-06T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 4,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 4,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-05T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-04T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 1,
+          "dosesTakenActual": 1,
+          "percent": 17,
+          "percentActual": 17,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 1,
+              "dosesTakenActual": 1,
+              "percent": 17,
+              "percentActual": 17
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 1,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-03T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 1,
+          "dosesTakenActual": 1,
+          "percent": 17,
+          "percentActual": 17,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 1,
+              "dosesTakenActual": 1,
+              "percent": 17,
+              "percentActual": 17
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 2,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-02T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 1,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-04-01T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-31T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 1,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-30T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 1,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-29T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 1,
+          "dosesTakenActual": 1,
+          "percent": 17,
+          "percentActual": 17,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 1,
+              "dosesTakenActual": 1,
+              "percent": 17,
+              "percentActual": 17
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-28T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-27T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-26T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-25T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-24T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-23T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-22T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": 6,
+          "dosesTaken": 0,
+          "dosesTakenActual": 0,
+          "percent": 0,
+          "percentActual": 0,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": 6,
+              "dosesTaken": 0,
+              "dosesTakenActual": 0,
+              "percent": 0,
+              "percentActual": 0
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      },
+      {
+        "date": "2018-03-21T00:00:00.000+00:00",
+        "controller": {
+          "dosesExpected": null,
+          "dosesTaken": null,
+          "dosesTakenActual": null,
+          "percent": null,
+          "percentActual": null,
+          "meds": [
+            {
+              "mid": "breo_ellipta",
+              "dosesExpected": null,
+              "dosesTaken": null,
+              "dosesTakenActual": null,
+              "percent": null,
+              "percentActual": null
+            }
+          ]
+        },
+        "rescue": {
+          "totalEvents": 0,
+          "nightEvents": 0
+        }
+      }
+    ]
+  },
+  "transitionAlertDates": [
+    "2018-04-06"
+  ],
+  "quiz": {},
+  "controllerAdherence": [
+    {
+      "date": "2018-04-16T05:00:00.000-05:00",
+      "values": {
+        "adherencePercent": null
+      },
+      "medications": [
+        {
+          "percentActual": null,
+          "percent": null,
+          "dosesTakenActual": null,
+          "dosesTaken": null,
+          "dosesExpected": null,
+          "mid": "breo_ellipta"
+        }
+      ]
+    },
+    {
+      "date": "2018-04-09T05:00:00.000-05:00",
+      "values": {
+        "adherencePercent": null
+      },
+      "medications": [
+        {
+          "percentActual": null,
+          "percent": null,
+          "dosesTakenActual": null,
+          "dosesTaken": null,
+          "dosesExpected": null,
+          "mid": "breo_ellipta"
+        }
+      ]
+    },
+    {
+      "date": "2018-04-02T05:00:00.000-05:00",
+      "values": {
+        "adherencePercent": 7
+      },
+      "medications": [
+        {
+          "percentActual": 7,
+          "percent": 7,
+          "dosesTakenActual": 2,
+          "dosesTaken": 2,
+          "dosesExpected": 28,
+          "mid": "breo_ellipta"
+        }
+      ]
+    },
+    {
+      "date": "2018-03-26T05:00:00.000-05:00",
+      "values": {
+        "adherencePercent": 2
+      },
+      "medications": [
+        {
+          "percentActual": 2,
+          "percent": 2,
+          "dosesTakenActual": 1,
+          "dosesTaken": 1,
+          "dosesExpected": 42,
+          "mid": "breo_ellipta"
+        }
+      ]
+    },
+    {
+      "date": "2018-03-19T05:00:00.000-05:00",
+      "values": {
+        "adherencePercent": 0
+      },
+      "medications": [
+        {
+          "percentActual": 0,
+          "percent": 0,
+          "dosesTakenActual": 0,
+          "dosesTaken": 0,
+          "dosesExpected": 24,
+          "mid": "breo_ellipta"
+        }
+      ]
+    },
+    {
+      "date": "2018-03-12T05:00:00.000-05:00",
+      "values": {
+        "adherencePercent": null
+      },
+      "medications": [
+        {
+          "percentActual": null,
+          "percent": null,
+          "dosesTakenActual": null,
+          "dosesTaken": null,
+          "dosesExpected": null,
+          "mid": "breo_ellipta"
+        }
+      ]
+    }
+  ],
+  "alerts": {
+    "transition": [
+      "2018-04-06"
+    ],
+    "atrisk": []
+  }
+}
