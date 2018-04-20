@@ -4,6 +4,7 @@
   "DISEASE_HEALTH_REPORT": "{{disease}} HEALTH REPORT",
   "DISEASE_INSIGHT_REPORT": "{{disease}} INSIGHT REPORT",
   "MONTHLY_HEALTH_REPORT": "MONTHLY HEALTH REPORT",
+  "DISEASE_REPORT": "{{disease}} REPORT",
   "SUMMARY": "Summary",
   "AGE_YEARS_OLD": "{{age}}yo",
   "CARE_TEAM": "Care Team",
