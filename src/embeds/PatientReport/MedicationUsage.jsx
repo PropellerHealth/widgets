@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import { translate } from "react-i18next";
 import { scaleUtc } from "d3-scale";
-import { utcDay, timeDay, timeMonth, timeWeek } from "d3-time";
+import { utcDay, timeDay, timeMonth, utcMonday } from "d3-time";
 import { axisBottom, axisTop } from "d3-axis";
 import { timeFormat, isoParse } from "d3-time-format";
 import SectionHeader from "./SectionHeader";
@@ -71,7 +71,7 @@ const MedicationUsage = function MedicationUsage({
     .tickFormat(d => monthFormatter(d).toUpperCase());
 
   const weekAxis = axisTop(xScale)
-    .ticks(timeWeek)
+    .ticks(utcMonday)
     .tickSize(-graphHeight);
 
   const alertDates = alerts[ALERT_FOR_DISEASE[disease]].map(a => new Date(a).toISOString());
