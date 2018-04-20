@@ -5,7 +5,7 @@ import { max as d3Max } from "d3-array";
 import { axisLeft, axisRight } from "d3-axis";
 import { line as d3Line, curveBasis } from "d3-shape";
 
-import { buildChartFrame } from "../../chartUtils";
+import { buildChartFrame, finalizeChart } from "../../chartUtils";
 
 const rectangle = (x, y, w, h, r) => {
   const r2 = 2 * r;
@@ -44,6 +44,7 @@ class BarChart extends Component {
       dScale,
       colors,
       baseline,
+      firstDate,
       lastSync,
       weekAxis,
       monthAxis,
@@ -91,7 +92,7 @@ class BarChart extends Component {
           const count = d.rescue.totalEvents;
           const yPos  = yScale(count);
           return rectangle(
-            xScale(d.date) + (xWidth/2),
+            xScale(d.date),
             yPos,
             xWidth,
             (graphHeight - yPos),
@@ -110,7 +111,7 @@ class BarChart extends Component {
           const count = d.rescue.nightEvents;
           const yPos  = yScale(count);
           return rectangle(
-            xScale(d.date) + (xWidth/2),
+            xScale(d.date),
             yPos,
             xWidth,
             (graphHeight - yPos),
@@ -122,7 +123,7 @@ class BarChart extends Component {
 
     bars.append("text")
       .attr("class", "alert-sent")
-      .attr("transform", `translate(${xWidth}, 0)`)
+      .attr("transform", `translate(${xWidth/2}, 0)`)
       .attr("x", d => xScale(d.date))
       .attr("y", d => yScale(d.rescue.totalEvents) - 10)
       .attr("fill", colors.red)
@@ -146,16 +147,7 @@ class BarChart extends Component {
         .attr("d", line);
     }
 
-    if (lastSync) {
-      svg.append("g")
-        .attr("class", "missing-data")
-        .append("rect")
-        .attr("height", graphHeight)
-        .attr("width", graphWidth - xScale(lastSync))
-        .attr("transform", `translate(${xScale(lastSync)}, 0)`)
-        .attr("fill", "#9B9B9B")
-        .attr("fill-opacity", "0.4");
-    }
+    finalizeChart(svg, { lastSync, firstDate, height: graphHeight, width: graphWidth, xScale });
 
     return el.toReact();
   }

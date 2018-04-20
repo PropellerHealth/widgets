@@ -84,9 +84,7 @@ const MedicationUsage = function MedicationUsage({
 
   const lastRescue     = lastSync(sync.lastRescue, range[1]);
   const lastController = lastSync(sync.lastController, range[1]);
-  console.log('startDate', startDate);
   const firstDate      = prehistoryDate(startDate, range[0]);
-  console.log('firstDate', firstDate);
 
   return (
     <div style={{ marginTop: "1rem" }}>

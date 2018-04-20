@@ -83,7 +83,7 @@ export const buildChartFrame = function buildChartFrame(
         .attr("stroke", DARK_GREY);
       g.selectAll(".tick text")
         .attr("fill", DARK_GREY)
-        .style("text-anchor", "start")
+        .style("text-anchor", "middle")
         .style("fontSize", FONT_SIZE);
     });
 
@@ -100,4 +100,63 @@ export const buildChartFrame = function buildChartFrame(
     });
 
   return svg;
+};
+
+export const finalizeChart = function finalizeChart(svg, { firstDate, lastSync, xScale, width, height }){
+  if (lastSync) {
+    svg.append("g")
+      .attr("class", "missing-data")
+      .append("rect")
+      .attr("height", height)
+      .attr("width", width - xScale(lastSync))
+      .attr("transform", `translate(${xScale(lastSync)}, 0)`)
+      .attr("fill", "#9B9B9B")
+      .attr("fill-opacity", "0.4");
+  }
+
+  if (firstDate) {
+    const prehistoryWidth = xScale(firstDate);
+
+    let prehistory = svg.append("g")
+      .attr("class", "missing-data");
+
+    prehistory.append("rect")
+      .attr("height", height - 1)
+      .attr("width", prehistoryWidth - 1)
+      .attr("transform", "translate(1,1)")
+      .attr("fill", "#FFF")
+      .attr("fill-opacity", "1");
+
+    prehistory.append("line")
+      .attr("class", "history-start")
+      .attr("x1", 0)
+      .attr("x2", 0)
+      .attr("y1", height)
+      .attr("y2", 0)
+      .attr("transform", `translate(${prehistoryWidth},0)`)
+      .attr("stroke-width", 2)
+      .attr("stroke", "#20C3F3")
+      .attr("fill", "none");
+
+    prehistory.append("line")
+      .attr("class", "history-start")
+      .attr("x1", 0)
+      .attr("x2", 0)
+      .attr("y1", height)
+      .attr("y2", 0)
+      .attr("transform", `translate(${prehistoryWidth},0)`)
+      .attr("stroke-width", 2)
+      .attr("stroke", "#20C3F3")
+      .attr("fill", "none");
+
+    // prehistory.append("line")
+    //   .attr("class", "axis-overlay")
+    //   .attr("x1", 0)
+    //   .attr("x2", prehistoryWidth)
+    //   .attr("y1", height+1)
+    //   .attr("y2", height+1)
+    //   .attr("stroke-width", 1)
+    //   .attr("stroke", DARK_GREY)
+    //   .attr("fill", "none");
+  }
 };

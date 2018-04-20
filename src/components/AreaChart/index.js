@@ -5,7 +5,7 @@ import { axisLeft, axisRight } from "d3-axis";
 import { max as d3Max } from "d3-array";
 import { area as d3Area, line as d3Line, curveBasis } from "d3-shape";
 
-import { buildChartFrame } from "../../chartUtils";
+import { buildChartFrame, finalizeChart } from "../../chartUtils";
 
 const scaleForY = percent => Math.round(percent || 0);
 
@@ -27,6 +27,7 @@ class AreaChart extends Component {
       xScale,
       yLabel,
       colors,
+      firstDate,
       lastSync,
       bottomAxis,
       monthAxis,
@@ -104,16 +105,7 @@ class AreaChart extends Component {
         .attr("stroke-width", 2);
     });
 
-    if (lastSync) {
-      svg.append("g")
-        .attr("class", "missing-data")
-        .append("rect")
-        .attr("height", graphHeight)
-        .attr("width", graphWidth - xScale(lastSync))
-        .attr("transform", `translate(${xScale(lastSync)}, 0)`)
-        .attr("fill", "#9B9B9B")
-        .attr("fill-opacity", "0.4");
-    }
+    finalizeChart(svg, { lastSync, firstDate, height: graphHeight, width: graphWidth, xScale });
 
     return el.toReact();
   }
