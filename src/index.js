@@ -6,7 +6,7 @@ import i18n from "./i18n";
 import App from "./App";
 import "./index.css";
 
-import testData from "./TEST_DATA.json";
+// import testData from "./TEST_DATA.json";
 
 let el = document.getElementById("app-props");
 let props;
@@ -14,8 +14,8 @@ let data;
 if (el) {
   props = el.textContent.replace("<![CDATA[", "").replace("]]>", "");
   data = JSON.parse(props);
-} else if (testData) {
-  data = testData;
+// } else if (testData) {
+  // data = testData;
 }
 
 const renderMethod = el
