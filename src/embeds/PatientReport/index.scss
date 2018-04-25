@@ -8,7 +8,7 @@ ol.rescue-last-seven {
     padding: 0 1rem;
 
     .rescue-day-count {
-      background-color: #EE0037;
+      background-color: #888B8D;
       color: white;
       border-radius: 50%;
       width: 35px;
@@ -16,8 +16,12 @@ ol.rescue-last-seven {
       line-height: 35px;
       font-size: 20px;
 
-      &.above-baseline {
+      &.warn {
         background-color: #6B1671;
+      }
+
+      &.alert {
+        background-color: #EE0037;
       }
     }
 

@@ -37,19 +37,21 @@ const CopdStatus = ({ days, totalDays, rescueNights, t }) => {
           <div>
             <ol className="rescue-last-seven">
               {lastSevenDays.map((day, i) => {
-                let aboveBaseline =
-                  day.rescue.totalEvents > day.rescue.baseline;
+                const events   = day.rescue.totalEvents;
+                const dayClass = events > 5 // day.rescue.baseline ???
+                  ? "alert"
+                  : events > 0
+                    ? "warn"
+                    : "";
                 return (
                   <li
                     key={`rescue-day-${i}`}
                     className="rescue-day text-center"
                   >
                     <div
-                      className={`rescue-day-count ${
-                        aboveBaseline ? "above-baseline" : ""
-                      }`}
+                      className={`rescue-day-count ${dayClass}`}
                     >
-                      {day.rescue.totalEvents}
+                      {events}
                     </div>
                     <div className="rescue-day-date">
                       {displayedDate(day.date, "ddd").toUpperCase()}
