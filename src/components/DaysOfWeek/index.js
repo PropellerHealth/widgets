@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Col } from "react-bootstrap";
 import { translate } from "react-i18next";
 import ReactFauxDOM from "react-faux-dom";
-import { min, max } from "d3-array";
+import { max } from "d3-array";
 import { scaleLinear, scaleBand } from "d3-scale";
 import { select as d3Select } from "d3-selection";
 import { axisBottom, axisLeft } from "d3-axis";
@@ -53,19 +53,6 @@ class DaysOfWeek extends Component {
     const _data  = structureData(data);
     const values = _data.map(d => d.value);
     const vMax   = max(values);
-    const vMin   = min(values);
-    let maxLabeled, minLabeled = false;
-
-    // disgusting
-    _data.forEach(d => {
-      if (!minLabeled && (d.value === vMin)) {
-        d.minmax = true;
-        minLabeled = true;
-      } else if (!maxLabeled && (d.value === vMax)) {
-        d.minmax = true;
-        maxLabeled = true;
-      }
-    });
 
     const yMax = Math.ceil(vMax * 10) * 10;
 
@@ -156,8 +143,7 @@ class DaysOfWeek extends Component {
       .attr("y", d => yScale(d.value) - 5)
       .attr("fill", COLORS.darkGrey)
       .style("fontSize", "16px")
-      .style("text-anchor", "middle")
-      .text((d) => d.minmax ? `${Math.round(d.value * 100)}%` : "");
+      .style("text-anchor", "middle");
 
     return el.toReact();
   }
