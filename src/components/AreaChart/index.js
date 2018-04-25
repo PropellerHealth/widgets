@@ -116,7 +116,7 @@ class AreaChart extends Component {
     return (
       <div
         className="areachart"
-        style={{ position: "relative" }}
+        style={{ position: "relative", pageBreakInside: "avoid" }}
       >
         {children}
         {chart}

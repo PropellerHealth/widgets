@@ -167,7 +167,7 @@ class BarChart extends Component {
     return (
       <div
         className="barchart"
-        style={{ position: "relative" }}
+        style={{ position: "relative", pageBreakInside: "avoid" }}
       >
         {children}
         {chart}
