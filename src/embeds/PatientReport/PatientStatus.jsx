@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import { Row, Col } from "react-bootstrap";
 import { translate } from "react-i18next";
 import SectionHeader from "./SectionHeader";
@@ -11,6 +10,8 @@ import RoundedBox from "../../components/RoundedBox";
 import TimesOfDay from "../../components/TimesOfDay";
 import DaysOfWeek from "../../components/DaysOfWeek";
 import MetricScore from "../../components/MetricScore";
+
+import { displayedDate } from "../../utilities";
 
 const PatientStatus = function PatientStatus({
   disease,
@@ -100,7 +101,7 @@ const PatientStatus = function PatientStatus({
               {
                 __html : t("LAST_SENSOR_SYNC", {
                   count : sensors.length,
-                  date  : lastSync ? moment(lastSync).format("ll") : t("N_A")
+                  date  : lastSync ? displayedDate(lastSync, "ll") : t("N_A")
                 })
               }
             }/>

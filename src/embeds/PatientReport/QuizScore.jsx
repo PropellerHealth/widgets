@@ -1,9 +1,9 @@
 import React from "react";
-import moment from "moment";
 import { translate } from "react-i18next";
 import RoundedBox from "../../components/RoundedBox";
 import MetricScore from "../../components/MetricScore";
 import GreyText from "../../components/GreyText";
+import { displayedDate } from "../../utilities";
 
 const TEST_FOR_DISEASE = {
   asthma : {
@@ -85,7 +85,7 @@ const QuizScore = ({ quiz, disease, t }) => {
       <br />
       <GreyText>
         {quiz.date
-          ? t("TAKEN_ON_DATE", {date: moment(quiz.date).format("LL")})
+          ? t("TAKEN_ON_DATE", { date: displayedDate(quiz.date, "LL") })
           : t("NOT_TAKEN")
         }
       </GreyText>

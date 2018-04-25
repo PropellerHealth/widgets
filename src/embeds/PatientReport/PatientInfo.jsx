@@ -5,19 +5,17 @@ import { Row, Col } from "react-bootstrap";
 
 import GreyText from "../../components/GreyText";
 
-import { COLORS } from "../../utilities";
-
-const displayedDate = (date, fmt = "L") => moment(date).format(fmt);
+import { COLORS, displayedDate } from "../../utilities";
 
 const controllerSchedule = (usageList, t) => {
   if (!usageList || usageList.length === 0)  return t("AS_NEEDED");
 
   const doses = usageList[0].doses;
   const times = usageList.map(u =>
-    moment()
-      .hour(u.hour)
-      .minute(u.minute)
-      .format("LT")
+    displayedDate(
+      moment().hour(u.hour).minute(u.minute),
+      "LT"
+    )
   );
   const schedule =
     times.length === 0

@@ -1,12 +1,11 @@
 import React from "react";
-import moment from "moment";
 import { translate } from "react-i18next";
 import { Row, Col } from "react-bootstrap";
 import RoundedBox from "../../components/RoundedBox";
 import MetricScore from "../../components/MetricScore";
 import Subtitle from "../../components/Subtitle";
 
-import { precisionRound } from "../../utilities";
+import { precisionRound, displayedDate } from "../../utilities";
 
 const CopdStatus = ({ days, totalDays, rescueNights, t }) => {
   const baseline30Days =
@@ -32,7 +31,7 @@ const CopdStatus = ({ days, totalDays, rescueNights, t }) => {
             <br />
             <Subtitle>
               {t("LAST_NUM_DAYS", { number: 7 }).toLowerCase()}{" "}
-              ({moment(lastSevenDays[0].date).format("ll")} - {moment(lastSevenDays[lastSevenDays.length - 1].date).format("ll")})
+              ({ displayedDate(lastSevenDays[0].date, "ll") } - { displayedDate(lastSevenDays[lastSevenDays.length - 1].date, "ll") })
             </Subtitle>
           </h4>
           <div>
@@ -53,9 +52,7 @@ const CopdStatus = ({ days, totalDays, rescueNights, t }) => {
                       {day.rescue.totalEvents}
                     </div>
                     <div className="rescue-day-date">
-                      {moment(day.date)
-                        .format("ddd")
-                        .toUpperCase()}
+                      {displayedDate(day.date, "ddd").toUpperCase()}
                     </div>
                   </li>
                 );

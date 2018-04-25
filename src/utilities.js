@@ -1,3 +1,13 @@
+import moment from "moment-timezone";
+
+const displayedDate = (date, fmt = "L") => {
+  // if an abbreviated format, get the full format for the current locale
+  const _fmt = fmt.toUpperCase().indexOf("L") > -1
+    ? moment.localeData().longDateFormat(fmt)
+    : fmt;
+  return moment(date).format(_fmt);
+};
+
 function checkStatus(response) {
   // console.log(response);
   if (response.status >= 200 && response.status < 300) {
@@ -9,9 +19,7 @@ function checkStatus(response) {
   }
 }
 
-function extractJSON(response) {
-  return response.json();
-}
+const extractJSON = res => res.json();
 
 const headers = {
   "Content-Type": "application/json"
@@ -83,5 +91,6 @@ export {
   objectFromQueryString,
   COLORS,
   sortDates,
-  precisionRound
+  precisionRound,
+  displayedDate
 };
