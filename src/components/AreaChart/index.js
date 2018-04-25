@@ -86,7 +86,7 @@ class AreaChart extends Component {
       svg.append("path")
         .datum(data)
         .attr("fill", colors[idx])
-        .attr("fill-opacity", "0.6")
+        .attr("fill-opacity", "0.35")
         .attr("class", "area")
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
