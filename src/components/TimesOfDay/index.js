@@ -34,7 +34,7 @@ const buildChartData = (data, t) => {
       label   : t("AFTERNOON"),
       percent : data.afternoon,
       color   : "#00BDF7",
-      times   : ["6am", "12pm"]
+      times   : ["12pm", "5pm"]
     }
   ];
 };
