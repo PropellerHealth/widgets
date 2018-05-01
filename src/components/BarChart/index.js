@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import ReactFauxDOM from "react-faux-dom";
 import { scaleLinear } from "d3-scale";
 import { max as d3Max } from "d3-array";
@@ -161,18 +161,7 @@ class BarChart extends Component {
   // }
 
   render() {
-    const { children } = this.props;
-    const chart = this.renderChart();
-
-    return (
-      <div
-        className="barchart"
-        style={{ position: "relative", pageBreakInside: "avoid" }}
-      >
-        {children}
-        {chart}
-      </div>
-    );
+    return this.renderChart();
   }
 }
 

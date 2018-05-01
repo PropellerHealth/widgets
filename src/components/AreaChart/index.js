@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import ReactFauxDOM from "react-faux-dom";
 import { scaleLinear } from "d3-scale";
 import { axisLeft, axisRight } from "d3-axis";
@@ -111,17 +111,7 @@ class AreaChart extends Component {
   }
 
   render() {
-    const { children } = this.props;
-    const chart = this.renderChart();
-    return (
-      <div
-        className="areachart"
-        style={{ position: "relative", pageBreakInside: "avoid" }}
-      >
-        {children}
-        {chart}
-      </div>
-    );
+    return this.renderChart();
   }
 }
 

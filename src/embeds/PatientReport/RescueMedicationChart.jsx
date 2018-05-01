@@ -4,6 +4,7 @@ import { translate } from "react-i18next";
 import BarChart from "../../components/BarChart";
 import ColorMark from "../../components/ColorMark";
 import GraphTitle from "./GraphTitle";
+import TimeSeriesChart from "../../components/TimeSeriesChart";
 
 import { COLORS } from "../../utilities";
 
@@ -55,7 +56,7 @@ const RescueMedicationChart = function RescueMedicationChart({
   const baseline = disease === "copd";
 
   return (
-    <BarChart baseline={baseline} lastSync={lastSync} {...rest}>
+    <TimeSeriesChart>
       <GraphTitle
         title={title}
         medications={medications}
@@ -63,7 +64,8 @@ const RescueMedicationChart = function RescueMedicationChart({
           <Legend medications={medications} disease={disease} baseline={baseline} incomplete={lastSync} t={t} />
         }
       />
-    </BarChart>
+      <BarChart baseline={baseline} lastSync={lastSync} {...rest} />
+    </TimeSeriesChart>
   );
 };
 

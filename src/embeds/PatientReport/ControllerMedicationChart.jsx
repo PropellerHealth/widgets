@@ -4,6 +4,7 @@ import { translate } from "react-i18next";
 import AreaChart from "../../components/AreaChart";
 import ColorMark from "../../components/ColorMark";
 import GraphTitle from "./GraphTitle";
+import TimeSeriesChart from "../../components/TimeSeriesChart";
 
 import { COLORS } from "../../utilities";
 
@@ -36,7 +37,7 @@ const Legend = ({ medications, incomplete, t }) => {
 };
 
 const ControllerMedicationChart = ({ medications, title, lastSync, t, ...rest }) => (
-  <AreaChart medications={medications} lastSync={lastSync} {...rest} colors={idxColors} >
+  <TimeSeriesChart>
     <GraphTitle
       title={title}
       medications={medications}
@@ -44,7 +45,8 @@ const ControllerMedicationChart = ({ medications, title, lastSync, t, ...rest })
         <Legend medications={medications} incomplete={lastSync} t={t}/>
       }
     />
-  </AreaChart>
+    <AreaChart medications={medications} lastSync={lastSync} {...rest} colors={idxColors} />
+  </TimeSeriesChart>
 );
 
 export default translate("patient-report")(ControllerMedicationChart);
