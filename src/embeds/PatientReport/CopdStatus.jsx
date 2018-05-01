@@ -7,13 +7,10 @@ import Subtitle from "../../components/Subtitle";
 
 import { precisionRound, displayedDate } from "../../utilities";
 
-const CopdStatus = ({ days, totalDays, rescueNights, t }) => {
-  const baseline30Days =
-    days
-      .slice(days.length - totalDays)
-      .reduce((tot, day) => tot + day.rescue.baseline, 0) / totalDays;
-
-  const baseline24Hours  = days[days.length - 1].rescue.baseline;
+const CopdStatus = ({ days, totalDays = 30, rescueNights, t }) => {
+  const lastDay          = days[days.length - 1];
+  const baseline30Days   = lastDay.rescue.baseline;
+  const baseline24Hours  = lastDay.rescue.last24Hours || 0;
   const lastSevenDays    = days.slice(days.length - 7);
   const totalEvents7Days = lastSevenDays.reduce(
     (tot, day) => tot + day.rescue.totalEvents,
