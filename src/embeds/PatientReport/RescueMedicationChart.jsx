@@ -22,22 +22,10 @@ const Legend = ({ medications, disease, baseline, incomplete, t }) => {
         className="text-right"
         style={{ float: "right" }}
       >
-        <div style={{ display: "inline-block" }}>
-          <span
-            style={{
-              color: COLORS.red,
-              fontSize: "2.7rem",
-              verticalAlign: "middle",
-              fontWeight: "bold"
-            }}
-          >
-            !
-          </span>{" "}
-          = {t(NOTIFICATION_TEXT)}
-        </div>
+        <ColorMark text={`= ${t(NOTIFICATION_TEXT)}`} color={COLORS.red} mark="!" />
         <ColorMark text={t("TOTAL")} color={COLORS.orange} right />
         <ColorMark text={t("NIGHTTIME_USAGE_LEGEND")} color={COLORS.brown} right />
-        {baseline && <ColorMark text={t("RESCUE_BASELINE")} color={COLORS.green} right />}
+        {baseline && <ColorMark text={t("RESCUE_BASELINE")} color={COLORS.green} right mark="—" />}
         {incomplete && <ColorMark text={t("INCOMPLETE_DATA")} color={COLORS.lightGrey} right />}
       </div>
     </Col>

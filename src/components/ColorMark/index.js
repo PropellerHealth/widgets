@@ -1,6 +1,6 @@
 import React from "react";
 
-const ColorMark = ({ text, color, left, right, style = {} }) => {
+const ColorMark = ({ text, color, left, right, style = {}, mark = "●" }) => {
   const padding = left
     ? { paddingRight: "1.5rem" }
     : right
@@ -16,7 +16,7 @@ const ColorMark = ({ text, color, left, right, style = {} }) => {
           verticalAlign: "bottom"
         }}
       >
-        ●
+        {mark}
       </span>{" "}
       <strong>{text}</strong>
     </div>
