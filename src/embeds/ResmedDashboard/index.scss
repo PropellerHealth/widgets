@@ -1,0 +1,116 @@
+// html.resmed-demo {
+//   height: 100%;
+
+//   body {
+//     height: 100%;
+//   }
+
+//   #ph-status {
+//     height: 100%;
+
+//     > section {
+//       height: 100%;
+//     }
+//   }
+// }
+
+#resmed-demo {
+  #top-bar {
+    height: 60px;
+    padding: 0.5rem 2rem;
+    box-sizing: border-box;
+    background-color: #20C3F3;
+    // border-bottom: 2px solid #20C3F3;
+    img {
+      height: 100%;
+    }
+  }
+
+  main {
+    padding: 4rem 3rem;
+    height: 100%;
+  }
+
+  .persona-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .image-wrapper {
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      padding: 0.2rem;
+      border: 1px solid #E0E0E0;
+    }
+  }
+
+  h1 {
+    color: #333;
+    font-size: 4rem;
+  }
+
+  .battery-indicator {
+    color: #333;
+
+    .battery-icon {
+      display: inline-block;
+      border: 2px solid;
+      width: 18px;
+      height: 25px;
+      border-radius: 2px;
+      position: relative;
+      margin-top: 5px;
+      // vertical-align: middle;
+
+      .battery-cap {
+        width: 12px;
+        height: 4px;
+        background: #333;
+        display: inline-block;
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        margin-left: -6px;
+        border-radius: 2px 2px 0 0;
+      }
+
+      .battery-level {
+        position: relative;
+        display: block;
+        width: 12px;
+        height: 4px;
+        background-color: #DDD;
+        left: 1px;
+        margin: 1px 0px;
+        padding: 0;
+        transition: background-color 500ms;
+        &.charged {
+          background-color: #333;
+        }
+      }
+    }
+
+    .battery-percent {
+      display: inline-block;
+      font-size: 3rem;
+      // vertical-align: middle;
+      padding: 0 1rem;
+      line-height: 20px;
+    }
+
+    &.battery-warn {
+      color: #EE0037;
+
+      .battery-cap,
+      .battery-level.charged {
+        background-color: #EE0037
+      }
+    }
+
+  }
+}

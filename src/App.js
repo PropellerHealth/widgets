@@ -4,6 +4,7 @@ import { timeFormatLocale } from "d3-time-format";
 import AsthmaConditions from "./embeds/AsthmaConditions/index";
 import FindMyDoctor from "./embeds/FindMyDoctor/FindMyDoctor";
 import PatientReport from "./embeds/PatientReport";
+import ResmedDashboard from "./embeds/ResmedDashboard";
 import d3Locales from "./d3Locales";
 
 import moment from "moment";
@@ -43,8 +44,14 @@ class App extends React.Component {
 
     return (
       <Switch>
-        <Route path="/asthma-conditions" render={() =>  <AsthmaConditions {...props}/> } />
-        <Route path="/find-my-doctor" render={() =>  <FindMyDoctor {...props}/> } />
+        <Route
+          path="/asthma-conditions"
+          render={() =>  <AsthmaConditions {...props}/> }
+        />
+        <Route
+          path="/find-my-doctor"
+          render={() =>  <FindMyDoctor {...props}/> }
+        />
         <Route
           exact
           path="/patient-summary"
@@ -54,7 +61,9 @@ class App extends React.Component {
           path="/patient-summary/:reportId"
           render={routeProps => <PatientReport {...routeProps} {...props} /> }
         />
+        <Route path="/resmed-demo" render={() => <ResmedDashboard {...props} />} />
         <Route render={() => <div>No match</div>} />
+
       </Switch>
     );
   }
