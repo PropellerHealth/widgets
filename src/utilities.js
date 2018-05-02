@@ -79,6 +79,17 @@ const precisionRound = function precisionRound(number, precision) {
   return Math.round(number * factor) / factor;
 };
 
+const GOOGLE_MAP_API_KEY = "AIzaSyBlk7LNk5oUhQ72IZ9N_b-SjqnPiSK0l0I";
+
+const capitalize = word => {
+  if ("string" !== typeof word) {
+    console.error(word, "is not a string");
+    return word;
+  }
+
+  return word[0].toUpperCase() + word.slice(1);
+};
+
 export {
   checkStatus,
   API_HEADER,
@@ -92,5 +103,7 @@ export {
   COLORS,
   sortDates,
   precisionRound,
-  displayedDate
+  displayedDate,
+  GOOGLE_MAP_API_KEY,
+  capitalize
 };
