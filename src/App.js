@@ -36,6 +36,9 @@ class App extends React.Component {
       // to see if we can handle it inside there, leveraging the initial language
       moment.locale(props.locale);
       timeFormatLocale(d3Locales[props.locale] || d3Locales["en-US"]);
+    } else {
+      moment.locale("en-US");
+      timeFormatLocale(d3Locales["en-US"]);
     }
   }
 

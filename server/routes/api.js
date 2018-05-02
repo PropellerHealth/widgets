@@ -60,4 +60,12 @@ router.post("/forecast-signup", function(req, res, next) {
     .catch(error => res.status(error.statusCode).json(error.error));
 });
 
+router.get("/resmed-data", function(req, res, next) {
+  const URI = "http://test.wyzgyz.com/resmed/";
+
+  rp({ method: "GET", uri: URI, json: true })
+    .then(response => res.status(200).json(response))
+    .catch(err => res.status(err.statusCode).json(err.error));
+});
+
 module.exports = router;

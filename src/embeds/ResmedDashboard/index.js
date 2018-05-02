@@ -97,15 +97,15 @@ const POCContent = ({
 class ResmedDemo extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      data: []
+      data: props.data? [ props.data ] : []
     };
 
     this.queryData = this.queryData.bind(this);
   }
 
-  API_URL = "http://test.wyzgyz.com/resmed/";
+  // API_URL = "http://test.wyzgyz.com/resmed/";
+  API_URL = "/api/resmed-data";
 
   /**
    * timestamp: utc seconds

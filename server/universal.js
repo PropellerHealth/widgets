@@ -90,6 +90,15 @@ const propsForRequest = (req, cb) => {
 
       return cb(undefined, {...body, API_HOST: apiHost});
     });
+  } else if (req.path.indexOf("/resmed-demo") === 0) {
+    request("http://test.wyzgyz.com/resmed/", (err, resp, body) => {
+      if (err) {
+        return cb(err);
+      }
+
+      return cb(undefined, { data: JSON.parse(body) });
+
+    });
   } else {
     return cb(undefined, {});
   }
