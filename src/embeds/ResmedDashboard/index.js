@@ -78,7 +78,7 @@ const POCContent = ({
         </Col>
         <Col xs={12} style={style.blockMargin}>
 
-          <LastLocation lat={"32.825720"} lng={"-117.133553"} temp={temp} />
+          <LastLocation lat={lat} lng={lon} temp={temp} />
         </Col>
         <Col xs={12} style={style.blockMargin}>
           <Subtitle>

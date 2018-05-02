@@ -529,8 +529,7 @@ const renderChart = (args) => {
       g.select(".domain")
         .attr("stroke", DARK_GREY);
       g.selectAll(".tick text")
-        .attr("fill", DARK_GREY)
-        .style("fontSize", FONT_SIZE);
+        .attr("fill", DARK_GREY);
     });
 
   svg.append("g")
