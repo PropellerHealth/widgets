@@ -2,16 +2,21 @@ import React from "react";
 import { Glyphicon } from "react-bootstrap";
 
 const style =  {
-  fontSize: "2.5rem",
+  fontSize: "1.9rem",
   position: "absolute",
-  left: "-2px",
-  top: "6px"
+  left: "-3px",
+  top: "1px"
 };
 
 const BatteryIndicator = ({ voltage, charging }) => {
   const bars = [4, 3, 2, 1];
-  const voltageMin = 12;
-  const percent = (voltage - voltageMin) / 4 * 100;
+  const vltMax = 16.8;
+  const vltMin = 12;
+  const vltCmp = vltMax - vltMin;
+  // console.log(voltage);
+  let percent = (voltage - vltMin) / vltCmp * 100;
+  // console.log(percent);
+  percent = percent > 100 ? 100 : percent;
   const level = Math.round(percent / 25 * 10) / 10;
   const warn = percent <= 5 ? "battery-warn" : "";
   const isCharging = charging === 1;

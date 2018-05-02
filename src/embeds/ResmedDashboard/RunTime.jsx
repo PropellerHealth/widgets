@@ -10,9 +10,9 @@ const Runtime = ({ time = 0 }) => {
   return (
     <div>
       <h5>Time in use</h5>
-      <div style={{fontSize: "3rem"}}>
+      <div style={{fontSize: "2rem"}}>
         {days > 0 ? `${days} days, ` : null}
-        {hours > 0 ? `${hours} hours, ` : null}
+        {hours > 0 ? `${hours} hr, ` : null}
         {minutes > 0 ? `${minutes} min` : null}
       </div>
     </div>

@@ -149,14 +149,15 @@ class ResmedDemo extends React.Component {
         <TopBar />
         <main>
           <Row>
-            <Col xs={12}>
-              <Persona />
-            </Col>
-          </Row>
-          <Row>
             <Col xs={12} sm={8}>
-              <PlanInfo />
+              <Persona />
+              <Row>
+                <Col xs={12} sm={12}>
+                  <PlanInfo />
+                </Col>
+              </Row>
             </Col>
+
             <Col xs={12} sm={4}>
               <POC {...currentData} />
             </Col>

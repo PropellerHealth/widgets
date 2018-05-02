@@ -109,9 +109,9 @@ const days = [
       ]
     },
     "rescue": {
-      "totalEvents": 1,
+      "totalEvents": 2,
       "nightEvents": 0,
-      "baseline": 0
+      "baseline": 3
     }
   },
   {
@@ -134,9 +134,9 @@ const days = [
       ]
     },
     "rescue": {
-      "totalEvents": 0,
+      "totalEvents": 3,
       "nightEvents": 0,
-      "baseline": 0
+      "baseline": 3
     }
   },
   {
@@ -159,9 +159,9 @@ const days = [
       ]
     },
     "rescue": {
-      "totalEvents": 1,
+      "totalEvents": 5,
       "nightEvents": 0,
-      "baseline": 0
+      "baseline": 3
     }
   },
   {
@@ -184,9 +184,9 @@ const days = [
       ]
     },
     "rescue": {
-      "totalEvents": 0,
+      "totalEvents": 2,
       "nightEvents": 0,
-      "baseline": 0
+      "baseline": 3
     }
   },
   {
@@ -209,9 +209,9 @@ const days = [
       ]
     },
     "rescue": {
-      "totalEvents": 0,
+      "totalEvents": 4,
       "nightEvents": 0,
-      "baseline": 0
+      "baseline": 3
     }
   },
   {
@@ -234,9 +234,9 @@ const days = [
       ]
     },
     "rescue": {
-      "totalEvents": 0,
+      "totalEvents": 3,
       "nightEvents": 0,
-      "baseline": 0
+      "baseline": 3
     }
   },
   {
@@ -261,7 +261,7 @@ const days = [
     "rescue": {
       "totalEvents": 1,
       "nightEvents": 0,
-      "baseline": 0
+      "baseline": 3
     }
   },
   {
@@ -286,7 +286,7 @@ const days = [
     "rescue": {
       "totalEvents": 0,
       "nightEvents": 0,
-      "baseline": 0
+      "baseline": 3
     }
   },
   {
@@ -311,7 +311,7 @@ const days = [
     "rescue": {
       "totalEvents": 1,
       "nightEvents": 0,
-      "baseline": 0
+      "baseline": 3
     }
   },
   {
@@ -458,7 +458,8 @@ const medMapper = type => (m, i) => {
       date  :  moment().subtract(j, "days"),
       value : type === "controller"
         ? day.controller.percentActual
-        : day.rescue.totalEvents
+        : day.rescue.totalEvents,
+      baseline : type === "rescue" ? day.rescue.baseline : undefined
     };
   });
 
@@ -480,7 +481,8 @@ const renderChart = (args) => {
     height = 150,
     width = 150,
     margin = {left: 35, right: 0, top: 20, bottom: 20},
-    yTickLabel = ""
+    yTickLabel = "",
+    type
   } = args;
 
   const graphHeight = height - margin.top - margin.bottom;
@@ -573,24 +575,36 @@ const renderChart = (args) => {
     .attr("stroke-linecap", "round")
     .attr("stroke-width", 2);
 
+  if (type === "rescue") {
+
+    const baseline = d3Line()
+      .curve(curveBasis)
+      .x(d =>  x(d.date))
+      .y(d => y(d.baseline));
+
+    svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", baseline)
+      .attr("stroke", COLORS.green)
+      .attr("fill", "none")
+      .attr("stroke-dasharray", "5, 5")
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-width", 2);
+  }
+
   return el.toReact();
 };
 
 class PlanInfo extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.renderChart = this.renderChart.bind(this);
-  // }
-
-
-
   render() {
     const rescue     = plan.medications.filter(isMedType("rescue"));
     const controller = plan.medications.filter(isMedType("controller"));
 
     return (
       <Row>
-        <Col xs={12}><h4>Treatment Plan</h4></Col>
+        <Col xs={12}><h4>COPD Treatment Plan</h4></Col>
         {rescue.map(medMapper("rescue"))}
         {controller.map(medMapper("controller"))}
       </Row>

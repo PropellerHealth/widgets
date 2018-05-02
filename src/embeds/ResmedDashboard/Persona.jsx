@@ -22,7 +22,7 @@ const Persona = () => {
             color: "#555"
           }}
         >
-          42 <GreyText style={{ padding: "0 0.7rem" }}>|</GreyText> Male{" "}
+          62 <GreyText style={{ padding: "0 0.7rem" }}>|</GreyText> Male{" "}
           <GreyText style={{ padding: "0 0.7rem" }}>|</GreyText> COPD
         </h2>
       </Media.Right>

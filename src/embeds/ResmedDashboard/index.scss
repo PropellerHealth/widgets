@@ -67,7 +67,7 @@
       border-radius: 2px;
       position: relative;
       margin-top: 5px;
-      // vertical-align: middle;
+      vertical-align: middle;
 
       .battery-cap {
         width: 12px;
@@ -99,8 +99,8 @@
 
     .battery-percent {
       display: inline-block;
-      font-size: 3rem;
-      // vertical-align: middle;
+      font-size: 2rem;
+      vertical-align: middle;
       padding: 0 1rem;
       line-height: 20px;
     }
