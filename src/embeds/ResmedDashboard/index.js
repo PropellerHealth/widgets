@@ -24,9 +24,8 @@ import resMedLogo from "../../assets/images/ResMed.png";
 
 import "./index.css";
 
-moment.locale("en-US");
-
 const tzone = moment.tz.guess();
+const env = typeof process !== "undefined" && process.env.NODE_ENV;
 
 const style = {
   blockMargin: {
@@ -105,7 +104,7 @@ class ResmedDemo extends React.Component {
   }
 
   // API_URL = "http://test.wyzgyz.com/resmed/";
-  API_URL = "/api/resmed-data";
+  API_URL = "development"  === env ? "http://test.wyzgyz.com/resmed/" : "/api/resmed-data";
 
   /**
    * timestamp: utc seconds
@@ -150,7 +149,7 @@ class ResmedDemo extends React.Component {
         <TopBar />
         <main>
           <Row>
-            <Col xs={12} sm={8}>
+            <Col xs={12}>
               <Persona />
             </Col>
           </Row>

@@ -4,15 +4,16 @@ import { Row, Col } from "react-bootstrap";
 import ReactFauxDOM from "react-faux-dom";
 import { scaleUtc } from "d3-scale";
 import { select as d3Select } from "d3-selection";
-import { utcDay, timeDay, timeMonth, utcMonday } from "d3-time";
+import { utcDay, timeDay } from "d3-time";
 import { axisBottom } from "d3-axis";
 import { timeFormat, isoParse } from "d3-time-format";
+import { format } from "d3-format";
 import { scaleLinear } from "d3-scale";
 import { axisLeft } from "d3-axis";
 import { max as d3Max } from "d3-array";
 import { area as d3Area, line as d3Line, curveBasis } from "d3-shape";
 
-import { COLORS, displayedDate, capitalize } from "../../utilities";
+import { COLORS, displayedDate, capitalize, HAS_WINDOW } from "../../utilities";
 import GreyText from "../../components/GreyText";
 
 const tzone = moment.tz.guess();
@@ -392,17 +393,69 @@ const sensorInfo = sensors => {
 
   return (
     <div>
-      <div>Last sync: {moment(sensors[0].lastSyncDate).tz(tzone).format("lll")}</div>
+      <GreyText>Last sync: {moment(sensors[0].lastSyncDate).tz(tzone).format("lll")}</GreyText>
     </div>
   );
 };
 
 const isMedType = type => m => type === m.medication.type;
 
+class MedFocus extends React.Component {
+
+  column = undefined;
+
+  setWidth() {
+    this.setState({
+      width: this.column.clientWidth
+    });
+  }
+
+  constructor(props) {
+    super(props);
+    this.setColumnRef = el => { this.column = el; };
+    this.state = { width: 0 };
+  }
+
+  componentDidMount() {
+    this.setWidth();
+
+    if (HAS_WINDOW) {
+      window.addEventListener("resize", this.setWidth.bind(this));
+    }
+
+  }
+
+  componentWillUnmount() {
+    if (HAS_WINDOW) {
+      window.removeEventListener("resize", this.setWidth.bind(this));
+    }
+  }
+
+  render() {
+    const { type, name, usageList, sensors, data } = this.props;
+    const { width } = this.state;
+    const isRescue = "rescue" === type;
+    const yTickLabel = isRescue ? "" : "%";
+    const title = isRescue ? "Rescue Events" : "Average Adherence";
+
+    return (
+      <Col xs={12} sm={6}>
+        <h3 ref={this.setColumnRef}>{name}</h3>
+        <h4 style={{marginBottom: "0"}}>{title}, last 7 days</h4>
+        {renderChart({data, type, width, yTickLabel })}
+        {controllerSchedule(usageList)}
+        <br />
+        {sensorInfo(sensors)}
+
+      </Col>
+    );
+  }
+};
+
 const medMapper = type => (m, i) => {
-  const data = days.slice(0, 8).map((day, j) => {
+  const data = days.slice(0, 7).map((day, j) => {
     return {
-      date  : moment().subtract(i, "days"),
+      date  :  moment().subtract(j, "days"),
       value : type === "controller"
         ? day.controller.percentActual
         : day.rescue.totalEvents
@@ -410,15 +463,15 @@ const medMapper = type => (m, i) => {
   });
 
   return (
-    <Col key={`${type}-${i}`} xs={12} sm={6}>
-      <h3>{m.medication.shortName}</h3>
-      {controllerSchedule(m.usageList)}
-      <br />
-      {/* <GreyText>{capitalize(type)} medication</GreyText>
-      <br /> */}
-      {sensorInfo(m.sensors)}
-      {renderChart({data, type})}
-    </Col>);
+    <MedFocus
+      key={`${type}-${i}`}
+      name={m.medication.shortName}
+      usageList={m.usageList}
+      sensors={m.sensors}
+      data={data}
+      type={type}
+    />
+  );
 };
 
 const renderChart = (args) => {
@@ -426,11 +479,12 @@ const renderChart = (args) => {
     data = [],
     height = 150,
     width = 150,
-    margin = 10,
-    graphHeight = 140,
-    graphWidth = 140
+    margin = {left: 35, right: 0, top: 20, bottom: 20},
+    yTickLabel = ""
   } = args;
 
+  const graphHeight = height - margin.top - margin.bottom;
+  const graphWidth  = width - margin.left - margin.right;
   const DARK_GREY  = COLORS.darkGrey;
   const LIGHT_GREY = COLORS.lightGrey;
   const FONT_SIZE = "12px";
@@ -438,26 +492,24 @@ const renderChart = (args) => {
   const scaleForY = percent => Math.round(percent || 0);
 
   const x = scaleUtc()
-    .domain([data[data.length - 1].date, utcDay.offset(data[0].date + 1)])
-    .range([0, width])
-    .clamp(true)
-    .nice(utcDay);
+    .domain([data[data.length - 1].date, data[0].date])
+    .range([0, graphWidth])
+    .clamp(true);
 
   const y = scaleLinear()
     .domain([0, d3Max(data.map(d => d.value))])
     .range([graphHeight, 0]);
 
   const bottomAxis = axisBottom(x)
-    .ticks(timeDay)
+    .ticks(utcDay)
     .tickSize(0)
-    .tickPadding(10)
-    .tickFormat(d => timeFormat("%-d")(isoParse(d)));
+    .tickPadding(10);
 
   const leftAxis = axisLeft(y)
     .ticks(5)
     .tickPadding(5)
     .tickSize(0)
-    .tickFormat(val => `${val}%`);
+    .tickFormat(val => `${val}${yTickLabel}`);
 
   let el = ReactFauxDOM.createElement("div");
 
@@ -465,8 +517,9 @@ const renderChart = (args) => {
     .append("svg")
       .attr("height", height)
       .attr("width", width)
+      .attr("transform", `translate(${-margin.left}, ${0})`)
     .append("g")
-      .attr("transform", `translate(${margin}, ${margin})`);
+      .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
   svg.append("g")
     .attr("class", "y axis left-axis")
@@ -487,43 +540,39 @@ const renderChart = (args) => {
       g.call(bottomAxis);
       g.select(".domain")
         .attr("stroke", DARK_GREY);
-      g.selectAll(".tick text")
-        .attr("fill", DARK_GREY)
-        .style("text-anchor", "middle")
-        .style("fontSize", FONT_SIZE);
     });
 
-    let area = d3Area()
-        .curve(curveBasis)
-        .x(d => x(d.date))
-        .y0(y(0))
-        .y1(d => y(scaleForY(d.values ? d.values.percent : 0)));
+  let area = d3Area()
+    .curve(curveBasis)
+    .x(d => x(d.date))
+    .y0(y(0))
+    .y1(d => y(scaleForY(d.value ? d.value : 0)));
 
-      let line = d3Line()
-        .curve(curveBasis)
-        .x(d => x(d.date))
-        .y(d => y(scaleForY(d.values ? d.values.percent : 0)));
+  let line = d3Line()
+    .curve(curveBasis)
+    .x(d =>  x(d.date))
+    .y(d => y(scaleForY(d.value ? d.value : 0)));
 
-      svg.append("path")
-        .datum(data)
-        .attr("fill", COLORS.blue)
-        .attr("fill-opacity", "0.35")
-        .attr("class", "area")
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("d", area)
-        .attr("transform", "translate(0, 0)");
+  svg.append("path")
+    .datum(data)
+    .attr("fill", COLORS.blue)
+    .attr("fill-opacity", "0.35")
+    .attr("class", "area")
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
+    .attr("d", area)
+    .attr("transform", "translate(0, 0)");
 
-      // add the valueline path.
-      svg.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("d", line)
-        .attr("stroke", COLORS.blue)
-        .attr("fill", "none")
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 2);
+  // add the valueline path.
+  svg.append("path")
+    .datum(data)
+    .attr("class", "line")
+    .attr("d", line)
+    .attr("stroke", COLORS.blue)
+    .attr("fill", "none")
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
+    .attr("stroke-width", 2);
 
   return el.toReact();
 };
