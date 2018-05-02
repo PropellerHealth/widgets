@@ -120,5 +120,14 @@
       }
     }
 
+    &.disconnected {
+      color: #C0C0C0;
+
+      .battery-cap,
+      .battery-level.charged {
+        background-color: #C0C0C0;
+      }
+    }
+
   }
 }

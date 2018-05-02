@@ -63,16 +63,17 @@ const POCContent = ({
   lon,
   powered,
   running,
-  temp
+  temp,
+  disconnected = false
 }) => {
   return (
     // 32.825720 / -117.133553
 
     <div>
-      <DeviceStatus powered={powered} running={running} />
+      <DeviceStatus powered={powered} running={running} disconnected={disconnected} />
       <Row style={style.blockMargin}>
         <Col xs={6}>
-          <BatteryIndicator voltage={batt_volt} charging={charging} />
+          <BatteryIndicator voltage={batt_volt} charging={charging} disconnected={disconnected} />
         </Col>
         <Col xs={6}>
           <Runtime time={runtime} />
@@ -98,7 +99,8 @@ class ResmedDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data? [ props.data ] : []
+      data         : props.data? [ props.data ] : [],
+      disconnected : false
     };
 
     this.queryData = this.queryData.bind(this);
@@ -126,12 +128,21 @@ class ResmedDemo extends React.Component {
       .then(checkResponse)
       .then(extractJSON)
       .then(data => {
-        const last = this.state.data[0];
-        if (!last || last.timestamp !== data.timestamp) {
-          this.setState({
-            data: [data].concat(this.state.data)
-          });
+        const secondsNow = Number.parseInt(Date.now().toString().slice(0, -3), 10);
+        const seconds    = Number.parseInt(data.timestamp, 10);
+        const last       = this.state.data[0];
+        const disconnect = secondsNow - seconds > 60;
+        const updates    = {};
+
+        if (this.state.disconnected !== disconnect) {
+          updates.disconnected = disconnect;
         }
+
+        if (!last || last.timestamp !== data.timestamp) {
+          updates.data = [data].concat(this.state.data);
+        }
+
+        this.setState(updates);
       });
   }
 
@@ -142,7 +153,7 @@ class ResmedDemo extends React.Component {
   }
 
   render() {
-    const { data = [] } = this.state;
+    const { data = [], disconnected } = this.state;
     const [currentData = {}] = data;
 
     return (
@@ -163,7 +174,7 @@ class ResmedDemo extends React.Component {
             </Col>
 
             <Col xs={12} sm={4}>
-              <POC {...currentData} />
+              <POC {...currentData} disconnected={disconnected} />
             </Col>
           </Row>
         </main>

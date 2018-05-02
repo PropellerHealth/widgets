@@ -8,7 +8,7 @@ const style =  {
   top: "1px"
 };
 
-const BatteryIndicator = ({ voltage, charging }) => {
+const BatteryIndicator = ({ voltage, charging, disconnected = false }) => {
   const bars = [4, 3, 2, 1];
   const vltMax = 16.8;
   const vltMin = 12;
@@ -19,12 +19,12 @@ const BatteryIndicator = ({ voltage, charging }) => {
   percent = percent > 100 ? 100 : percent;
   const level = Math.round(percent / 25 * 10) / 10;
   const warn = percent <= 5 ? "battery-warn" : "";
-  const isCharging = charging === 1;
+  const isCharging = !disconnected && charging === 1;
 
   return (
     <div>
       <h5>Battery Status</h5>
-      <div className={`battery-indicator ${warn}`}>
+      <div className={`battery-indicator ${warn} ${disconnected ? "disconnected" : ""}`}>
         <div className="battery-icon">
           <span className="battery-cap" />
           {isCharging ? (
