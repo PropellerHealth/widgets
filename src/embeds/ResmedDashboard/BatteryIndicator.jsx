@@ -10,7 +10,8 @@ const style =  {
 
 const BatteryIndicator = ({ voltage, charging }) => {
   const bars = [4, 3, 2, 1];
-  const percent = voltage / 16 * 100;
+  const voltageMin = 12;
+  const percent = (voltage - voltageMin) / 4 * 100;
   const level = Math.round(percent / 25 * 10) / 10;
   const warn = percent <= 5 ? "battery-warn" : "";
   const isCharging = charging === 1;
