@@ -14,6 +14,7 @@ import DeviceStatus from "./DeviceStatus";
 import BatteryIndicator from "./BatteryIndicator";
 import LastLocation from "./LastLocation";
 import Runtime from "./RunTime";
+import DeviceMetrics from "./DeviceMetrics";
 import PlanInfo from "./PlanInfo";
 import Subtitle from "../../components/Subtitle";
 import RoundedBox from "../../components/RoundedBox";
@@ -152,7 +153,10 @@ class ResmedDemo extends React.Component {
             <Col xs={12} sm={8}>
               <Persona />
               <Row>
-                <Col xs={12} sm={12}>
+                <Col xs={12}>
+                  <DeviceMetrics {...currentData} />
+                </Col>
+                <Col xs={12}>
                   <PlanInfo />
                 </Col>
               </Row>

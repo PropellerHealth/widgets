@@ -15,6 +15,7 @@ import { area as d3Area, line as d3Line, curveBasis } from "d3-shape";
 
 import { COLORS, displayedDate, capitalize, HAS_WINDOW } from "../../utilities";
 import GreyText from "../../components/GreyText";
+import Subtitle from "../../components/Subtitle";
 
 const tzone = moment.tz.guess();
 
@@ -436,12 +437,14 @@ class MedFocus extends React.Component {
     const { width } = this.state;
     const isRescue = "rescue" === type;
     const yTickLabel = isRescue ? "" : "%";
-    const title = isRescue ? "Rescue Events" : "Average Adherence";
+    const title = isRescue ? "rescue events" : "average adherence";
 
     return (
       <Col xs={12} sm={6}>
-        <h3 ref={this.setColumnRef}>{name}</h3>
-        <h4 style={{marginBottom: "0"}}>{title}, last 7 days</h4>
+        <h3 ref={this.setColumnRef}>
+          {name} <Subtitle>{title}, last 7 days</Subtitle>
+        </h3>
+
         {renderChart({data, type, width, yTickLabel })}
         {controllerSchedule(usageList)}
         <br />
@@ -475,21 +478,20 @@ const medMapper = type => (m, i) => {
   );
 };
 
-const renderChart = (args) => {
-  const {
-    data = [],
-    height = 150,
-    width = 150,
-    margin = {left: 35, right: 0, top: 20, bottom: 20},
-    yTickLabel = "",
-    type
-  } = args;
+const renderChart = ({
+  data = [],
+  height = 150,
+  width = 150,
+  margin = {left: 35, right: 0, top: 20, bottom: 20},
+  yTickLabel = "",
+  type
+}) => {
 
   const graphHeight = height - margin.top - margin.bottom;
   const graphWidth  = width - margin.left - margin.right;
   const DARK_GREY  = COLORS.darkGrey;
-  const LIGHT_GREY = COLORS.lightGrey;
-  const FONT_SIZE = "12px";
+  // const LIGHT_GREY = COLORS.lightGrey;
+  // const FONT_SIZE = "12px";
 
   const scaleForY = percent => Math.round(percent || 0);
 
@@ -603,7 +605,7 @@ class PlanInfo extends React.Component {
     const controller = plan.medications.filter(isMedType("controller"));
 
     return (
-      <Row>
+      <Row className="chart-wrapper">
         <Col xs={12}><h4>COPD Treatment Plan</h4></Col>
         {rescue.map(medMapper("rescue"))}
         {controller.map(medMapper("controller"))}

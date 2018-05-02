@@ -38,8 +38,8 @@
   }
 
   .image-wrapper {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     display: inline-block;
 
     .profile-image {
@@ -54,6 +54,12 @@
   h1 {
     color: #333;
     font-size: 4rem;
+    margin-top: 0;
+  }
+
+  .chart-wrapper h3 {
+    margin-top: 0.7rem;
+    margin-bottom: 0;
   }
 
   .battery-indicator {
