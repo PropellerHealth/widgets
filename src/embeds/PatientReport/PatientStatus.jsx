@@ -28,7 +28,6 @@ const PatientStatus = function PatientStatus({
 
   const { dayofweek, timeofday } = trends;
 
-  const totalDays  = days.length > 31 ? 30 : days.length;
   const controller = medications.controller || [];
 
   const adherence = controller.map(med => {
@@ -47,7 +46,7 @@ const PatientStatus = function PatientStatus({
     <div style={{ marginTop: "1rem" }}>
       <SectionHeader
         text={t("HEALTH_STATUS")}
-        tab={t("LAST_NUM_DAYS", { number: totalDays })}
+        tab={t("LAST_NUM_DAYS", { number: 30 })}
       />
       <div style={{ position: "relative" }}>
         <Row>
@@ -55,13 +54,11 @@ const PatientStatus = function PatientStatus({
             {disease === "asthma"
               ? (
                 <AsthmaStatus
-                  totalDays={totalDays}
                   controlStatus={controlStatus}
                   rescueNights={rescueNights}
                 />
               ) : (
                 <CopdStatus
-                  totalDays={totalDays}
                   days={days}
                   rescueNights={rescueNights}
                 />
@@ -81,7 +78,7 @@ const PatientStatus = function PatientStatus({
               <h4>
                 {t("CONTROLLER_ADHERENCE")}{" "}
                 <Subtitle>
-                  {t("LAST_NUM_DAYS", { number: totalDays }).toLowerCase()}
+                  {t("LAST_NUM_DAYS", { number: 30 }).toLowerCase()}
                 </Subtitle>
               </h4>
               <Row>

@@ -5,7 +5,7 @@ import RoundedBox from "../../components/RoundedBox";
 import MetricScore from "../../components/MetricScore";
 import Subtitle from "../../components/Subtitle";
 
-const AsthmaStatus = ({ totalDays, controlStatus, rescueNights, t}) => {
+const AsthmaStatus = ({ controlStatus, rescueNights, t}) => {
   return (
     <Row>
       <Col xs={12}>
@@ -37,7 +37,7 @@ const AsthmaStatus = ({ totalDays, controlStatus, rescueNights, t}) => {
             <strong>{t("NIGHTTIME_RESUCE_USE")}</strong>
             <br />
             <Subtitle>
-              {t("LAST_NUM_DAYS", { number: totalDays }).toLowerCase()}
+              {t("LAST_NUM_DAYS", { number: 30 }).toLowerCase()}
             </Subtitle>
           </h4>
           <MetricScore>{t("NUM_NIGHT", { count: rescueNights })}</MetricScore>
