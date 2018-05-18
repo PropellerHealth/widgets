@@ -52,7 +52,7 @@ class DaysOfWeek extends Component {
 
     const _data  = structureData(data);
     const values = _data.map(d => d.value);
-    const vMax   = max(values);
+    const vMax   = max(values) || 1;
 
     const yMax = Math.ceil(vMax * 10) * 10;
 
@@ -106,7 +106,7 @@ class DaysOfWeek extends Component {
       .call(g => {
         g.call(
           axisLeft(yScale)
-            .ticks(yMax / 10, "%")
+            .ticks(5, "%")
             .tickSize(0)
         );
         g.selectAll(".tick text")
@@ -154,7 +154,7 @@ class DaysOfWeek extends Component {
 
     return (
       <Col xs={6} >
-        <h4>{t("RESCUE_TIME_OF_WEEK")}</h4>
+        <h4>{t("RESCUE_DAY_OF_WEEK")}</h4>
         <div className="days-of-week-chart">
           { chart }
         </div>
