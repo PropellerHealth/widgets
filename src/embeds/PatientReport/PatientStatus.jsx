@@ -56,6 +56,7 @@ const PatientStatus = function PatientStatus({
             {disease === "asthma"
               ? (
                 <AsthmaStatus
+                  totalDays={days.length}
                   controlStatus={controlStatus}
                   rescueNights={rescueNights}
                 />

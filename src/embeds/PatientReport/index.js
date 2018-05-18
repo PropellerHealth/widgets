@@ -93,7 +93,6 @@ class PatientReport extends Component {
     const rescueNights = days.filter(d => d.rescue.nightEvents > 0).length;
     const rescueMeds   = medications.filter(m => "rescue" === m.medication.type);
     const sortedDays   = days.sort(sortDates);
-    // console.log("sortedDays", sortedDays);
     const range        = [
       reportStart,
       moment(_endDate).tz(timeZone)
