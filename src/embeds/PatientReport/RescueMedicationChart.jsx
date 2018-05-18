@@ -42,6 +42,7 @@ const RescueMedicationChart = function RescueMedicationChart({
 }) {
 
   const baseline = disease === "copd";
+  const label = t("EVENTS");
 
   return (
     <TimeSeriesChart>
@@ -52,7 +53,7 @@ const RescueMedicationChart = function RescueMedicationChart({
           <Legend medications={medications} disease={disease} baseline={baseline} incomplete={lastSync} t={t} />
         }
       />
-      <BarChart baseline={baseline} lastSync={lastSync} {...rest} />
+      <BarChart baseline={baseline} lastSync={lastSync} yLabel={label} {...rest} />
     </TimeSeriesChart>
   );
 };

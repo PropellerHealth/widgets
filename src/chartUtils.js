@@ -42,36 +42,34 @@ export const buildChartFrame = function buildChartFrame(
         .attr("stroke", DARK_GREY);
       g.selectAll(".tick line")
         .attr("stroke", COLORS.lightestGrey)
-        .attr("transform", `translate(${xWidth/2}, 0)`);
+        .attr("transform", "translate(0, 1)");
       g.selectAll(".tick text").remove();
     });
 
   // left axis with labels
-  svg
-    .append("g")
-      .attr("class", "y axis left-axis")
-      .attr("transform", "translate(0, 0)")
-      .call(g => {
-        g.call(leftAxis);
-        g.select(".domain")
-          .attr("stroke", DARK_GREY);
-        g.selectAll(".tick text")
-          .attr("fill", DARK_GREY)
-          .style("fontSize", FONT_SIZE);
-        // console.log(g);
-        // let fText = g.select(".tick text").nodes();
-        // let last = fText[]
-        // console.log(fText);
-        // fText.text(`${yLabel} ${fText.text()}`);
-      })
-    .append("text")
-      .attr("class", "label")
-      .attr("x", -20)
-      .attr("y", 4)
-      .attr("fill", DARK_GREY)
-      .style("fontSize", FONT_SIZE)
-      .style("text-anchor", "end")
+  svg.append("g")
+    .attr("class", "y axis left-axis")
+    .attr("transform", "translate(0, 0)")
+    .call(g => {
+      g.call(leftAxis);
+      g.select(".domain")
+        .attr("stroke", DARK_GREY);
+      g.selectAll(".tick text")
+        .attr("fill", COLORS.grey)
+        .style("fontSize", FONT_SIZE);
+    });
+
+  if (yLabel) {
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (graphHeight / 2))
+      .attr("dy", "1.5em")
+      .attr("font-size", "12")
+      .attr("fill", COLORS.grey)
+      .style("text-anchor", "middle")
       .text(yLabel);
+  }
 
   // bottom primary axis
   svg.append("g")
@@ -82,7 +80,7 @@ export const buildChartFrame = function buildChartFrame(
       g.select(".domain")
         .attr("stroke", DARK_GREY);
       g.selectAll(".tick text")
-        .attr("fill", DARK_GREY)
+        .attr("fill", COLORS.grey)
         .style("text-anchor", "middle")
         .style("fontSize", FONT_SIZE);
     });
@@ -95,7 +93,7 @@ export const buildChartFrame = function buildChartFrame(
       g.call(monthAxis);
       g.select(".domain").remove();
       g.selectAll(".tick text")
-        .attr("fill", DARK_GREY)
+        .attr("fill", COLORS.grey)
         .style("fontSize", FONT_SIZE);
     });
 
