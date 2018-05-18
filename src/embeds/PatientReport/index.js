@@ -68,7 +68,9 @@ class PatientReport extends Component {
       controllerAdherence = [],
       alerts,
       locale,
-      quiz
+      quiz,
+      reportLength = 30,
+      endDate
     } = this.state;
 
     if (!patient) return <Loading />;
@@ -76,6 +78,8 @@ class PatientReport extends Component {
     // do all of our heavy data munging here and just feed the result downstream
     const { controlStatus = [], days : _days = [], trends = {} } = dailySummary;
     const { timeZone } = patient;
+    const _endDate     = "undefined" === typeof endDate ? _days[0].date : endDate;
+    const reportStart  = moment(_endDate).tz(timeZone).subtract(reportLength, "days");
 
     const days = _days.map(d => {
       d.date = moment(d.date).tz(timeZone);
@@ -86,7 +90,7 @@ class PatientReport extends Component {
     const rescueMeds   = medications.filter(m => "rescue" === m.medication.type);
     const sortedDays   = days.sort(sortDates);
     const range        = [
-      sortedDays[0].date,
+      reportStart,
       sortedDays[sortedDays.length - 1].date
     ];
 
@@ -108,12 +112,12 @@ class PatientReport extends Component {
       .reduce((ary, times) => ary.concat(times))
       .sort(sortDates)[0]);
 
-    const adherence  = controllerAdherence.sort(sortDates);
+    const weeklyAdherence = controllerAdherence.sort(sortDates);
 
     const controllerMeds = medications
       .filter(m => "controller" === m.medication.type)
       .map(med => {
-        med.adherenceByWeek = adherence
+        med.adherenceByWeek = weeklyAdherence
           .map(week => ({
             date   : moment(week.date).tz(timeZone),
             values : week.medications && week.medications.find(m => med.medicationId === m.mid)
