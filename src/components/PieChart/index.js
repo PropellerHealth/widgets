@@ -50,15 +50,6 @@ class PieChart extends Component {
       .attr("d", path)
       .attr("fill", d => color(d.data.period));
 
-    // append the inner labels
-    arc.append("text")
-      .attr("transform", d => `translate(${innerLabel.centroid(d)})`)
-      .attr("dy", "0.35em")
-      .text(d => d.data.percent > 0 ? `${d.data.percent}%` : "")
-      .attr("fill", "#FFF")
-      .style("fontSize", "16px")
-      .style("text-anchor", "middle");
-
     // append the outer labels
     arc.append("text")
       .attr("class", "arc-label")
@@ -81,6 +72,22 @@ class PieChart extends Component {
       .attr("dy", "13px")
       .style("text-anchor", "middle")
       .text(d => d.data.percent > 0 ? d.data.times.join("-") : "");
+
+    const percents = svg.selectAll(".arc-percent")
+      .data(angles(data))
+      .enter()
+      .append("g")
+        .attr("class", "arc");
+
+    // append the inner labels. Lay them over the .arc areas so they aren't clipped
+    percents.append("text")
+      .attr("class", "arc-percent")
+      .attr("transform", d => `translate(${innerLabel.centroid(d)})`)
+      .attr("dy", "0.35em")
+      .text(d => d.data.percent > 0 && "none" !== d.data.period ? `${d.data.percent}%` : "")
+      .attr("fill", "#FFF")
+      .style("fontSize", "16px")
+      .style("text-anchor", "middle");
 
     return el.toReact();
   }
