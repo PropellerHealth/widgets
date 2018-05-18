@@ -101,12 +101,12 @@ class PatientReport extends Component {
     const sync = patient.sync;
 
     const syncTimes = {
-      first           : moment(sync.first).tz(timeZone),
-      last            : moment(sync.last).tz(timeZone),
-      firstController : moment(sync.firstController).tz(timeZone),
-      lastController  : moment(sync.lastController).tz(timeZone),
-      firstRescue     : moment(sync.firstRescue).tz(timeZone),
-      lastRescue      : moment(sync.lastRescue).tz(timeZone),
+      first           : sync && sync.first ? moment(sync.first).tz(timeZone) : false,
+      last            : sync && sync.last ? moment(sync.last).tz(timeZone) : false,
+      firstController : sync && sync.firstController ? moment(sync.firstController).tz(timeZone) : false,
+      lastController  : sync && sync.lastController ? moment(sync.lastController).tz(timeZone) : false,
+      firstRescue     : sync && sync.firstRescue ? moment(sync.firstRescue).tz(timeZone) : false,
+      lastRescue      : sync && sync.lastRescue ? moment(sync.lastRescue).tz(timeZone) : false,
     };
 
     const startDate = moment(patient.createdDate).tz(timeZone);

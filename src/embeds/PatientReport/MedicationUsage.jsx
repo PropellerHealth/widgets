@@ -23,8 +23,8 @@ const ALERT_FOR_DISEASE = {
   copd   : "atrisk"
 };
 
-const lastSync       = (date, end)   => moment(date).diff(moment(end))   < 0 ? date : false;
-const prehistoryDate = (date, start) => moment(date).diff(moment(start)) > 0 ? date : false;
+const isBeforeDate = (date, end)   => moment(date).diff(moment(end))   < 0 ? date : false;
+const isAfterDate  = (date, start) => moment(date).diff(moment(start)) > 0 ? date : false;
 
 const MedicationUsage = function MedicationUsage({
   disease,
@@ -75,17 +75,18 @@ const MedicationUsage = function MedicationUsage({
     .ticks(timeMonday)
     .tickSize(-(graphHeight - 1));
 
-  const alertDates = alerts[ALERT_FOR_DISEASE[disease]].map(a => moment(a).toISOString());
+  const alertDates = alerts[ALERT_FOR_DISEASE[disease]].map(a => moment.utc(a).format("YYYY-MM-DD"));
 
   const rescueData = days.map(d => {
-    // d.date  = new Date(d.date);
-    d.alert = alertDates.indexOf(d.date.toISOString()) > -1;
+    d.alert = alertDates.indexOf(moment.utc(d.date).format("YYYY-MM-DD")) > -1;
     return d;
   });
 
-  const lastRescue     = lastSync(sync.lastRescue, range[1]);
-  const lastController = lastSync(sync.lastController, range[1]);
-  const firstDate      = prehistoryDate(startDate, range[0]);
+  const lastRescue     = sync.lastRescue && isBeforeDate(sync.lastRescue, range[1]);
+  const lastController = sync.lastController && isBeforeDate(sync.lastController, range[1]);
+  const firstDate      = isAfterDate(startDate, range[0]);
+  const hasRescue      = !!sync.firstRescue;
+  const hasController  = !!sync.firstController;
 
   return (
     <div style={{ marginTop: "1rem" }}>
@@ -93,7 +94,7 @@ const MedicationUsage = function MedicationUsage({
         text={t("MEDICATION_USAGE")}
         tab={t("LAST_NUM_DAYS", {number: 30})}
       />
-      <RescueMedicationChart
+      {hasRescue && <RescueMedicationChart
         disease={disease}
         data={rescueData}
         firstDate={firstDate}
@@ -113,8 +114,8 @@ const MedicationUsage = function MedicationUsage({
         colors={COLORS}
         medications={medications.rescue}
         title={t("RESCUE_MEDICATION_USAGE")}
-      />
-      <ControllerMedicationChart
+      />}
+      {hasController && <ControllerMedicationChart
         data={adherence}
         firstDate={firstDate}
         lastSync={lastController}
@@ -131,7 +132,7 @@ const MedicationUsage = function MedicationUsage({
         colors={COLORS}
         medications={medications.controller}
         title={t("CONTROLLER_MEDICATION_ADHERENCE")}
-      />
+      />}
     </div>
   );
 };

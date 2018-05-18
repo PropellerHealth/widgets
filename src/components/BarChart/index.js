@@ -127,7 +127,7 @@ class BarChart extends Component {
       .attr("x", d => xScale(d.date))
       .attr("y", d => yScale(d.rescue.totalEvents) - 10)
       .attr("fill", colors.red)
-      .style("fontSize", "20px")
+      .style("fontSize", "2.5rem")
       .style("text-anchor", "middle")
       .text((d) => d.alert ? "!" : undefined);
 
