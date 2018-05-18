@@ -2,7 +2,7 @@ import React from "react";
 import { translate } from "react-i18next";
 import { Row, Col } from "react-bootstrap";
 import PageHeader from "./PageHeader";
-import { COLORS } from "../../utilities";
+import { COLORS, displayedDate } from "../../utilities";
 import logo from "../../assets/images/logo.svg";
 
 const timeFrame = range => {
@@ -13,9 +13,9 @@ const timeFrame = range => {
     d1.month() === d2.month() ||
     (d2.diff(d1, "months") === 1 && d2.date() === 1)
   ) {
-    return d1.format("MMM Y");
+    return displayedDate(d1, "ll");
   } else {
-    return `${d1.format("MMM")}-${d2.format("MMM")} ${d2.format("Y")}`;
+    return `${displayedDate(d1, "ll")} - ${displayedDate(d2, "ll")}`;
   }
 };
 

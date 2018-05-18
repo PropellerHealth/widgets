@@ -2,39 +2,53 @@ import React, { Component } from "react";
 import { Col } from "react-bootstrap";
 import { translate } from "react-i18next";
 // import { timeFormat } from "d3-time-format";
-// import moment from "moment";
+import moment from "moment";
 import PieChart from "../PieChart";
+
+const formatTime = localeData => time => {
+  const _t =  moment(time, "H").format(localeData.longDateFormat("LT"));
+  // const meridiem = _t.match(localeData._meridiemParse);
+  return _t.replace(/:00/g, "").toLowerCase(); // /:00|\s/g to remove whitespace too
+};
 
 // do we need to format these time ranges?
 const buildChartData = (data, t) => {
+  const formatter = formatTime(moment.localeData());
   return [
     {
       period  : "evening",
       label   : t("EVENING"),
       percent : data.evening,
       color   : "#2B63A9",
-      times   : ["5pm", "10pm"]
+      times   : [formatter("17"), formatter("22")]
     },
     {
       period  : "night",
       label   : t("NIGHT"),
       percent : data.night,
       color   : "#000000",
-      times   : ["10pm", "6am"]
+      times   : [formatter("22"), formatter("6")]
     },
     {
       period  : "morning",
       label   : t("MORNING"),
       percent : data.morning,
       color   : "#A8E5FE",
-      times   : ["6am", "12pm"]
+      times   : [formatter("6"), formatter("12")]
     },
     {
       period  : "afternoon",
       label   : t("AFTERNOON"),
       percent : data.afternoon,
       color   : "#00BDF7",
-      times   : ["12pm", "5pm"]
+      times   : [formatter("12"), formatter("17")]
+    },
+    {
+      period: "none",
+      label: "No usages",
+      percent: data.evening + data.night + data.morning + data.afternoon === 0 ? 100 : 0,
+      color: "#DDD",
+      times: []
     }
   ];
 };
