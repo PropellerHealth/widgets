@@ -31,13 +31,15 @@ const PatientStatus = function PatientStatus({
   const controller = medications.controller || [];
 
   const adherence = controller.map(med => {
-    const items = med.adherenceByDay;
+    const items = med.adherenceByDay.filter(item => item.values && "number" === typeof item.values.percent);
 
     return {
       name      : med.medication.name,
       adherence : Math.round(
-        items.reduce((total, item) => total + ((item.values && item.values.percent) || 0), 0) /
-          items.length
+        items.reduce(
+          (tot, item) => tot + item.values.percent,
+          0
+        ) / items.length
       )
     };
   });
