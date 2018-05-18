@@ -6,7 +6,7 @@ import i18n from "./i18n";
 import App from "./App";
 import "./index.css";
 
-// import testData from "./TEST_DATA.json";
+// import testData from "./TEST_DATA_COPD.json";
 
 let el = document.getElementById("app-props");
 let props;
