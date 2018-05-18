@@ -50,6 +50,7 @@
   "NIGHT": "Nuit",
   "WEEKLY_RESCUE_USE_TREND": "Méd. de secours (tendance hebdo.)",
   "RESCUE_TIME_OF_WEEK": "Jour de l'utilisation du médicament de secours",
+  "RESCUE_DAY_OF_WEEK": "Jour de la prise du médicament de secours",
   "COPD_ASSESSMENT_TEST": "Test d'évaluation de la MPOC",
   "LOW_IMPACT": "Incidence faible",
   "MEDIUM_IMPACT": "Incidence moyenne",
