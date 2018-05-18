@@ -71,7 +71,7 @@ const propsForRequest = (req, cb) => {
       method  : "GET",
       json    : true,
       headers : {
-        "x-ph-api-version": "3.34.0"
+        "x-ph-api-version": "3.42.0"
       }
     };
 
