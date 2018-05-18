@@ -82,8 +82,8 @@ class PatientReport extends Component {
     // do all of our heavy data munging here and just feed the result downstream
     const { controlStatus = [], days : _days = [], trends = {} } = dailySummary;
     const { timeZone } = patient;
-    const _endDate     = "undefined" === typeof endDate ? _days[0].date : endDate;
-    const reportStart  = moment(_endDate).tz(timeZone).subtract(reportLength, "days");
+    const _endDate     = "undefined" === typeof endDate ? dailySummary.trends.endDate : endDate;
+    const reportStart  = moment.utc(_endDate).subtract(reportLength, "days");
 
     const days = _days.map(d => {
       d.date = moment(d.date).tz(timeZone);
@@ -110,12 +110,14 @@ class PatientReport extends Component {
       lastRescue      : moment(sync.lastRescue).tz(timeZone),
     };
 
-    const startDate = moment(patient.createdDate);
+    const startDate = moment(patient.createdDate).tz(timeZone);
 
-    const oldestLastSync = moment(medications
-      .map(med => med.sensors.map(s => s.lastSyncDate))
-      .reduce((ary, times) => ary.concat(times))
-      .sort(sortDates)[0]);
+    const oldestLastSync = moment(
+      medications
+        .map(med => med.sensors.map(s => s.lastSyncDate))
+        .reduce((ary, times) => ary.concat(times))
+        .sort(sortDates)[0]
+    ).tz(timeZone);
 
     const weeklyAdherence = controllerAdherence.sort(sortDates);
 

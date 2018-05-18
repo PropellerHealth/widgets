@@ -1,8 +1,8 @@
 import React from "react";
 import moment from "moment";
 import { translate } from "react-i18next";
-import { scaleUtc } from "d3-scale";
-import { utcDay, timeDay, timeMonth, utcMonday } from "d3-time";
+import { scaleTime, scaleUtc } from "d3-scale";
+import { utcDay, timeDay, utcMonth, timeMonth, utcMonday, timeMonday } from "d3-time";
 import { axisBottom, axisTop } from "d3-axis";
 import { timeFormat, isoParse } from "d3-time-format";
 import SectionHeader from "./SectionHeader";
@@ -12,19 +12,19 @@ import ControllerMedicationChart from "./ControllerMedicationChart";
 import { COLORS } from "../../utilities";
 
 const createTimeScale = (a, b, width) =>
-  scaleUtc()
-    .domain([a, utcDay.offset(b, + 1)])
+  scaleTime()
+    .domain([a, b])
     .range([0, width])
     .clamp(true)
-    .nice(utcDay);
+    .nice(timeDay);
 
 const ALERT_FOR_DISEASE = {
   asthma : "transition",
   copd   : "atrisk"
 };
 
-const lastSync = (date, end) => moment(date).diff(moment(end), "d") < 0 ? date : false;
-const prehistoryDate = (date, start) => moment(date).diff(moment(start), "d") > 0 ? date : false;
+const lastSync       = (date, end)   => moment(date).diff(moment(end))   < 0 ? date : false;
+const prehistoryDate = (date, start) => moment(date).diff(moment(start)) > 0 ? date : false;
 
 const MedicationUsage = function MedicationUsage({
   disease,
@@ -72,13 +72,13 @@ const MedicationUsage = function MedicationUsage({
     .tickFormat(d => monthFormatter(d).toUpperCase());
 
   const weekAxis = axisTop(xScale)
-    .ticks(utcMonday)
-    .tickSize(-graphHeight);
+    .ticks(timeMonday)
+    .tickSize(-(graphHeight - 1));
 
-  const alertDates = alerts[ALERT_FOR_DISEASE[disease]].map(a => new Date(a).toISOString());
+  const alertDates = alerts[ALERT_FOR_DISEASE[disease]].map(a => moment(a).toISOString());
 
   const rescueData = days.map(d => {
-    d.date  = new Date(d.date);
+    // d.date  = new Date(d.date);
     d.alert = alertDates.indexOf(d.date.toISOString()) > -1;
     return d;
   });
@@ -106,7 +106,7 @@ const MedicationUsage = function MedicationUsage({
         graphWidth={graphWidth}
         xScale={xScale}
         xWidth={xWidth}
-        dScale={lineScale}
+        lineScale={lineScale}
         bottomAxis={bottomAxis}
         monthAxis={monthAxis}
         weekAxis={weekAxis}
