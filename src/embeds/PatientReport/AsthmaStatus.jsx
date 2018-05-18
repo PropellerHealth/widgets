@@ -5,7 +5,9 @@ import RoundedBox from "../../components/RoundedBox";
 import MetricScore from "../../components/MetricScore";
 import Subtitle from "../../components/Subtitle";
 
-const AsthmaStatus = ({ controlStatus, rescueNights, t}) => {
+const asPercent = (num, den) => Math.round(100 * num / den);
+
+const AsthmaStatus = ({ totalDays, controlStatus, rescueNights, t}) => {
   return (
     <Row>
       <Col xs={12}>
@@ -16,17 +18,17 @@ const AsthmaStatus = ({ controlStatus, rescueNights, t}) => {
           <div style={{fontSize: "16px"}}>
             {t("WELL_CONTROLLED")}:{" "}
             <MetricScore>
-              {t("NUM_DAY", { count: controlStatus.good })}
+              {asPercent(controlStatus.good, totalDays)}%
             </MetricScore>
             <br />
             {t("NOT_WELL_CONTROLLED")}:{" "}
             <MetricScore>
-              {t("NUM_DAY", { count: controlStatus.fair })}
+              {asPercent(controlStatus.fair, totalDays)}%
             </MetricScore>
             <br />
             {t("VERY_POORLY_CONTROLLED")}:{" "}
             <MetricScore>
-              {t("NUM_DAY", { count: controlStatus.poor })}
+              {asPercent(controlStatus.poor, totalDays)}%
             </MetricScore>
           </div>
         </RoundedBox>
