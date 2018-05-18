@@ -43,7 +43,6 @@ i18n
 
 i18n.on("languageChanged", function(lng) {
   moment.locale(lng);
-  console.log("languageChange", lng, d3Locales[lng]);
   timeFormatDefaultLocale(d3Locales[lng] || d3Locales["en-US"]);
 });
 
