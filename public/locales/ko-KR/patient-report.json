@@ -74,5 +74,6 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "질병 조절제 복용 일정 준수",
   "PUFFS": "번 흡입",
   "DAYS": "일",
-  "INCOMPLETE_DATA": "불완전한 데이터"
+  "INCOMPLETE_DATA": "불완전한 데이터",
+  "EVENTS": "증상 발생 상황"
 }

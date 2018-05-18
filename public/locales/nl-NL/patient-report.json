@@ -74,5 +74,6 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Therapietrouw controlemedicijnen",
   "PUFFS": "Pufjes",
   "DAYS": "Dagen",
-  "INCOMPLETE_DATA": "Onvolledige gegevens"
+  "INCOMPLETE_DATA": "Onvolledige gegevens",
+  "EVENTS": "Gebeurtenissen"
 }

@@ -74,5 +74,6 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Control grau de compliment de medicació",
   "PUFFS": "Inhalacions",
   "DAYS": "Dies",
-  "INCOMPLETE_DATA": "Dades incompletes"
+  "INCOMPLETE_DATA": "Dades incompletes",
+  "EVENTS": "Esdeveniments"
 }

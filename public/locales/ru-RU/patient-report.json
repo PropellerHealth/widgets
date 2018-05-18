@@ -74,5 +74,6 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Соблюдение режима по контролирующему препарату",
   "PUFFS": "Впрыскиваний",
   "DAYS": "Дня (дней)",
-  "INCOMPLETE_DATA": "Неполные данные"
+  "INCOMPLETE_DATA": "Неполные данные",
+  "EVENTS": "События"
 }

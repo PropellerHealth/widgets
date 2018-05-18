@@ -74,5 +74,6 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Adesione Farmaco di controllo",
   "PUFFS": "Inalazioni",
   "DAYS": "Giorno(i)",
-  "INCOMPLETE_DATA": "Dati incompleti"
+  "INCOMPLETE_DATA": "Dati incompleti",
+  "EVENTS": "Eventi"
 }

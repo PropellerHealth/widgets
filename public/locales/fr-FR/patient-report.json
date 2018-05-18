@@ -74,5 +74,6 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Observance du médicament de fond",
   "PUFFS": "Inhalations",
   "DAYS": "Jours",
-  "INCOMPLETE_DATA": "Données incomplètes"
+  "INCOMPLETE_DATA": "Données incomplètes",
+  "EVENTS": "Événements"
 }

@@ -74,5 +74,6 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Cumplimiento con el medicamento de control",
   "PUFFS": " Inhalaciones",
   "DAYS": "Días",
-  "INCOMPLETE_DATA": "Datos incompletos"
+  "INCOMPLETE_DATA": "Datos incompletos",
+  "EVENTS": "Eventos"
 }
