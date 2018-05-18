@@ -41,7 +41,7 @@ class BarChart extends Component {
       xWidth,
       xScale,
       yLabel,
-      dScale,
+      lineScale,
       colors,
       baseline,
       firstDate,
@@ -134,7 +134,7 @@ class BarChart extends Component {
     if (baseline) {
       let line = d3Line()
         .curve(curveBasis)
-        .x(d => dScale(d.date))
+        .x(d => xScale(d.date))
         .y(d => yScale(d.rescue.baseline));
 
       svg.append("path")
@@ -144,6 +144,7 @@ class BarChart extends Component {
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
+        .attr("transform", `translate(${xWidth},0)`)
         .attr("d", line);
     }
 

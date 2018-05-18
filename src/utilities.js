@@ -61,7 +61,7 @@ const COLORS = {
   red       : "#EE0037",
   yellow    : "yellow",
   orange    : "#FF7500",
-  grey      : "#888B8D",
+  grey      : "#8C8E8F",
   darkGrey  : "#333",
   lightGrey : "#C0C0C0",
   lightestGrey : "#E0E0E0",
