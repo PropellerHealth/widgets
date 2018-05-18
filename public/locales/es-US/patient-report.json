@@ -39,7 +39,7 @@
   "LAST_NUM_HOURS": "últimas {{number}} h",
   "RESCUE_USE_TOTAL": "Uso de medicamento de rescate (total de {{count}} evento de rescate)",
   "RESCUE_USE_TOTAL_plural": "Uso de medicamento de rescate (total de {{count}} eventos de rescate)",
-  "RESCUE_BASELINE": "Línea de rescate",
+  "RESCUE_BASELINE": "Estado inicial de rescate",
   "PHYSICIAN_EVALUATION": "EVALUACIÓN DEL MÉDICO",
   "SIGN": "Firma",
   "DAILY_AVERAGE_RESCUE": "Uso promedio diario de medicamento de rescate",
