@@ -12,6 +12,8 @@ import {
 
 import "./index.css";
 
+const weekToDaysReducer = timeZone => (arr, d) => arr.concat(incrementToDays(timeZone)(d, 8));
+
 const incrementToDays = timeZone => (toCopy, days) => {
   const ary = new Array(days);
   for (let i = 0; i < days; i++) {
@@ -32,7 +34,9 @@ class PatientReport extends Component {
       medications         : props.medications || [],
       locale              : props.locale,
       alerts              : props.alerts || {},
-      quiz                : props.quiz   || {}
+      quiz                : props.quiz   || {},
+      reportLength        : props.reportLength,
+      endDate             : props.endDate
     };
     this.loadData = this.loadData.bind(this);
   }
@@ -47,7 +51,7 @@ class PatientReport extends Component {
     const url = `${host}/api/reports/${reportId}/data?accessToken=${accessToken}`;
 
     window
-      .fetch(url, { headers: { "x-ph-api-version": "3.35.0" } })
+      .fetch(url, { headers: { "x-ph-api-version": "3.42.0" } })
       .then(checkResponse)
       .then(extractJSON)
       .then(data => this.setState({ ...data }))
@@ -89,9 +93,10 @@ class PatientReport extends Component {
     const rescueNights = days.filter(d => d.rescue.nightEvents > 0).length;
     const rescueMeds   = medications.filter(m => "rescue" === m.medication.type);
     const sortedDays   = days.sort(sortDates);
+    // console.log("sortedDays", sortedDays);
     const range        = [
       reportStart,
-      sortedDays[sortedDays.length - 1].date
+      moment(_endDate).tz(timeZone)
     ];
 
     const sync = patient.sync;
@@ -123,14 +128,24 @@ class PatientReport extends Component {
             values : week.medications && week.medications.find(m => med.medicationId === m.mid)
           }))
           .sort(sortDates)
-          .reduce((arr, d) => arr.concat(incrementToDays(timeZone)(d, 8)), []);
+          .reduce(weekToDaysReducer(timeZone), []);
 
         med.adherenceByDay = sortedDays.map(day => ({
-          date   : moment(day.date).tz(timeZone),
+          date   : moment.utc(day.date).tz(timeZone),
           values : day.controller && day.controller.meds.find(m => m.mid === med.medicationId)
         }));
         return med;
       });
+
+    const overallAdherence = weeklyAdherence
+      .map(week => ({
+        date   : moment(week.date).tz(timeZone),
+        values : {
+          percent: week.values.adherencePercent
+        }
+      }))
+      .sort(sortDates)
+      .reduce(weekToDaysReducer(timeZone), []);
 
     return (
       <PatientSummary
@@ -147,6 +162,7 @@ class PatientReport extends Component {
         quiz={quiz}
         locale={locale}
         rescueNights={rescueNights}
+        adherence={overallAdherence}
       />
     );
   }

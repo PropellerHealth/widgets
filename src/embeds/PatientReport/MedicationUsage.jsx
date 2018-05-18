@@ -34,11 +34,12 @@ const MedicationUsage = function MedicationUsage({
   alerts,
   sync,
   startDate,
+  adherence,
   t
 }) {
-  const width  = 1090;
-  const height = 240;
-  const margin = { top: 10, right: 35, bottom: 20, left: 35 };
+  const width       = 1090;
+  const height      = 240;
+  const margin      = { top: 10, right: 35, bottom: 20, left: 35 };
   const graphWidth  = width - margin.left - margin.right;
   const graphHeight = height - margin.top - margin.bottom - 18;
   const xWidth      = graphWidth / days.length / 2;
@@ -114,6 +115,7 @@ const MedicationUsage = function MedicationUsage({
         title={t("RESCUE_MEDICATION_USAGE")}
       />
       <ControllerMedicationChart
+        data={adherence}
         firstDate={firstDate}
         lastSync={lastController}
         width={width}

@@ -1,11 +1,65 @@
 import { Component } from "react";
+import moment from "moment";
 import ReactFauxDOM from "react-faux-dom";
 import { scaleLinear } from "d3-scale";
 import { axisLeft, axisRight } from "d3-axis";
 import { max as d3Max } from "d3-array";
 import { area as d3Area, line as d3Line, curveBasis } from "d3-shape";
+import { bisector } from "d3-array";
+import { COLORS } from "../../utilities";
 
 import { buildChartFrame, finalizeChart } from "../../chartUtils";
+
+const TIME_BISECTOR_LEFT = bisector(d => d.date).left;
+
+const graphableControllerData = (data, lastSync) => {
+  const idx = TIME_BISECTOR_LEFT(data, lastSync);
+
+  return data
+    .slice(0, idx)
+    .concat({
+      date: moment(lastSync),
+      values: Object.assign({}, data[idx].values)
+    });
+};
+
+const areaBuilder = (svg, xScale, yScale, curve, lastSync) => (data, color) => {
+  const toGraph = graphableControllerData(data, lastSync);
+
+  let area = d3Area()
+    .curve(curve)
+    .defined(d => d.values && "number" === typeof d.values.percent)
+    .x(d => xScale(d.date))
+    .y0(yScale(0))
+    .y1(d => yScale(scaleForY(d.values ? d.values.percent : 0)));
+
+  let line = d3Line()
+    .curve(curve)
+    .defined(d => d.values && "number" === typeof d.values.percent)
+    .x(d => xScale(d.date))
+    .y(d => yScale(scaleForY(d.values ? d.values.percent : 0)));
+
+  svg.append("path")
+    .datum(toGraph)
+    .attr("fill", color)
+    .attr("fill-opacity", "0.35")
+    .attr("class", "area")
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
+    .attr("d", area);
+
+  // add the valueline path.
+  svg.append("path")
+    .datum(toGraph)
+    .attr("class", "line")
+    // .attr("transform", "translate(0, -1)")
+    .attr("d", line)
+    .attr("stroke", color)
+    .attr("fill", "none")
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
+    .attr("stroke-width", 1.5);
+};
 
 const scaleForY = percent => Math.round(percent || 0);
 
@@ -17,6 +71,7 @@ class AreaChart extends Component {
 
   renderChart() {
     const {
+      data,
       medications,
       width,
       height,
@@ -67,42 +122,13 @@ class AreaChart extends Component {
       { height, width, margin, graphWidth, graphHeight, yLabel, xWidth }
     );
 
-    let curve = curveBasis;
+    const buildArea = areaBuilder(svg, xScale, yScale, curveBasis, lastSync);
+
+    buildArea(data, COLORS.grey);
 
     medications.forEach((med, idx) => {
-      let data = med.adherenceByWeek;
-
-      let area = d3Area()
-        .curve(curve)
-        .x(d => xScale(d.date))
-        .y0(yScale(0))
-        .y1(d => yScale(scaleForY(d.values ? d.values.percent : 0)));
-
-      let line = d3Line()
-        .curve(curve)
-        .x(d => xScale(d.date))
-        .y(d => yScale(scaleForY(d.values ? d.values.percent : 0)));
-
-      svg.append("path")
-        .datum(data)
-        .attr("fill", colors[idx])
-        .attr("fill-opacity", "0.35")
-        .attr("class", "area")
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("d", area)
-        .attr("transform", "translate(0, 0)");
-
-      // add the valueline path.
-      svg.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("d", line)
-        .attr("stroke", colors[idx])
-        .attr("fill", "none")
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 2);
+      let _data = med.adherenceByWeek;
+      buildArea(_data, colors[idx]);
     });
 
     finalizeChart(svg, { lastSync, firstDate, height: graphHeight, width: graphWidth, xScale });

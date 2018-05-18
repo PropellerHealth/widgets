@@ -41,7 +41,8 @@ class PatientSummary extends React.Component {
       sync,
       startDate,
       lastSync,
-      rescueNights
+      rescueNights,
+      adherence
     } = this.props;
 
     return (
@@ -69,6 +70,7 @@ class PatientSummary extends React.Component {
           alerts={alerts}
           sync={sync}
           startDate={startDate}
+          adherence={adherence}
         />
       </Page>
     );
