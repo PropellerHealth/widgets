@@ -2,7 +2,7 @@ import i18n from "i18next";
 import XHR from "i18next-xhr-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import moment from "moment";
-import { timeFormatLocale } from "d3-time-format";
+import { timeFormatDefaultLocale } from "d3-time-format";
 import d3Locales from "./d3Locales";
 
 // is there a way to disable trying to load language-only resources? eg. `en`?
@@ -43,7 +43,8 @@ i18n
 
 i18n.on("languageChanged", function(lng) {
   moment.locale(lng);
-  timeFormatLocale(d3Locales[lng] || d3Locales["en-US"]);
+  console.log("languageChange", lng, d3Locales[lng]);
+  timeFormatDefaultLocale(d3Locales[lng] || d3Locales["en-US"]);
 });
 
 export default i18n;
