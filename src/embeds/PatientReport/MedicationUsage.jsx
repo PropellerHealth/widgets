@@ -12,11 +12,11 @@ import ControllerMedicationChart from "./ControllerMedicationChart";
 import { COLORS } from "../../utilities";
 
 const createTimeScale = (a, b, width) =>
-  scaleTime()
+  scaleUtc()
     .domain([a, b])
     .range([0, width])
     .clamp(true)
-    .nice(timeDay);
+    .nice(utcDay);
 
 const ALERT_FOR_DISEASE = {
   asthma : "transition",
