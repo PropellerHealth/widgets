@@ -75,5 +75,6 @@
   "PUFFS": "Inhalaciones",
   "DAYS": "Días",
   "INCOMPLETE_DATA": "Datos incompletos",
-  "EVENTS": "Eventos"
+  "EVENTS": "Eventos",
+  "AVERAGE_ADHERENCE": "Cumplimiento promedio"
 }

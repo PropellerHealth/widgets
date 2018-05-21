@@ -75,5 +75,6 @@
   "PUFFS": "Inhalacions",
   "DAYS": "Dies",
   "INCOMPLETE_DATA": "Dades incompletes",
-  "EVENTS": "Esdeveniments"
+  "EVENTS": "Esdeveniments",
+  "AVERAGE_ADHERENCE": "Mitjana del grau de compliment"
 }

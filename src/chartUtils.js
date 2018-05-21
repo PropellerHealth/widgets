@@ -108,7 +108,7 @@ export const finalizeChart = function finalizeChart(svg, { firstDate, lastSync, 
       .attr("height", height)
       .attr("width", width - xScale(lastSync))
       .attr("transform", `translate(${xScale(lastSync)}, 0)`)
-      .attr("fill", "#9B9B9B")
+      .attr("fill", COLORS.lightGrey)
       .attr("fill-opacity", "0.4");
   }
 

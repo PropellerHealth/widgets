@@ -75,5 +75,6 @@
   "PUFFS": "Inhalations",
   "DAYS": "Jours",
   "INCOMPLETE_DATA": "Données incomplètes",
-  "EVENTS": "Événements"
+  "EVENTS": "Événements",
+  "AVERAGE_ADHERENCE": "Observance moyenne"
 }

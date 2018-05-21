@@ -75,5 +75,6 @@
   "PUFFS": "번 흡입",
   "DAYS": "일",
   "INCOMPLETE_DATA": "불완전한 데이터",
-  "EVENTS": "증상 발생 상황"
+  "EVENTS": "증상 발생 상황",
+  "AVERAGE_ADHERENCE": "평균 복용 일정 준수"
 }

@@ -75,5 +75,6 @@
   "PUFFS": "Inalazioni",
   "DAYS": "Giorno(i)",
   "INCOMPLETE_DATA": "Dati incompleti",
-  "EVENTS": "Eventi"
+  "EVENTS": "Eventi",
+  "AVERAGE_ADHERENCE": "Adesione media"
 }
