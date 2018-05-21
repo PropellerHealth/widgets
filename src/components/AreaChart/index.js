@@ -3,7 +3,6 @@ import moment from "moment";
 import ReactFauxDOM from "react-faux-dom";
 import { scaleLinear } from "d3-scale";
 import { axisLeft, axisRight } from "d3-axis";
-import { max as d3Max } from "d3-array";
 import { area as d3Area, line as d3Line, curveBasis } from "d3-shape";
 import { bisector } from "d3-array";
 import { COLORS } from "../../utilities";
@@ -31,13 +30,13 @@ const areaBuilder = (svg, xScale, yScale, curve, lastSync) => (data, color) => {
     .defined(d => d.values && "number" === typeof d.values.percent)
     .x(d => xScale(d.date))
     .y0(yScale(0))
-    .y1(d => yScale(scaleForY(d.values ? d.values.percent : 0)));
+    .y1(d => yScale(d.values.percent));
 
   let line = d3Line()
     .curve(curve)
     .defined(d => d.values && "number" === typeof d.values.percent)
     .x(d => xScale(d.date))
-    .y(d => yScale(scaleForY(d.values ? d.values.percent : 0)));
+    .y(d => yScale(d.values.percent));
 
   svg.append("path")
     .datum(toGraph)
@@ -60,8 +59,6 @@ const areaBuilder = (svg, xScale, yScale, curve, lastSync) => (data, color) => {
     .attr("stroke-linecap", "round")
     .attr("stroke-width", 1.5);
 };
-
-const scaleForY = percent => Math.round(percent || 0);
 
 class AreaChart extends Component {
   constructor(props) {
@@ -89,16 +86,8 @@ class AreaChart extends Component {
       weekAxis
     } = this.props;
 
-    const _yMax = d3Max(
-      medications.reduce((ary, med) => {
-        ary = ary.concat(med.adherenceByWeek.map(day => day.values ? day.values.percent : 0));
-        return ary;
-      }, [])
-    );
-    const yMax = _yMax < 100 ? 100 : Math.ceil(_yMax / 20) * 20;
-
     const yScale = scaleLinear()
-      .domain([0, yMax])
+      .domain([0, 100])
       .range([graphHeight, 0]);
 
     // prepare our axes
@@ -124,7 +113,7 @@ class AreaChart extends Component {
 
     const buildArea = areaBuilder(svg, xScale, yScale, curveBasis, lastSync);
 
-    buildArea(data, COLORS.grey);
+    buildArea(data, COLORS.darkGrey);
 
     medications.forEach((med, idx) => {
       let _data = med.adherenceByWeek;
