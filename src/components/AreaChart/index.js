@@ -12,6 +12,8 @@ import { buildChartFrame, finalizeChart } from "../../chartUtils";
 const TIME_BISECTOR_LEFT = bisector(d => d.date).left;
 
 const graphableControllerData = (data, lastSync) => {
+  if (!lastSync) return data; // either a date or false. date if before the end of the report, false if after
+
   const idx = TIME_BISECTOR_LEFT(data, lastSync);
 
   return data
