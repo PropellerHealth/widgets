@@ -1,0 +1,1283 @@
+{
+    "patient": {
+        "age": 7,
+        "birthDate": "2010-08-04",
+        "createdDate": "2017-12-01T06:00:00.000Z",
+        "disease": "asthma",
+        "email": "faketnb1povks9nvlsvvguvwvgkq@propellerhealth.com",
+        "givenName": "Report",
+        "familyName": "Patient",
+        "followers": [
+            {
+                "id": "58debd7e509add1607806a9c",
+                "accessLevel": "modify",
+                "givenName": "Test",
+                "familyName": "Physician01",
+                "role": "physician"
+            },
+            {
+                "id": "5aecc3ff93405000148ed383",
+                "accessLevel": "modify",
+                "givenName": "Report",
+                "familyName": "Caregiver",
+                "role": "caregiver"
+            }
+        ],
+        "language": "en-US",
+        "medicalIds": [],
+        "membership": "premium",
+        "plan": {
+            "medications": [
+                {
+                    "medication": {
+                        "shortName": "Advair HFA",
+                        "name": "Advair HFA",
+                        "type": "controller",
+                        "formFactor": "mdi",
+                        "id": "advair",
+                        "diseases": [
+                            "asthma",
+                            "copd"
+                        ]
+                    },
+                    "medicationId": "advair",
+                    "sensors": [
+                        {
+                            "firstSyncDate": "2018-01-04T21:39:43.000+00:00",
+                            "lastSyncDate": "2018-05-22T16:52:36.617+00:00",
+                            "mac": "F8:FE:5C:79:FD:F9",
+                            "model": "BLE1",
+                            "batteryLevel": 59,
+                            "lastTransmitDevice": {
+                                "bluetoothStatus": "on",
+                                "date": "2018-05-22T16:52:36.617+00:00",
+                                "appVersion": "4.3.0",
+                                "operatingSystem": "android"
+                            }
+                        }
+                    ],
+                    "usageList": [
+                        {
+                            "doses": 1,
+                            "hour": 9,
+                            "minute": 0
+                        }
+                    ]
+                },
+                {
+                    "medication": {
+                        "shortName": "Ventolin",
+                        "name": "Ventolin",
+                        "type": "rescue",
+                        "formFactor": "mdi",
+                        "id": "ventolin",
+                        "diseases": [
+                            "asthma",
+                            "copd"
+                        ]
+                    },
+                    "medicationId": "ventolin",
+                    "sensors": [
+                        {
+                            "firstSyncDate": "2018-01-04T21:39:54.000+00:00",
+                            "lastSyncDate": "2018-05-17T18:15:13.193+00:00",
+                            "mac": "F8:FE:5C:87:9A:EF",
+                            "model": "BLE1",
+                            "batteryLevel": 59,
+                            "lastTransmitDevice": {
+                                "bluetoothStatus": "on",
+                                "date": "2018-05-17T18:15:13.193+00:00",
+                                "appVersion": "4.3.0",
+                                "operatingSystem": "android"
+                            }
+                        }
+                    ],
+                    "usageList": []
+                }
+            ]
+        },
+        "role": "patient",
+        "score": {
+            "code": "good",
+            "type": "naeep"
+        },
+        "sync": {
+            "first": "2018-01-04T21:39:43.000+00:00",
+            "firstController": "2018-01-04T21:39:43.000+00:00",
+            "firstRescue": "2018-01-04T21:39:54.000+00:00",
+            "last": "2018-05-22T16:52:36.617+00:00",
+            "lastController": "2018-05-22T16:52:36.617+00:00",
+            "lastRescue": "2018-05-17T18:15:13.193+00:00",
+            "total": 42
+        },
+        "event": {
+            "first": "2018-05-01T14:51:06.000+00:00",
+            "firstController": "2018-05-01T14:51:06.000+00:00",
+            "firstRescue": "2018-05-08T18:15:03.000+00:00",
+            "last": "2018-05-22T16:51:06.000+00:00",
+            "lastController": "2018-05-22T16:51:06.000+00:00",
+            "lastRescue": "2018-05-17T18:15:03.000+00:00",
+            "totalRescue": 4
+        },
+        "timeZone": "America/Chicago"
+    },
+    "locale": "en-US",
+    "medications": [
+        {
+            "medication": {
+                "shortName": "Advair HFA",
+                "name": "Advair HFA",
+                "type": "controller",
+                "formFactor": "mdi",
+                "id": "advair",
+                "diseases": [
+                    "asthma",
+                    "copd"
+                ]
+            },
+            "medicationId": "advair",
+            "sensors": [
+                {
+                    "firstSyncDate": "2018-01-04T21:39:43.000+00:00",
+                    "lastSyncDate": "2018-05-22T16:52:36.617+00:00",
+                    "mac": "F8:FE:5C:79:FD:F9",
+                    "model": "BLE1",
+                    "batteryLevel": 59,
+                    "lastTransmitDevice": {
+                        "bluetoothStatus": "on",
+                        "date": "2018-05-22T16:52:36.617+00:00",
+                        "appVersion": "4.3.0",
+                        "operatingSystem": "android"
+                    }
+                }
+            ],
+            "usageList": [
+                {
+                    "doses": 1,
+                    "hour": 9,
+                    "minute": 0
+                }
+            ]
+        },
+        {
+            "medication": {
+                "shortName": "Ventolin",
+                "name": "Ventolin",
+                "type": "rescue",
+                "formFactor": "mdi",
+                "id": "ventolin",
+                "diseases": [
+                    "asthma",
+                    "copd"
+                ]
+            },
+            "medicationId": "ventolin",
+            "sensors": [
+                {
+                    "firstSyncDate": "2018-01-04T21:39:54.000+00:00",
+                    "lastSyncDate": "2018-05-17T18:15:13.193+00:00",
+                    "mac": "F8:FE:5C:87:9A:EF",
+                    "model": "BLE1",
+                    "batteryLevel": 59,
+                    "lastTransmitDevice": {
+                        "bluetoothStatus": "on",
+                        "date": "2018-05-17T18:15:13.193+00:00",
+                        "appVersion": "4.3.0",
+                        "operatingSystem": "android"
+                    }
+                }
+            ],
+            "usageList": []
+        }
+    ],
+    "transitionAlertDates": [],
+    "controllerAdherence": [
+        {
+            "date": "2018-05-21T05:00:00.000-05:00",
+            "values": {
+                "adherencePercent": 100
+            },
+            "medications": [
+                {
+                    "percentActual": 100,
+                    "percent": 100,
+                    "dosesTakenActual": 2,
+                    "dosesTaken": 2,
+                    "dosesExpected": 2,
+                    "mid": "advair"
+                }
+            ]
+        },
+        {
+            "date": "2018-05-14T05:00:00.000-05:00",
+            "values": {
+                "adherencePercent": 100
+            },
+            "medications": [
+                {
+                    "percentActual": 171,
+                    "percent": 100,
+                    "dosesTakenActual": 12,
+                    "dosesTaken": 7,
+                    "dosesExpected": 7,
+                    "mid": "advair"
+                }
+            ]
+        },
+        {
+            "date": "2018-05-07T05:00:00.000-05:00",
+            "values": {
+                "adherencePercent": 100
+            },
+            "medications": [
+                {
+                    "percentActual": 171,
+                    "percent": 100,
+                    "dosesTakenActual": 12,
+                    "dosesTaken": 7,
+                    "dosesExpected": 7,
+                    "mid": "advair"
+                }
+            ]
+        },
+        {
+            "date": "2018-04-30T05:00:00.000-05:00",
+            "values": {
+                "adherencePercent": 86
+            },
+            "medications": [
+                {
+                    "percentActual": 171,
+                    "percent": 86,
+                    "dosesTakenActual": 12,
+                    "dosesTaken": 6,
+                    "dosesExpected": 7,
+                    "mid": "advair"
+                }
+            ]
+        },
+        {
+            "date": "2018-04-23T05:00:00.000-05:00",
+            "values": {
+                "adherencePercent": 0
+            },
+            "medications": [
+                {
+                    "percentActual": 0,
+                    "percent": 0,
+                    "dosesTakenActual": 0,
+                    "dosesTaken": 0,
+                    "dosesExpected": 6,
+                    "mid": "advair"
+                }
+            ]
+        },
+        {
+            "date": "2018-04-16T05:00:00.000-05:00",
+            "values": {
+                "adherencePercent": null
+            },
+            "medications": [
+                {
+                    "percentActual": null,
+                    "percent": null,
+                    "dosesTakenActual": null,
+                    "dosesTaken": null,
+                    "dosesExpected": null,
+                    "mid": "advair"
+                }
+            ]
+        }
+    ],
+    "dailySummary": {
+        "trends": {
+            "endDate": "2018-05-22",
+            "startDate": "2018-04-22",
+            "trigger_event_coverage": 0,
+            "triggers": {
+                "unknown": 0,
+                "exercise": 0,
+                "airPollution": 0,
+                "workplaceExposure": 0,
+                "outdoorAllergens": 0,
+                "dust": 0,
+                "animals": 0,
+                "coldAir": 0,
+                "tobacco": 0,
+                "respiratoryInfection": 0,
+                "smellsOrScents": 0
+            },
+            "symptom_event_coverage": 0,
+            "symptoms": {
+                "activityLimitations": 0,
+                "chestTightness": 0,
+                "shortnessOfBreath": 0,
+                "difficultyBreathing": 0,
+                "wheeze": 0,
+                "cough": 0,
+                "wokenAtNight": 0
+            },
+            "nightevents": 0,
+            "timeofday": {
+                "night": 0,
+                "evening": 0,
+                "afternoon": 100,
+                "morning": 0
+            },
+            "dayofweek": {
+                "sat": 0,
+                "fri": 0,
+                "thu": 50,
+                "wed": 0,
+                "tue": 25,
+                "mon": 25,
+                "sun": 0
+            }
+        },
+        "controlStatus": {
+            "good": 28,
+            "fair": 1,
+            "poor": 0,
+            "unknown": null
+        },
+        "rescueUsage": [
+            {
+                "date": "2018-05-22T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-21T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-20T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-19T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-18T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-17T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 1,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-16T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-15T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-14T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 1,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-13T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-12T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-11T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-10T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 1,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-09T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-08T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 1,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-07T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-06T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-05T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-04T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-03T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-02T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-05-01T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-04-30T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-04-29T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-04-28T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-04-27T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-04-26T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-04-25T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-04-24T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            },
+            {
+                "date": "2018-04-23T00:00:00.000+00:00",
+                "values": {
+                    "eventsRescue": 0,
+                    "eventsRescueNight": 0
+                }
+            }
+        ],
+        "days": [
+            {
+                "date": "2018-05-22T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 1,
+                    "percent": 100,
+                    "percentActual": 100,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 1,
+                            "percent": 100,
+                            "percentActual": 100
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-21T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 1,
+                    "percent": 100,
+                    "percentActual": 100,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 1,
+                            "percent": 100,
+                            "percentActual": 100
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-20T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 1,
+                    "percent": 100,
+                    "percentActual": 100,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 1,
+                            "percent": 100,
+                            "percentActual": 100
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-19T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 1,
+                    "percent": 100,
+                    "percentActual": 100,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 1,
+                            "percent": 100,
+                            "percentActual": 100
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-18T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 1,
+                    "percent": 100,
+                    "percentActual": 100,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 1,
+                            "percent": 100,
+                            "percentActual": 100
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-17T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 3,
+                    "percent": 100,
+                    "percentActual": 300,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 3,
+                            "percent": 100,
+                            "percentActual": 300
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 1,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-16T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-15T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-14T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 1,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-13T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-12T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-11T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-10T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 1,
+                    "percent": 100,
+                    "percentActual": 100,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 1,
+                            "percent": 100,
+                            "percentActual": 100
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 1,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-09T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-08T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 1,
+                    "percent": 100,
+                    "percentActual": 100,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 1,
+                            "percent": 100,
+                            "percentActual": 100
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 1,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-07T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-06T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-05T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-04T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-03T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-02T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-05-01T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 1,
+                    "dosesTakenActual": 2,
+                    "percent": 100,
+                    "percentActual": 200,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 1,
+                            "dosesTakenActual": 2,
+                            "percent": 100,
+                            "percentActual": 200
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-04-30T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 0,
+                    "dosesTakenActual": 0,
+                    "percent": 0,
+                    "percentActual": 0,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 0,
+                            "dosesTakenActual": 0,
+                            "percent": 0,
+                            "percentActual": 0
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-04-29T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 0,
+                    "dosesTakenActual": 0,
+                    "percent": 0,
+                    "percentActual": 0,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 0,
+                            "dosesTakenActual": 0,
+                            "percent": 0,
+                            "percentActual": 0
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-04-28T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 0,
+                    "dosesTakenActual": 0,
+                    "percent": 0,
+                    "percentActual": 0,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 0,
+                            "dosesTakenActual": 0,
+                            "percent": 0,
+                            "percentActual": 0
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-04-27T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 0,
+                    "dosesTakenActual": 0,
+                    "percent": 0,
+                    "percentActual": 0,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 0,
+                            "dosesTakenActual": 0,
+                            "percent": 0,
+                            "percentActual": 0
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-04-26T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 0,
+                    "dosesTakenActual": 0,
+                    "percent": 0,
+                    "percentActual": 0,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 0,
+                            "dosesTakenActual": 0,
+                            "percent": 0,
+                            "percentActual": 0
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-04-25T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 0,
+                    "dosesTakenActual": 0,
+                    "percent": 0,
+                    "percentActual": 0,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 0,
+                            "dosesTakenActual": 0,
+                            "percent": 0,
+                            "percentActual": 0
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-04-24T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": 1,
+                    "dosesTaken": 0,
+                    "dosesTakenActual": 0,
+                    "percent": 0,
+                    "percentActual": 0,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": 1,
+                            "dosesTaken": 0,
+                            "dosesTakenActual": 0,
+                            "percent": 0,
+                            "percentActual": 0
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            },
+            {
+                "date": "2018-04-23T00:00:00.000+00:00",
+                "controller": {
+                    "dosesExpected": null,
+                    "dosesTaken": null,
+                    "dosesTakenActual": null,
+                    "percent": null,
+                    "percentActual": null,
+                    "meds": [
+                        {
+                            "mid": "advair",
+                            "dosesExpected": null,
+                            "dosesTaken": null,
+                            "dosesTakenActual": null,
+                            "percent": null,
+                            "percentActual": null
+                        }
+                    ]
+                },
+                "rescue": {
+                    "totalEvents": 0,
+                    "nightEvents": 0
+                }
+            }
+        ]
+    },
+    "quiz": {},
+    "alerts": {
+        "transition": [],
+        "atrisk": []
+    }
+}
