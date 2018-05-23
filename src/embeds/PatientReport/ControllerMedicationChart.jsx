@@ -10,9 +10,11 @@ import { COLORS } from "../../utilities";
 
 const idxColors = [
   "#20C3F3",
-  "#006C98",
-  "#9B9B9B",
-  "#8ADFCC"
+  "#A9D571",
+  "#E0004D",
+  "#F1C607",
+  "#A874B0",
+  "#FF931E"
 ];
 
 const Legend = ({ medications, incomplete, t }) => {
