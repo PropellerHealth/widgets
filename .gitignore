@@ -22,3 +22,4 @@ yarn-error.log*
 
 *.css
 !/src/assets/styles/bootstrap.css
+.idea/

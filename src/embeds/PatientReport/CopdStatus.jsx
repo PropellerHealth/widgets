@@ -97,7 +97,7 @@ const CopdStatus = ({ days, rescueNights, t }) => {
             </MetricScore>
             <br />
             <Subtitle>
-              {t("LAST_NUM_HOURS", { number: 24 }).toLowerCase()}
+              {t("LAST_NUM_DAYS", { number: 2 }).toLowerCase()}
             </Subtitle>
           </div>
         </RoundedBox>
