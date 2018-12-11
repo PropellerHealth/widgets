@@ -160,6 +160,16 @@ export default {
     "months": ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
     "shortMonths": ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
   },
+  "pt-PT": {
+    "dateTime": "%Y/%m/%d %H:%M:%S",
+    "date": "%Y/%m/%d",
+    "time": "%H:%M:%S",
+    "periods": ["AM", "PM"],
+    "days": ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"],
+    "shortDays": ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"],
+    "months": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+    "shortMonths": ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"]
+  },
   "ru-RU": {
     "dateTime": "%A, %e %B %Y г. %X",
     "date": "%d.%m.%Y",
