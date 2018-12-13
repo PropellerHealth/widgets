@@ -51,7 +51,7 @@ class PatientReport extends Component {
     const url = `${host}/api/reports/${reportId}/data?accessToken=${accessToken}`;
 
     window
-      .fetch(url, { headers: { "x-ph-api-version": "3.42.0" } })
+      .fetch(url, { headers: { "x-ph-api-version": "3.58.0" } })
       .then(checkResponse)
       .then(extractJSON)
       .then(data => this.setState({ ...data }))
