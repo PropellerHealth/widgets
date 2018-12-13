@@ -611,7 +611,8 @@
                     "totalEvents": 2,
                     "nightEvents": 1,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -645,7 +646,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -679,7 +681,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -713,7 +716,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -747,7 +751,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -781,7 +786,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -815,7 +821,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -849,7 +856,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -883,7 +891,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -917,7 +926,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -951,7 +961,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -985,7 +996,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1019,7 +1031,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1053,7 +1066,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1087,7 +1101,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1121,7 +1136,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1155,7 +1171,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1189,7 +1206,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1223,7 +1241,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1257,7 +1276,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1291,7 +1311,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1325,7 +1346,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1359,7 +1381,8 @@
                     "totalEvents": 0,
                     "nightEvents": 0,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             },
             {
@@ -1393,7 +1416,8 @@
                     "totalEvents": 2,
                     "nightEvents": 1,
                     "baseline": 0,
-                    "baseline24Hours": 0
+                    "baseline24Hours": 0,
+                    "baselineAvgLastTwoDays": 1
                 }
             }
         ]

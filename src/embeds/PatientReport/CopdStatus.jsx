@@ -10,7 +10,7 @@ import { precisionRound, displayedDate } from "../../utilities";
 const CopdStatus = ({ days, rescueNights, t }) => {
   const lastDay          = days[days.length - 1];
   const baseline30Days   = lastDay.rescue.baseline;
-  const baseline24Hours  = lastDay.rescue.baseline24Hour || 0;
+  const baseline2Days  = lastDay.rescue.baselineAvgLastTwoDays || 0;
   const lastSevenDays    = days.slice(days.length - 7);
   const totalEvents7Days = lastSevenDays.reduce(
     (tot, day) => tot + day.rescue.totalEvents,
@@ -93,11 +93,11 @@ const CopdStatus = ({ days, rescueNights, t }) => {
           </div>
           <div style={{display: "inline-block"}}>
             <MetricScore>
-              {precisionRound(baseline24Hours, 2)}
+              {precisionRound(baseline2Days, 2)}
             </MetricScore>
             <br />
             <Subtitle>
-              {t("LAST_NUM_HOURS", { number: 24 }).toLowerCase()}
+              {t("LAST_NUM_DAYS", { number: 2 }).toLowerCase()}
             </Subtitle>
           </div>
         </RoundedBox>
