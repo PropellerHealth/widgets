@@ -74,5 +74,7 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Controller Medication Adherence",
   "PUFFS": "Puffs",
   "DAYS": "Days",
-  "INCOMPLETE_DATA": "Incomplete Data"
+  "INCOMPLETE_DATA": "Incomplete Data",
+  "EVENTS": "Events",
+  "AVERAGE_ADHERENCE": "Average adherence"
 }

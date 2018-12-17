@@ -50,6 +50,7 @@
   "NIGHT": "Nacht",
   "WEEKLY_RESCUE_USE_TREND": "Trend der wöchentlichen Nutzung des Notfall-Inhalators",
   "RESCUE_TIME_OF_WEEK": "Wochentag Notfall-Nutzung",
+  "RESCUE_DAY_OF_WEEK": "Notfall-Wochentag",
   "COPD_ASSESSMENT_TEST": "Test zur Bewertung der COPD",
   "LOW_IMPACT": "Geringer Einfluss",
   "MEDIUM_IMPACT": "Mittlerer Einfluss",
@@ -73,5 +74,7 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Einhaltung der Einnahme des Kontrollmedikaments",
   "PUFFS": "Pumphübe",
   "DAYS": "Tage",
-  "INCOMPLETE_DATA": "Unvollständige Daten"
+  "INCOMPLETE_DATA": "Unvollständige Daten",
+  "EVENTS": "Ereignisse",
+  "AVERAGE_ADHERENCE": "Durchschnittliche Einhaltung"
 }

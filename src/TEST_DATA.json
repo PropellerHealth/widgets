@@ -110,7 +110,55 @@
           },
           "medicationId": "accuneb",
           "sensors": [],
-          "usageList": []
+          "usageList": [
+            {
+              "doses": 2,
+              "hour": 8,
+              "minute": 0
+            },
+            {
+              "doses": 2,
+              "hour": 14,
+              "minute": 0
+            },
+            {
+              "doses": 2,
+              "hour": 20,
+              "minute": 0
+            }
+          ]
+        },
+        {
+          "medication": {
+            "shortName": "test",
+            "name": "Accuneb Nebulizer",
+            "type": "rescue",
+            "formFactor": "nebulizer",
+            "id": "test",
+            "diseases": [
+              "asthma",
+              "copd"
+            ]
+          },
+          "medicationId": "test",
+          "sensors": [],
+          "usageList": [
+            {
+              "doses": 2,
+              "hour": 8,
+              "minute": 0
+            },
+            {
+              "doses": 2,
+              "hour": 14,
+              "minute": 0
+            },
+            {
+              "doses": 2,
+              "hour": 20,
+              "minute": 0
+            }
+          ]
         }
       ]
     },
@@ -139,7 +187,7 @@
     },
     "timeZone": "America/Chicago"
   },
-  "locale": "en-US",
+  "locale": "es-MX",
   "medications": [
     {
       "medication": {
@@ -231,6 +279,38 @@
       "medicationId": "accuneb",
       "sensors": [],
       "usageList": []
+    },
+    {
+      "medication": {
+        "shortName": "test",
+        "name": "Accuneb Nebulizer",
+        "type": "rescue",
+        "formFactor": "nebulizer",
+        "id": "test",
+        "diseases": [
+          "asthma",
+          "copd"
+        ]
+      },
+      "medicationId": "test",
+      "sensors": [],
+      "usageList": [
+        {
+          "doses": 2,
+          "hour": 8,
+          "minute": 0
+        },
+        {
+          "doses": 2,
+          "hour": 14,
+          "minute": 0
+        },
+        {
+          "doses": 2,
+          "hour": 20,
+          "minute": 0
+        }
+      ]
     }
   ],
   "dailySummary": {
@@ -1323,7 +1403,8 @@
   ],
   "alerts": {
     "transition": [
-      "2018-04-06"
+      "2018-04-06",
+      "2018-04-03"
     ],
     "atrisk": []
   }

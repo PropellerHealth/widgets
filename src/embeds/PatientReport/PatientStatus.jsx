@@ -89,7 +89,7 @@ const PatientStatus = function PatientStatus({
                   <Col xs={6} key={`adherence-${i}`}>
                     <strong>{med.name}</strong>
                     <br />
-                    <MetricScore>{med.adherence}%</MetricScore>
+                    <MetricScore>{isNaN(med.adherence) ? t("N_A") : `${med.adherence}%`}</MetricScore>
                   </Col>
                 ))}
               </Row>

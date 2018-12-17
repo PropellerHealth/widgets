@@ -39,7 +39,7 @@
   "LAST_NUM_HOURS": "últimas {{number}} h",
   "RESCUE_USE_TOTAL": "Uso de medicamento de rescate (total de {{count}} evento de rescate)",
   "RESCUE_USE_TOTAL_plural": "Uso de medicamento de rescate (total de {{count}} eventos de rescate)",
-  "RESCUE_BASELINE": "Línea de rescate",
+  "RESCUE_BASELINE": "Estado inicial de rescate",
   "PHYSICIAN_EVALUATION": "EVALUACIÓN DEL MÉDICO",
   "SIGN": "Firma",
   "DAILY_AVERAGE_RESCUE": "Uso promedio diario de medicamento de rescate",
@@ -50,6 +50,7 @@
   "NIGHT": "Noche",
   "WEEKLY_RESCUE_USE_TREND": "Tendencia de uso semanal de medicamento de rescate",
   "RESCUE_TIME_OF_WEEK": "Momento de la semana de uso del medicamento de rescate",
+  "RESCUE_DAY_OF_WEEK": "Día de la semana de uso del medicamento de rescate",
   "COPD_ASSESSMENT_TEST": "Examen de evaluación de EPOC",
   "LOW_IMPACT": "Efecto bajo",
   "MEDIUM_IMPACT": "Efecto medio",
@@ -73,5 +74,7 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Cumplimiento con el medicamento de control",
   "PUFFS": "Inhalaciones",
   "DAYS": "Días",
-  "INCOMPLETE_DATA": "Datos incompletos"
+  "INCOMPLETE_DATA": "Datos incompletos",
+  "EVENTS": "Eventos",
+  "AVERAGE_ADHERENCE": "Cumplimiento promedio"
 }

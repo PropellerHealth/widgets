@@ -50,6 +50,7 @@
   "NIGHT": "Noche",
   "WEEKLY_RESCUE_USE_TREND": "Tendencia para uso de rescate semanal",
   "RESCUE_TIME_OF_WEEK": "Momento de la semana del rescate",
+  "RESCUE_DAY_OF_WEEK": "Día de la semana del rescate",
   "COPD_ASSESSMENT_TEST": "Examen de evaluación de EPOC",
   "LOW_IMPACT": "Efecto reducido",
   "MEDIUM_IMPACT": "Efecto medio",
@@ -73,5 +74,7 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Complimiento del medicamento de control",
   "PUFFS": "Inhalaciones",
   "DAYS": "Días",
-  "INCOMPLETE_DATA": "Datos incompletos"
+  "INCOMPLETE_DATA": "Datos incompletos",
+  "EVENTS": "Eventos",
+  "AVERAGE_ADHERENCE": "Cumplimiento promedio"
 }

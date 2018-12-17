@@ -1,5 +1,11 @@
 .page {
-  margin: 2rem 2rem;
+  margin: 2rem 0;
+  padding: 0 2rem;
   page-break-after: always;
   page-break-inside: avoid;
+
+  @media print {
+    margin: 0;
+    padding: 0;
+  }
 }

@@ -50,6 +50,7 @@
   "NIGHT": "야간",
   "WEEKLY_RESCUE_USE_TREND": "주간 구조 사용 추이",
   "RESCUE_TIME_OF_WEEK": "주중 구조 사용 시간",
+  "RESCUE_DAY_OF_WEEK": "주중 구조 약물 사용일",
   "COPD_ASSESSMENT_TEST": "COPD 평가 시험",
   "LOW_IMPACT": "낮은 영향",
   "MEDIUM_IMPACT": "중간 영향",
@@ -73,5 +74,7 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "질병 조절제 복용 일정 준수",
   "PUFFS": "번 흡입",
   "DAYS": "일",
-  "INCOMPLETE_DATA": "불완전한 데이터"
+  "INCOMPLETE_DATA": "불완전한 데이터",
+  "EVENTS": "증상 발생 상황",
+  "AVERAGE_ADHERENCE": "평균 복용 일정 준수"
 }

@@ -50,6 +50,7 @@
   "NIGHT": "Nit",
   "WEEKLY_RESCUE_USE_TREND": "Tendència d'ús setmanal d'auxili",
   "RESCUE_TIME_OF_WEEK": "Dia de la setmana de la medicació d'auxili",
+  "RESCUE_DAY_OF_WEEK": "Dia d'auxili de la setmana",
   "COPD_ASSESSMENT_TEST": "Prova d'avaluació de MPOC",
   "LOW_IMPACT": "Impacte baix",
   "MEDIUM_IMPACT": "Impacte mig",
@@ -73,5 +74,7 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Control grau de compliment de medicació",
   "PUFFS": "Inhalacions",
   "DAYS": "Dies",
-  "INCOMPLETE_DATA": "Dades incompletes"
+  "INCOMPLETE_DATA": "Dades incompletes",
+  "EVENTS": "Esdeveniments",
+  "AVERAGE_ADHERENCE": "Mitjana del grau de compliment"
 }

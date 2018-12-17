@@ -26,7 +26,7 @@ const Legend = ({ medications, disease, baseline, incomplete, t }) => {
         <ColorMark text={t("TOTAL")} color={COLORS.orange} right />
         <ColorMark text={t("NIGHTTIME_USAGE_LEGEND")} color={COLORS.brown} right />
         {baseline && <ColorMark text={t("RESCUE_BASELINE")} color={COLORS.green} right mark="—" />}
-        {incomplete && <ColorMark text={t("INCOMPLETE_DATA")} color={COLORS.lightGrey} right />}
+        {incomplete && <ColorMark text={t("INCOMPLETE_DATA")} color={COLORS.lightestGrey} right />}
       </div>
     </Col>
   );

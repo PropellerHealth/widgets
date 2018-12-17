@@ -5,7 +5,7 @@ import { Row, Col } from "react-bootstrap";
 
 import GreyText from "../../components/GreyText";
 
-import { COLORS, displayedDate } from "../../utilities";
+import { COLORS, displayedDate, capitalize } from "../../utilities";
 
 const controllerSchedule = (usageList, t) => {
   if (!usageList || usageList.length === 0)  return t("AS_NEEDED");
@@ -54,7 +54,7 @@ const PatientInfo = function PatientInfo({ patient, medications, t }) {
             <GreyText style={{ padding: "0 0.7rem" }}>|</GreyText>{" "}
             {t("AGE_YEARS_OLD", { age })}, {displayedDate(birthDate, "ll")}{" "}
             <GreyText style={{ padding: "0 0.7rem" }}>|</GreyText>{" "}
-            {t(disease.toUpperCase())}
+            {capitalize(t(disease.toUpperCase()))}
           </h2>
         </Col>
       </Row>

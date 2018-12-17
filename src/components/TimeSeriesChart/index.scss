@@ -1,0 +1,19 @@
+.time-series-chart {
+  // position: relative;
+  page-break-inside: avoid;
+  page-break-before: unset;
+  page-break-after: unset;
+  break-before: unset;
+  break-after: unset;
+  break-inside: avoid;
+  margin-top: 1rem;
+
+  @media print {
+    page-break-inside: avoid;
+    page-break-before: unset;
+    page-break-after: unset;
+    break-before: unset;
+    break-after: unset;
+    break-inside: avoid;
+  }
+}

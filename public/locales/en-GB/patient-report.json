@@ -50,6 +50,7 @@
   "NIGHT": "Night",
   "WEEKLY_RESCUE_USE_TREND": "Weekly reliever use trend",
   "RESCUE_TIME_OF_WEEK": "Reliever time of week",
+  "RESCUE_DAY_OF_WEEK": "Reliever Day of Week",
   "COPD_ASSESSMENT_TEST": "COPD Assessment Test",
   "LOW_IMPACT": "Low impact",
   "MEDIUM_IMPACT": "Medium impact",
@@ -73,5 +74,7 @@
   "CONTROLLER_MEDICATION_ADHERENCE": "Preventer Medication Adherence",
   "PUFFS": "Puffs",
   "DAYS": "Days",
-  "INCOMPLETE_DATA": "Incomplete data"
+  "INCOMPLETE_DATA": "Incomplete data",
+  "EVENTS": "Events",
+  "AVERAGE_ADHERENCE": "Average adherence"
 }

@@ -9,7 +9,7 @@ import SectionHeader from "./SectionHeader";
 import RescueMedicationChart from "./RescueMedicationChart";
 import ControllerMedicationChart from "./ControllerMedicationChart";
 
-import { COLORS } from "../../utilities";
+import { COLORS, HAS_WINDOW } from "../../utilities";
 
 const createTimeScale = (a, b, width) =>
   scaleUtc()
@@ -23,117 +23,162 @@ const ALERT_FOR_DISEASE = {
   copd   : "atrisk"
 };
 
-const lastSync       = (date, end)   => moment(date).diff(moment(end))   < 0 ? date : false;
-const prehistoryDate = (date, start) => moment(date).diff(moment(start)) > 0 ? date : false;
+const isBeforeDate = (date, end)   => moment(date).diff(moment(end))   < 0 ? date : false;
+const isAfterDate  = (date, start) => moment(date).diff(moment(start)) > 0 ? date : false;
 
-const MedicationUsage = function MedicationUsage({
-  disease,
-  range,
-  days,
-  medications,
-  alerts,
-  sync,
-  startDate,
-  adherence,
-  t
-}) {
-  const width       = 1090;
-  const height      = 240;
-  const margin      = { top: 10, right: 35, bottom: 20, left: 35 };
-  const graphWidth  = width - margin.left - margin.right;
-  const graphHeight = height - margin.top - margin.bottom - 18;
-  const xWidth      = graphWidth / days.length / 2;
+class MedicationUsage extends React.Component {
 
-  const xFormatter     = timeFormat("%-d");
-  const monthFormatter = timeFormat("%b");
+  column = undefined;
 
-  const lineScale = createTimeScale(
-    range[0],
-    range[1],
-    graphWidth + (xWidth * 2)
-  );
+  setWidth(evt, width) {
+    this.setState({
+      width: width || this.column.clientWidth
+    });
+  }
 
-  const xScale = createTimeScale(
-    range[0],
-    range[1],
-    graphWidth
-  );
+  setPrintWidth(evt) {
+    // debugger;
+    this.setWidth(evt, "1100");
+  }
 
-  const bottomAxis = axisBottom(xScale)
-    .ticks(timeDay)
-    .tickSize(0)
-    .tickPadding(10)
-    .tickFormat(d => xFormatter(isoParse(d)));
+  constructor(props) {
+    super(props);
+    this.setColumnRef = el => { this.column = el; };
+    this.state = { width: 1090 };
+    this.setWidth = this.setWidth.bind(this);
+    this.setPrintWidth = this.setPrintWidth.bind(this);
+  }
 
-  const monthAxis = axisBottom(xScale)
-    .ticks(timeMonth)
-    .tickSize(0)
-    .tickPadding(25)
-    .tickFormat(d => monthFormatter(d).toUpperCase());
+  componentDidMount() {
+    this.setWidth();
 
-  const weekAxis = axisTop(xScale)
-    .ticks(timeMonday)
-    .tickSize(-(graphHeight - 1));
+    if (HAS_WINDOW) {
+      window.addEventListener("resize", this.setWidth);
+      window.addEventListener("beforeprint", this.setPrintWidth);
+      window.addEventListener("afterprint", this.setWidth);
+    }
+  }
 
-  const alertDates = alerts[ALERT_FOR_DISEASE[disease]].map(a => moment(a).toISOString());
+  componentWillUnmount() {
+    if (HAS_WINDOW) {
+      window.removeEventListener("resize", this.setWidth);
+      window.removeEventListener("beforeprint", this.setPrintWidth);
+      window.removeEventListener("afterprint", this.setWidth);
+    }
+  }
 
-  const rescueData = days.map(d => {
-    // d.date  = new Date(d.date);
-    d.alert = alertDates.indexOf(d.date.toISOString()) > -1;
-    return d;
-  });
+  render() {
+    const {
+      disease,
+      range,
+      days,
+      medications,
+      alerts,
+      sync,
+      startDate,
+      adherence,
+      t
+    } = this.props;
 
-  const lastRescue     = lastSync(sync.lastRescue, range[1]);
-  const lastController = lastSync(sync.lastController, range[1]);
-  const firstDate      = prehistoryDate(startDate, range[0]);
+    const { width }   = this.state;
+    const height      = 240;
+    const margin      = { top: 10, right: 1, bottom: 20, left: 40 };
+    const graphWidth  = width - margin.left - margin.right;
+    const graphHeight = height - margin.top - margin.bottom - 18;
+    const xWidth      = graphWidth / days.length / 2;
 
-  return (
-    <div style={{ marginTop: "1rem" }}>
-      <SectionHeader
-        text={t("MEDICATION_USAGE")}
-        tab={t("LAST_NUM_DAYS", {number: 30})}
-      />
-      <RescueMedicationChart
-        disease={disease}
-        data={rescueData}
-        firstDate={firstDate}
-        lastSync={lastRescue}
-        alertDates={alertDates}
-        width={width}
-        height={height}
-        margin={margin}
-        graphHeight={graphHeight}
-        graphWidth={graphWidth}
-        xScale={xScale}
-        xWidth={xWidth}
-        lineScale={lineScale}
-        bottomAxis={bottomAxis}
-        monthAxis={monthAxis}
-        weekAxis={weekAxis}
-        colors={COLORS}
-        medications={medications.rescue}
-        title={t("RESCUE_MEDICATION_USAGE")}
-      />
-      <ControllerMedicationChart
-        data={adherence}
-        firstDate={firstDate}
-        lastSync={lastController}
-        width={width}
-        height={height}
-        margin={margin}
-        graphHeight={graphHeight}
-        graphWidth={graphWidth}
-        xScale={xScale}
-        xWidth={xWidth}
-        bottomAxis={bottomAxis}
-        monthAxis={monthAxis}
-        weekAxis={weekAxis}
-        colors={COLORS}
-        medications={medications.controller}
-        title={t("CONTROLLER_MEDICATION_ADHERENCE")}
-      />
-    </div>
-  );
-};
+    const xFormatter     = timeFormat("%-d");
+    const monthFormatter = timeFormat("%b");
+
+    const lineScale = createTimeScale(
+      range[0],
+      range[1],
+      graphWidth + (xWidth * 2)
+    );
+
+    const xScale = createTimeScale(
+      range[0],
+      range[1],
+      graphWidth
+    );
+
+    const bottomAxis = axisBottom(xScale)
+      .ticks(timeDay)
+      .tickSize(0)
+      .tickPadding(10)
+      .tickFormat(d => xFormatter(isoParse(d)));
+
+    const monthAxis = axisBottom(xScale)
+      .ticks(timeMonth)
+      .tickSize(0)
+      .tickPadding(25)
+      .tickFormat(d => monthFormatter(d).toUpperCase());
+
+    const weekAxis = axisTop(xScale)
+      .ticks(timeMonday)
+      .tickSize(-(graphHeight - 1));
+
+    const alertDates = alerts[ALERT_FOR_DISEASE[disease]].map(a => moment.utc(a).format("YYYY-MM-DD"));
+
+    const rescueData = days.map(d => {
+      d.alert = alertDates.indexOf(moment.utc(d.date).format("YYYY-MM-DD")) > -1;
+      return d;
+    });
+
+    const lastRescue     = sync.lastRescue && isBeforeDate(sync.lastRescue, range[1]);
+    const lastController = sync.lastController && isBeforeDate(sync.lastController, range[1]);
+    const firstDate      = isAfterDate(startDate, range[0]);
+    const hasRescue      = !!sync.firstRescue;
+    const hasController  = !!sync.firstController;
+
+    return (
+      <div ref={this.setColumnRef} style={{ marginTop: "1rem" }}>
+        <SectionHeader
+          text={t("MEDICATION_USAGE")}
+          tab={t("LAST_NUM_DAYS", {number: 30})}
+        />
+        {hasRescue && <RescueMedicationChart
+          disease={disease}
+          data={rescueData}
+          firstDate={firstDate}
+          lastSync={lastRescue}
+          alertDates={alertDates}
+          width={width}
+          height={height}
+          margin={margin}
+          graphHeight={graphHeight}
+          graphWidth={graphWidth}
+          xScale={xScale}
+          xWidth={xWidth}
+          lineScale={lineScale}
+          bottomAxis={bottomAxis}
+          monthAxis={monthAxis}
+          weekAxis={weekAxis}
+          colors={COLORS}
+          medications={medications.rescue}
+          title={t("RESCUE_MEDICATION_USAGE")}
+        />}
+        {hasController && <ControllerMedicationChart
+          data={adherence}
+          firstDate={firstDate}
+          lastSync={lastController}
+          width={width}
+          height={height}
+          margin={margin}
+          graphHeight={graphHeight}
+          graphWidth={graphWidth}
+          xScale={xScale}
+          xWidth={xWidth}
+          bottomAxis={bottomAxis}
+          monthAxis={monthAxis}
+          weekAxis={weekAxis}
+          colors={COLORS}
+          medications={medications.controller}
+          title={t("CONTROLLER_MEDICATION_ADHERENCE")}
+        />}
+      </div>
+    );
+  }
+}
 
 export default translate("patient-report")(MedicationUsage);
